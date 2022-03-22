@@ -1,0 +1,74 @@
+.pointer {
+  cursor: pointer;
+}
+
+.page-title h1 {
+  color: #313b3d;
+  font-weight: 300;
+  line-height: 46px;
+  padding-top: 8px;
+  margin: 0;
+  display: inline-block;
+}
+
+.example-container {
+  height: 400px;
+  overflow: auto;
+}
+
+.btn.btn-primary {
+  background: #025686;
+  color: #fff !important;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  font-size: 14px;
+  margin: 0.3125rem 5px;
+}
+
+.card [class*="card-header-"] .card-title a, .card [class*="card-header-"] .card-title, .card [class*="card-header-"] .icon i, .card[class*="bg-"] .card-title a, .card[class*="bg-"] .card-title, .card[class*="bg-"] .icon i {
+  color: #fff;
+  padding: 3px 30px 7px 15px;
+  background: #025686;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+}
+
+.card [class*="card-header-"]:not(.card-header-icon):not(.card-header-text):not(.card-header-image) {
+  background: #fbfafa;
+  box-shadow: none;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  position: relative;
+  border-top: 3px solid #fecd68;
+  border-bottom: 1px solid #efefef;
+}
+
+.card [class*="card-header-"] .card-title::before {
+  content: '';
+  border-top: 34px solid #025686;
+  border-right: 22px solid #fbfafa;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.page-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: #fecd68;
+}
+
+.btn, .btn.btn-default {
+  color: #fff;
+  background-color: #025686;
+  border-color: #025686;
+  box-shadow: 0 2px 2px 0 rgb(153 153 153 / 14%), 0 3px 1px -2px rgb(153 153 153 / 20%), 0 1px 5px 0 rgb(153 153 153 / 12%);
+}

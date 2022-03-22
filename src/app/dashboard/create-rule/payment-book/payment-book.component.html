@@ -1,0 +1,68 @@
+<div [hidden]="!showPaymentBook">
+
+  <form [formGroup]="createRuleForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-file-invoice-dollar"></i> Payment Book</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <label class="col-sm-5">Book Type</label>
+              <div class="col-sm-7">
+                <!-- <select class="form-control custom-select hover" name="payment_book_type" -->
+                <!--  Dilip 05/27/2020 COM-738 -->
+                <select class="custom-select hover" name="payment_book_type" formControlName="payment_book_type"
+                  data-style="btn btn-link" id="dropName1">
+                  <ng-container *ngFor="let opt of paymentBookTypes">
+                    <option *ngIf="opt.maxWithdrawalInd===1" value="{{opt.pbTypeId}}">{{opt.bookType}}</option>
+                  </ng-container>
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+
+              <label class="col-sm-5">Overdraw Limit ( - )</label>
+              <div class="col-sm-7">
+
+                <input currencyMask [options]="{ allowNegative: false, align: 'left' }" name="overdraw_limit"
+                  formControlName="overdraw_limit" class="custom-input">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 ">
+            <div class="row">
+
+              <label class="col-sm-5">Weekly Pay</label>
+              <div class="col-sm-7">
+
+                <input currencyMask [options]="{ allowNegative: false, align: 'left' }" name="weekly_pay"
+                  formControlName="weekly_pay" class="custom-input">
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row">
+          <div class="col text-right">
+            <button type="button" class="btn btn-primary" (click)="onGoBack();"><i class="fas fa-times"></i>
+              Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="resetForm();"><i class="fas fa-sync-alt"></i>
+              Clear</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Rule</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,75 @@
+<div class="dailog-title-bg">
+    <div class="dailog-title"><i class="fas fa-history"></i> History<button class="dailog-close"
+        [mat-dialog-close]><span>X</span></button>
+    </div>
+  </div>
+  <div class="row" *ngIf="tieredOverageGroup">
+  
+  
+    <div class="col-md-6">
+      <div class="row">
+        <label class="col-sm-5">Sales Territory</label>
+        <span class="col-sm-7">{{tieredOverageGroup[0][0].salesTerritory}}</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <label class="col-sm-5">Utility Company</label>
+        <span class="col-sm-5">{{tieredOverageGroup[0][0].utilityCompany}}</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <label class="col-sm-5">Finance Partner</label>
+        <span class="col-sm-7">{{tieredOverageGroup[0][0].financePartner}}</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <label class="col-sm-5">Purchase Method</label>
+        <span class="col-sm-7">{{tieredOverageGroup[0][0].purchaseMethod}}</span>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <table class="my-table mat-table w-100 mt-3">
+        <thead>
+          <tr class="mat-header-row">
+            <th class="mat-header-cell" scope="col">Effective Start Date</th>
+            <th class="mat-header-cell" scope="col">Effective End Date</th>
+            <!-- <th scope="col">PPA Rate</th>
+                <th scope="col">Price Per kW</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let tr of tieredOverageGroup">
+            <tr class="mat-row" (click)="groupClick(tr)">
+              <td data-td-head="Effective Start Date" class="mat-cell">{{tr[0].effectiveStartDate | date}}</td>
+              <td data-td-head="Effective End Date" class="mat-cell">{{tr[0].effectiveEndDate | date}}</td>
+            </tr>
+            <td colspan="2" style="background-color: #FFF;"
+              *ngIf="tieredOverageSelectedGroup && tr[0].effectiveStartDate == tieredOverageSelectedGroup[0].effectiveStartDate">
+  
+              <table class="my-table mat-table w-100 mt-3">
+                <thead>
+                  <tr class="mat-header-row">
+                    <th class="mat-header-cell" scope="col">Installation Price (Commissionable PPW)</th>
+                    <th class="mat-header-cell" scope="col">Overage Percentage Amount</th>
+                    <!-- <th scope="col">PPA Rate</th>
+                        <th scope="col">Price Per kW</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  <tr class="mat-row" *ngFor="let tr of tieredOverageSelectedGroup">
+                    <td data-td-head="Price per kw" class="mat-cell">{{tr.tieredOveragePercentage | currency}}</td>
+                    <td data-td-head="PPA Rate" class="mat-cell">{{tr.tieredOveragePpw | currency}} </td>
+                  </tr>
+  
+                </tbody>
+              </table>
+            </td>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>

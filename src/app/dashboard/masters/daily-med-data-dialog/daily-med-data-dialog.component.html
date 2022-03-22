@@ -1,0 +1,441 @@
+<div class="dailog-title-bg">
+    <div class="dailog-title">DailyMed Data<button class="dailog-close" (click)="closedClick()"
+            [mat-dialog-close]><span>X</span></button></div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="w-30">
+    <!--<form [formGroup]="dailymedForm" (ngSubmit)="onSubmit()" class="w-100">
+    <div class="row">
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Year </label>
+          <div class="col-sm-8">
+            <input type="text" name="Year" id="Year" class="custom-input" formControlName="Year" value="{{data.Year}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Approval Date </label>
+          <div class="col-sm-8">
+            <input type="text" name="ApprovalDate" id="ApprovalDate" class="custom-input" formControlName="ApprovalDate" value="{{data.ApprovalDate}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Application Type</label>
+          <div class="col-sm-8">
+            <input type="text" name="ApplicationType" id="ApplicationType" class="custom-input" formControlName="ApplicationType" value="{{data.ApplicationType}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Application Number </label>
+          <div class="col-sm-8">
+            <input type="text" name="ApplicationNumber" id="ApplicationNumber" class="custom-input" formControlName="ApplicationNumber" value="{{data.ApplicationNumber}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Brand Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="BrandName" id="BrandName" class="custom-input" formControlName="BrandName" value="{{data.BrandName}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Route Of Administration</label>
+          <div class="col-sm-8">
+            <input type="text" name="RouteOfAdministration" id="RouteOfAdministration" class="custom-input" formControlName="RouteOfAdministration" value="{{data.RouteOfAdministration}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Dosage</label>
+          <div class="col-sm-8">
+            <input type="text" name="Dosage" id="Dosage" class="custom-input" formControlName="Dosage" value="{{data.Dosage}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Type of DosageForm</label>
+          <div class="col-sm-8">
+            <input type="text" name="TypeofDosageForm" id="TypeofDosageForm" class="custom-input" formControlName="TypeofDosageForm" value="{{data.TypeofDosageForm}}"
+                   placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Type Of Release</label>
+          <div class="col-sm-8">
+            <input type="text" name="TypeOfRelease" id="TypeOfRelease" class="custom-input" formControlName="TypeOfRelease" value="{{data.TypeOfRelease}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Marketing Status</label>
+          <div class="col-sm-8">
+            <input type="text" name="MarketingStatus" id="MarketingStatus" class="custom-input" formControlName="MarketingStatus" value="{{data.MarketingStatus}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Marketing Start Date</label>
+          <div class="col-sm-8">
+            <input type="text" name="MarketingStartDate" id="MarketingStartDate" class="custom-input" formControlName="MarketingStartDate" value="{{data.MarketingStartDate}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Category</label>
+          <div class="col-sm-8">
+            <input type="text" name="Category" id="Category" class="custom-input" formControlName="Category" value="{{data.Category}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Active Ingredient</label>
+          <div class="col-sm-8">
+            <textarea name="ActiveIngredient" id="ActiveIngredient" class="custom-input"
+                      formControlName="ActiveIngredient" value="{{data.ActiveIngredient}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Active UNII Number</label>
+          <div class="col-sm-8">
+            <textarea name="ActiveUNIINumber" id="ActiveUNIINumber" class="custom-input"
+                      formControlName="ActiveUNIINumber" value="{{data.ActiveUNIINumber}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Active Strength</label>
+          <div class="col-sm-8">
+            <textarea name="ActiveStrength" id="ActiveStrength" class="custom-input"
+                      formControlName="ActiveStrength" value="{{data.ActiveStrength}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Inactive Ingredient</label>
+          <div class="col-sm-8">
+            <textarea name="InactiveIngredient" id="InactiveIngredient" class="custom-input"
+                      formControlName="InactiveIngredient" value="{{data.InactiveIngredient}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Inctive UNII Number</label>
+          <div class="col-sm-8">
+            <textarea name="InctiveUNIINumber" id="InctiveUNIINumber" class="custom-input"
+                      formControlName="InctiveUNIINumber" value="{{data.InctiveUNIINumber}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Inactive Strength</label>
+          <div class="col-sm-8">
+            <textarea name="InactiveStrength" id="InactiveStrength" class="custom-input"
+                      formControlName="InactiveStrength" value="{{data.InactiveStrength}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <div class="row">
+          <label class="col-sm-4">Therapeutic Category</label>
+          <div class="col-sm-8">
+            <textarea name="TherapeuticCategory" id="TherapeuticCategory" class="custom-input"
+                      formControlName="TherapeuticCategory" value="{{data.TherapeuticCategory}}" placeholder=""></textarea>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group col-md-4"></div>
+      <div class="form-group col-md-4"></div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Submission</label>
+          <div class="col-sm-8">
+            <input type="text" name="Submission" id="Submission" class="custom-input" formControlName="Submission" value="{{data.Submission}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Submission Type</label>
+          <div class="col-sm-8">
+            <input type="text" name="SubmissionType" id="SubmissionType" class="custom-input" formControlName="SubmissionType" value="{{data.SubmissionType}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Submission Status</label>
+          <div class="col-sm-8">
+            <input type="text" name="SubmissionStatus" id="SubmissionStatus" class="custom-input" formControlName="SubmissionStatus" value="{{data.SubmissionStatus}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Duns Number</label>
+          <div class="col-sm-8">
+            <input type="text" name="DunsNumber" id="DunsNumber" class="custom-input" formControlName="DunsNumber" value="{{data.DunsNumber}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Company Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="CompanyName" id="CompanyName" class="custom-input" formControlName="CompanyName" value="{{data.CompanyName}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Subsidiaries</label>
+          <div class="col-sm-8">
+            <input type="text" name="Subsidiaries" id="Subsidiaries" class="custom-input" formControlName="Subsidiaries" value="{{data.Subsidiaries}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Repackager</label>
+          <div class="col-sm-8">
+            <input type="text" name="Repackager" id="Repackager" class="custom-input" formControlName="Repackager" value="{{data.Repackager}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Registrant Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="RegistrantName" id="RegistrantName" class="custom-input" formControlName="RegistrantName" value="{{data.RegistrantName}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Labeler Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="LabelerName" id="LabelerName" class="custom-input" formControlName="LabelerName" value="{{data.LabelerName}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Manufacure Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="ManufacureName" id="ManufacureName" class="custom-input" formControlName="ManufacureName" value="{{data.ManufacureName}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Manufacure Address</label>
+          <div class="col-sm-8">
+            <input type="text" name="ManufacureAddress" id="ManufacureAddress" class="custom-input" formControlName="ManufacureAddress" value="{{data.ManufacureAddress}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Manufacure Country</label>
+          <div class="col-sm-8">
+            <input type="text" name="ManufacureCountry" id="ManufacureCountry" class="custom-input" formControlName="ManufacureCountry" value="{{data.ManufacureCountry}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Paten No</label>
+          <div class="col-sm-8">
+            <input type="text" name="PatenNo" id="PatenNo" class="custom-input" formControlName="PatenNo" value="{{data.PatenNo}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Expiration Date</label>
+          <div class="col-sm-8">
+            <input type="text" name="ExpirationDate" id="ExpirationDate" class="custom-input" formControlName="ExpirationDate" value="{{data.ExpirationDate}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Exclusivity Date</label>
+          <div class="col-sm-8">
+            <input type="text" name="ExclusivityDate" id="ExclusivityDate" class="custom-input" formControlName="ExclusivityDate" value="{{data.ExclusivityDate}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Ndc Code</label>
+          <div class="col-sm-8">
+            <input type="text" name="NdcCode" id="NdcCode" class="custom-input" formControlName="NdcCode" value="{{data.NdcCode}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Packaging</label>
+          <div class="col-sm-8">
+            <input type="text" name="Packaging" id="Packaging" class="custom-input" formControlName="Packaging" value="{{data.Packaging}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Image Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="ImageName" id="ImageName" class="custom-input" formControlName="ImageName" value="{{data.ImageName}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="row">
+          <label class="col-sm-4">Image Url</label>
+          <div class="col-sm-8">
+            <input type="text" name="ImageUrl" id="ImageUrl" class="custom-input" formControlName="ImageUrl" value="{{data.ImageUrl}}"
+                   placeholder="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>-->
+    <p><label>Year</label>: {{data.Year}}</p>
+    <p><label>Approval Date</label>: {{data.ApprovalDate}}</p>
+    <p><label>Application Type</label>: {{data.ApplicationType}}</p>
+    <p><label>Application Number</label>: {{data.ApplicationNumber}}</p>
+    <p><label>Therapeutic Equivalents</label>: {{data.TherapeuticEquivalents}}</p>
+    <p><label>Brand Name</label>: {{data.BrandName}}</p>
+    <p><label>Route Of Administration</label>: {{data.RouteOfAdministration}}</p>
+    <p><label>Dosage</label>: {{data.Dosage}}</p>
+    <p><label>Type Of DosageForm</label>: {{data.TypeofDosageForm}}</p>
+    <p><label>Type Of Release</label>: {{data.TypeOfRelease}}</p>
+    <p><label>Active Ingredient</label>: {{data.ActiveIngredient}}</p>
+    <p><label>Active UNII Number</label>: {{data.ActiveUNIINumber}}</p>
+    <p><label>Active Strength</label>: {{data.ActiveStrength}}</p>
+    <p><label>Inactive Ingredient</label>: {{data.InactiveIngredient}}</p>
+    <p><label>Inctive UNII Number</label>: {{data.InctiveUNIINumber}}</p>
+    <p><label>Inactive Strength</label>: {{data.InactiveStrength}}</p>
+    <p><label>Therapeutic Category</label>: {{data.TherapeuticCategory}}</p>
+    <p><label>Marketing Status</label>: {{data.MarketingStatus}}</p>
+    <p><label>Marketing Start Date</label>: {{data.MarketingStartDate}}</p>
+    <p><label>Category</label>: {{data.Category}}</p>
+    <p><label>Submission</label>: {{data.Submission}}</p>
+    <p><label>Submission Type</label>: {{data.SubmissionType}}</p>
+    <p><label>Submission Status</label>: {{data.SubmissionStatus}}</p>
+    <p><label>Duns Number</label>: {{data.DunsNumber}}</p>
+    <p><label>Company Name</label>: {{data.CompanyName}}</p>
+    <p><label>Subsidiaries</label>: {{data.Subsidiaries}}</p>
+    <p><label>Repackager</label>: {{data.Repackager}}</p>
+    <p><label>Registrant Name</label>: {{data.RegistrantName}}</p>
+    <p><label>Labeler Name</label>: {{data.LabelerName}}</p>
+    <p><label>Manufacure Name</label>: {{data.ManufacureName}}</p>
+    <p><label>Manufacure Address</label>: {{data.ManufacureAddress}}</p>
+    <p><label>Manufacure Country</label>: {{data.ManufacureCountry}}</p>
+    <p><label>Patent Number</label>: {{data.PatenNo}}</p>
+    <p><label>Expiration Date</label>: {{data.ExpirationDate}}</p>
+    <p><label>Exclusivity Date</label>: {{data.ExclusivityDate}}</p>
+    <p><label>Ndc Code</label>: {{data.NdcCode}}</p>
+    <p><label>Packaging</label>: {{data.Packaging}}</p>
+    <p><label>Image Name</label>: {{data.ImageName}}</p>
+    <p><label>Image Url</label>: {{data.ImageUrl}}</p>
+  </div>
+</div>
+
+<div class="row justify-content-end">
+    <button class="btn btn-primary" (click)="closedClick()" [mat-dialog-close]><i class="fas fa-check"></i> OK</button>
+</div>

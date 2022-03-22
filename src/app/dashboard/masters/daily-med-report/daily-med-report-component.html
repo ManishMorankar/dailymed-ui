@@ -1,0 +1,760 @@
+<div class="page-title col-md-12 ">
+  <h1>Daily Med Report</h1>
+  <div class="breadcrumbs">
+    <a href="#">Home</a>/<span>Daily Med Report</span>
+  </div>
+</div>
+<div class="content">
+  <button type="submit" class="btn btn-primary" (click)="syncOfflineData()">
+    <i class="fas"></i> Sync offline data
+  </button>
+  <a class="btn btn-primary float-right" *ngIf="addbtn" (click)="addClick()">
+    <i class="fas fa-search"></i> Filter Report
+  </a>
+  <a class="btn btn-primary float-right" *ngIf="cancelbtn" (click)="cancelClick()">
+    <i class="material-icons pointer">remove_circle</i> Hide
+  </a>
+  <div class="card" *ngIf="addInd">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect">Filter Report </h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="DailyMedReportForm" (ngSubmit)="ResultSkipedRows='0';TotalCount='0';getResult()" class="w-100">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">From Approval Date</label>
+              <div class="col-sm-8">
+                <input type="date" name="From" id="From" class="custom-input"
+                       formControlName="From" placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">To Approval Date</label>
+              <div class="col-sm-8">
+                <input type="date" name="To" id="To" class="custom-input"
+                       formControlName="To" placeholder="">
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Application Type</label>
+              <div class="col-sm-8">
+                <ng-select [items]="applicationTypeList"
+                           bindLabel="applicationType"
+                           formControlName="typeOfApplicationdropdown"
+                           placeholder="Select Application Type"
+                           searchable="true"
+                           [multiple]="true"
+                           [(ngModel)]="selectedapplicationType">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <!--<div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Application Number</label>
+              <div class="col-sm-8">
+                <ng-select [items]="applicationNoList"
+                           bindLabel="applicationNo"
+                           formControlName="applicationNodropdown"
+                           placeholder="Select Application No"
+                           searchable="true"
+                           [(ngModel)]="selectedapplicationNo">
+                </ng-select>
+              </div>
+            </div>
+          </div>-->
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Application Number</label>
+              <div class="col-sm-8">
+                <input type="text" name="applicationNodropdown" id="applicationNodropdown" class="custom-input" formControlName="applicationNodropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Active Ingredients</label>
+              <div class="col-sm-8">
+                <input type="text" name="activeIngredientdropdown" id="activeIngredientdropdown" class="custom-input" formControlName="activeIngredientdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Active Strength</label>
+              <div class="col-sm-8">
+                <input type="text" name="activeStrengthdropdown" id="activeStrengthdropdown" class="custom-input" formControlName="activeStrengthdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Active UNII Number</label>
+              <div class="col-sm-8">
+                <input type="text" name="activeUniidropdown" id="activeUniidropdown" class="custom-input" formControlName="activeUniidropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Inactive Ingredients</label>
+              <div class="col-sm-8">
+                <input type="text" name="inActiveIngredientdropdown" id="inActiveIngredientdropdown" class="custom-input" formControlName="inActiveIngredientdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Inactive Strength</label>
+              <div class="col-sm-8">
+                <input type="text" name="inActiveStrengthdropdown" id="inActiveStrengthdropdown" class="custom-input" formControlName="inActiveStrengthdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Inactive UNII Number</label>
+              <div class="col-sm-8">
+                <input type="text" name="inActiveUniidropdown" id="inActiveUniidropdown" class="custom-input" formControlName="inActiveUniidropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Therapeutic Category</label>
+              <div class="col-sm-8">
+                <input type="text" name="therapeuticCategory" id="therapeuticCategory" class="custom-input" formControlName="therapeuticCategory" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Route Of Administration</label>
+              <div class="col-sm-8">
+                <input type="text" name="routeOfAdministrationdropdown" id="routeOfAdministrationdropdown" class="custom-input" formControlName="routeOfAdministrationdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Dosage Form</label>
+              <div class="col-sm-8">
+                <ng-select [items]="dosageFormList"
+                           bindLabel="dosageForm"
+                           formControlName="dosageFormdropdown"
+                           placeholder="Select Dosage Form"
+                           searchable="true"
+                           [multiple]="true"
+                           [(ngModel)]="selecteddosageForm">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Type of Release</label>
+              <div class="col-sm-8">
+                <ng-select [items]="typeOfRelaseList"
+                           bindLabel="typeOfRelease"
+                           formControlName="typeOfReleasedropdown"
+                           placeholder="Select Type of Release"
+                           searchable="true"
+                           [multiple]="true"
+                           [(ngModel)]="selectedtypeOfRelease">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Marketing Status</label>
+              <div class="col-sm-8">
+                <ng-select [items]="marketingStatusList"
+                           bindLabel="marketingStatus"
+                           formControlName="marketingStatusdropdown"
+                           placeholder="Select Marketing Status"
+                           searchable="true"
+                           [multiple]="true"
+                           [(ngModel)]="selectedmarketingStatus">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Manufacure Name</label>
+              <div class="col-sm-8">
+                <input type="text" name="manufacureNamedropdown" id="manufacureNamedropdown" class="custom-input" formControlName="manufacureNamedropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Manufacure Country</label>
+              <div class="col-sm-8">
+                <input type="text" name="manufacureCountrydropdown" id="manufacureCountrydropdown" class="custom-input" formControlName="manufacureCountrydropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Company Name</label>
+              <div class="col-sm-8">
+                <input type="text" name="companyName" id="companyName" class="custom-input" formControlName="companyName" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Brand Name</label>
+              <div class="col-sm-8">
+                <input type="text" name="brandNamedropdown" id="brandNamedropdown" class="custom-input" formControlName="brandNamedropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Category</label>
+              <div class="col-sm-8">
+                <input type="text" name="categorydropdown" id="categorydropdown" class="custom-input" formControlName="categorydropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Ndc Code</label>
+              <div class="col-sm-8">
+                <input type="text" name="ndcCodedropdown" id="ndcCodedropdown" class="custom-input" formControlName="ndcCodedropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Packaging</label>
+              <div class="col-sm-8">
+                <input type="text" name="packagingdropdown" id="packagingdropdown" class="custom-input" formControlName="packagingdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Submission</label>
+              <div class="col-sm-8">
+                <input type="text" name="submissiondropdown" id="submissiondropdown" class="custom-input" formControlName="submissiondropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Submission Type</label>
+              <div class="col-sm-8">
+                <input type="text" name="submissionTypedropdown" id="submissiondropdown" class="custom-input" formControlName="submissionTypedropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Submission Status</label>
+              <div class="col-sm-8">
+                <input type="text" name="submissionStatusdropdown" id="submissionStatusdropdown" class="custom-input" formControlName="submissionStatusdropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Patent Number</label>
+              <div class="col-sm-8">
+                <input type="text" name="patentNodropdown" id="patentNodropdown" class="custom-input" formControlName="patentNodropdown" placeholder="">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Patent Expiration Date</label>
+              <div class="col-sm-8">
+                <input type="date" name="patentExpirationDate" id="patentExpirationDate" class="custom-input"
+                       formControlName="patentExpirationDate" placeholder="">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Patent Exclusivity Date</label>
+              <div class="col-sm-8">
+                <input type="date" name="patentExclusivityDate" id="patentExclusivityDate" class="custom-input"
+                       formControlName="patentExclusivityDate" placeholder="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-12 text-right">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Search
+          </button>
+          <a class="btn btn-primary float-right" (click)="resetClick()">
+            <i class="material-icons pointer">remove_circle</i> Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect">Result</h4>
+    </div>
+    <div class="card-body">
+      <div style="width:100%; overflow-x:scroll">
+        <div class="example-container mat-elevation-z8">
+          <table mat-table [dataSource]="resultDataSource" matSort class="my-table mt-3" style="width: 100%;">
+
+            <ng-container matColumnDef="year">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Approval Year </th>
+              <td data-td-head="Year" mat-cell *matCellDef="let element">
+                {{element.year}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="approvalDate">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Approval Date </th>
+              <td data-td-head=" Approval Date" mat-cell *matCellDef="let element">
+                {{element.approvalDate}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="NDAANDABLA">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Filling Type</th>
+              <td data-td-head="NDAANDABLA" mat-cell *matCellDef="let element">
+                {{element.NDAANDABLA}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="applicationNumber">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Application Number </th>
+              <td data-td-head="Application Number" mat-cell *matCellDef="let element">
+                {{element.applicationNumber}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="therapeuticEquivalents">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Therapeutic Equivalents </th>
+              <td data-td-head="therapeuticEquivalents" mat-cell *matCellDef="let element">
+                {{element.therapeuticEquivalents}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="brandName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Brand Name  </th>
+              <td data-td-head="brandName " mat-cell *matCellDef="let element">
+                {{element.brandName}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="routeOfAdministration">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Route Of Administration  </th>
+              <td data-td-head="routeOfAdministration" mat-cell *matCellDef="let element">
+                {{element.routeOfAdministration}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subRouteOfAdministration">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Sub Route Of Administration  </th>
+              <td data-td-head="subRouteOfAdministration" mat-cell *matCellDef="let element">
+                {{element.subRouteOfAdministration}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dosage">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Dosage  </th>
+              <td data-td-head="dosage" mat-cell *matCellDef="let element">
+                {{element.dosage}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="typeofDosageForm">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Type of Dosage Form </th>
+              <td data-td-head="typeofDosageForm" mat-cell *matCellDef="let element">
+                {{element.typeofDosageForm}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="typeOfRelease">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Type Of Release</th>
+              <td data-td-head="typeOfRelease" mat-cell *matCellDef="let element">
+                {{element.typeOfRelease}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="activeIngredient">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Active Ingredient</th>
+              <td data-td-head="activeIngredient" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.active_Ingredient)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="activeUnii">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Active UNII Number</th>
+              <td data-td-head="activeUnii" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.active_UNII_Number)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="activeStrength">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Active Strength</th>
+              <td data-td-head="activeStrength" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.active_Strength)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="inActiveIngredient">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>InActive Ingredient</th>
+              <td data-td-head="inActiveIngredient" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.inactive_Ingredient)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="inActiveUnii">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>InActive UNII Number</th>
+              <td data-td-head="inActiveUnii" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.inctive_UNII_Number)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="inActiveStrength">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>InActive Strength</th>
+              <td data-td-head="inActiveStrength" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.inactive_Strength)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="therapeuticCategory">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Therapeutic Category </th>
+              <td data-td-head="therapeuticCategory" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.therapeuticCategory)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subcategory">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Subcategory </th>
+              <td data-td-head="subcategory" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.subcategory)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="marketingStatus">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Marketing Status</th>
+              <td data-td-head="marketingStatus" mat-cell *matCellDef="let element">
+                {{element.marketingStatus}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="marketingStartDate">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Marketing Start Date</th>
+              <td data-td-head="marketingStartDate" mat-cell *matCellDef="let element">
+                {{element.marketing_Start_Date}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+              <td data-td-head="category" mat-cell *matCellDef="let element">
+                {{element.category}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="submission">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Submission</th>
+              <td data-td-head="submission" mat-cell *matCellDef="let element">
+                {{element.submission}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="submissionType">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Submission Type</th>
+              <td data-td-head="submissionType" mat-cell *matCellDef="let element">
+                {{element.submission_Type}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="submissionStatus">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Submission Status</th>
+              <td data-td-head="submissionStatus" mat-cell *matCellDef="let element">
+                {{element.submission_Status}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dunsNumber">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Duns Number</th>
+              <td data-td-head="dunsNumber" mat-cell *matCellDef="let element">
+                {{element.duns_Number}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="companyName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</th>
+              <td data-td-head="companyName" mat-cell *matCellDef="let element">
+                {{element.company_Name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subsidiaries">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Subsidiary</th>
+              <td data-td-head="subsidiaries" mat-cell *matCellDef="let element">
+                {{element.subsidiaries}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="repackager">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Repackager</th>
+              <td data-td-head="repackager" mat-cell *matCellDef="let element">
+                {{element.repackager}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="registrantName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Registrant Name</th>
+              <td data-td-head="registrantName" mat-cell *matCellDef="let element">
+                {{element.registrant_Name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="labelerName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Labeler Name</th>
+              <td data-td-head="labelerName" mat-cell *matCellDef="let element">
+                {{element.labeler_Name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="manufacureName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Manufacture Name</th>
+              <td data-td-head="manufacureName" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.manufacure_Name)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="manufacureAddress">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Manufacture Address</th>
+              <td data-td-head="manufacureAddress" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.manufacure_Address)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="manufacureCountry">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Manufacture Country</th>
+              <td data-td-head="manufacureCountry" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.manufacure_Country)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="patentNo">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Patent Number</th>
+              <td data-td-head="patentNo" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.patent_No)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expirationDate">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Expiration Date</th>
+              <td data-td-head="expirationDate" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.expiration_Date)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="exclusivityDate">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Exclusivity Date</th>
+              <td data-td-head="exclusivityDate" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.exclusivity_Date)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ndcCode">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Ndc Code</th>
+              <td data-td-head="ndcCode" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.ndc_Code)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="packaging">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Packaging</th>
+              <td data-td-head="packaging" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.packaging)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="imageName">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Image Name</th>
+              <td data-td-head="imageName" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.imageName)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="imageUrl">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Image Url</th>
+              <td data-td-head="imageUrl" mat-cell *matCellDef="let element">
+                {{limitDailyMedData(element.imageUrl)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="country">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+              <td data-td-head="country" mat-cell *matCellDef="let element">
+                {{element.country}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sector">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Sector</th>
+              <td data-td-head="sector" mat-cell *matCellDef="let element">
+                {{element.sector}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="intStrength">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Int Strength</th>
+              <td data-td-head="intStrength" mat-cell *matCellDef="let element">
+                {{element.intStrength}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="intPack">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Int Pack</th>
+              <td data-td-head="intPack" mat-cell *matCellDef="let element">
+                {{element.intPack}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="patentExpiryDate">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Patent Expiry Date</th>
+              <td data-td-head="patentExpiryDate" mat-cell *matCellDef="let element">
+                {{element.patentExpiryDate}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="countingUnits2016">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Counting Units 2016</th>
+              <td data-td-head="countingUnits2016" mat-cell *matCellDef="let element">
+                {{element.countingUnits2016}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="usDollarMnf2016">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>US Dollar MNF 2016</th>
+              <td data-td-head="usDollarMnf2016" mat-cell *matCellDef="let element">
+                {{element.usDollarMnf2016}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="countingUnits2017">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Counting Units 2017</th>
+              <td data-td-head="countingUnits2017" mat-cell *matCellDef="let element">
+                {{element.countingUnits2017}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="usDollarMnf2017">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>US Dollar MNF 2017</th>
+              <td data-td-head="usDollarMnf2017" mat-cell *matCellDef="let element">
+                {{element.usDollarMnf2017}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="countingUnits2018">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Counting Units 2018</th>
+              <td data-td-head="countingUnits2018" mat-cell *matCellDef="let element">
+                {{element.countingUnits2018}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="usDollarMnf2018">
+              <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>US Dollar MNF 2018</th>
+              <td data-td-head="usDollarMnf2018" mat-cell *matCellDef="let element">
+                {{element.usDollarMnf2018}}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="resultCols; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns resultCols;" (click)="rowClick(row)" class="pointer table-content"></tr>
+          </table>
+        </div>
+      </div>
+      <!--<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>-->
+
+      <div class="col-md-12 text-right">
+        Items per page 250 | {{(1 * ResultSkipedRows) + 1}} - {{(1 * ResultSkipedRows) + 250}} of {{TotalCount}}
+        <button type="submit" class="btn" (click)="previousResult()" *ngIf="ResultSkipedRows!='0'">
+          <i class="fas fa-arrow-circle-left"></i>
+        </button>
+
+        <button type="submit" class="btn" (click)="nextResult()" *ngIf="((1 * ResultSkipedRows) + 250)<(1 * TotalCount)">
+          <i class="fas fa-arrow-circle-right"></i>
+        </button>
+      </div>
+
+      <div class="col-md-12 text-right" *ngIf="exportButton">
+        <input type="number" name="numberOfRows" id="numberOfRows" placeholder="Number of rows" (change)="RowsValue($event.target.value)" min="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null">
+        <button type="submit" class="btn btn-primary" (click)="exportResult()">
+          <i class="fas fa-plus"></i> Export Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+

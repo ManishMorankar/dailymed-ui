@@ -1,0 +1,58 @@
+<!-- <div class="loading" *ngIf="!apiService.hideLoader">
+    <img src="/assets/images/ajax-loader-2.gif">
+</div> -->
+<!-- <app-header></app-header> -->
+<app-new-navigation></app-new-navigation>
+<router-outlet></router-outlet>
+<!--<app-sidebar></app-sidebar>-->
+<div class="wrapper" id="wrapper"
+  [ngStyle]="{'background-image': !apiService.isLoggedIn()?'url(/assets/images/sample.jpg)':null, 'background-repeat': !apiService.isLoggedIn()? 'no-repeat': null, 'background-size': !apiService.isLoggedIn()?'cover':null}">
+
+  <app-loader></app-loader>
+
+</div>
+
+<style type="text/css">
+  /* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+  /* .loading screen is visible when app is not bootstraped yet, .my-app is empty */
+  .loading {
+    opacity: 1;
+    transition: opacity 1.3s ease-in-out;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    background: rgba(236, 238, 239, 0.81);
+    /*background: #fff;*/
+    z-index: 100000;
+    text-align: center;
+    padding-top: 18%;
+  }
+</style>
+
+
+
+<!--<hr>-->
+<!-- <table>  
+  <thead>  
+    <tr>  
+      <th>Id</th>  
+      <th>Name</th>  
+      <th>Company</th>  
+      <th>City</th>  
+    </tr>  
+  </thead>  
+  <tbody>  
+    <tr *ngFor="let employee of employees">  
+      <td>{{ employee.id }}</td>  
+      <td>{{ employee.name }}</td>  
+      <td>{{ employee.company }}</td>  
+      <td>{{ employee.city }}</td>  
+    </tr>  
+  </tbody>  
+</table>  
+
+<hr>
+
+<button (click)="getUser()">User Name</button>
+<button (click)="logout()">Logout</button>  -->

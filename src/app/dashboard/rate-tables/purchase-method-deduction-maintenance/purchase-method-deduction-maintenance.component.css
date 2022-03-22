@@ -1,0 +1,14 @@
+.pointer {
+    cursor: pointer;
+}
+
+.table-header {
+    font-weight: 800;
+    color:#5f5f5f;
+    /* align-content: flex-start; */
+}
+
+mat-header-cell {
+    display:flex;
+    justify-content:flex-start;
+   }

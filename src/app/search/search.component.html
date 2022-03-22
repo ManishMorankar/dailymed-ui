@@ -1,0 +1,22 @@
+<ng-container *ngIf="apiService.checkPermission('AccessSearchBar')">
+  <form>
+    <div class="row" id="search-row">
+      <mat-form-field id="search" color="accent" appearance="outline" [style.fontSize.px]="'10px'">
+        <!-- <mat-label>Search</mat-label> -->
+        <input matInput name="search" placeholder="Search" [(ngModel)]="keyword" (ngModelChange)="searchValue(keyword)"
+          [matAutocomplete]="auto">
+      </mat-form-field>
+  
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-optgroup *ngFor="let group of searchValues" [label]="group.type">
+          <mat-option *ngFor="let item of group.values" (click)="onClick(item)">
+            {{item.objectName}} 
+            {{!!item.ruleType || !!item.stage ? '(' : ''}} 
+            {{item.ruleType}}{{item.stage}} {{item.stageStatus}} 
+            {{!!item.ruleType || !!item.stage ? ')' : ''}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </div>
+  </form>
+</ng-container>

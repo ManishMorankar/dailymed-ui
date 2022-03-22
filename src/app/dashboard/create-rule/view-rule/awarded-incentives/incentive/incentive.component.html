@@ -1,0 +1,93 @@
+<div  class="dailog-title-bg"><div  class="dailog-title">Step Name: {{data.step.stepName}}<button  class="dailog-close" [mat-dialog-close] type="button"><span>X</span></button></div></div>
+ 
+    
+ 
+        <h4>Conditions</h4>
+        <div class="row" *ngFor="let item of data.step.conditions;let j=index">
+ 
+            <div class="col-md-8">
+                <div class="gray-bg mb-2 pb-1 lft-green-brdr">
+                    <div class="col-md-12  condition-container ">
+                        <div class="row">
+                    <span class="condition-count">{{j+1}} </span>
+<div class="col-md-4">
+                    
+                        <input class="custom-input" type="text" [(ngModel)]=item.leftSide [readonly]="true">
+                     
+</div>
+<div class="col-md-4"> 
+                   
+                        <mat-select class="custom-select" [(ngModel)]="item.operators" name="operators" [disabled]="true">
+                            <mat-option [value]="'<'">Less Than</mat-option>
+                            <mat-option [value]="'>'">Greater Than</mat-option>
+                            <mat-option [value]="'<='">Less Than or Equal</mat-option>
+                            <mat-option [value]="'>='">Greater Than or Equal</mat-option>
+                            <mat-option [value]="'='">Equal</mat-option>
+                        </mat-select>
+                    
+</div>
+                    <!-- <select class="custom-select" id="step_1_operator_1" [(ngModel)]=item.operators>{{item.operators}}
+                    <option value="<">Less than</option>
+                    <option value=">">Greater than</option>
+                    <option value="<=">Less than or equal</option>
+                    <option value=">=">Greater than or equal</option>
+                    <option value="=">Equal</option>
+                </select> -->
+                <div class="col-md-4"> 
+                  
+                        <input class="custom-input" type="text" [(ngModel)]=item.rightSide [readonly]="true">
+                    
+                    </div>
+                    <!-- </div> -->
+                </div> </div></div>
+
+                <div class="col-md-12">
+                    
+                    <mat-radio-group   class="condition-radio-group" [(ngModel)]="data.step.criteria" [disabled]="true">
+                        <mat-radio-button   [value]="'1'">All Conditions Should Meet</mat-radio-button>
+                        <mat-radio-button   [value]="'2'">One or More Conditions Should Meet</mat-radio-button>
+                        <mat-radio-button   [value]="'3'">Advanced</mat-radio-button>
+                    </mat-radio-group>
+               
+                    <mat-form-field>
+                        <mat-label>Advanced Condition</mat-label>
+                        <input matInput [(ngModel)]="data.step.comment" [readonly]="true">
+                    </mat-form-field>
+                </div>
+            </div>
+            
+                <div class="col-md-4">
+                <mat-form-field>
+                    <h4>Action</h4>
+                    <textarea matInput [(ngModel)]="data.step.action" rows="6" cols="30" [readonly]="true"></textarea>
+                </mat-form-field>
+
+                <div *ngIf="data.step.roundDepth != null">
+                    <mat-form-field>
+                        <h4>Rounding Depth</h4>
+                        <mat-select [(ngModel)]="data.step.roundDepth" [disabled]="true">
+                            <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]" [value]="i">
+                                {{i}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div> </div>
+         
+
+        <h4>Meta Data</h4>
+        <table mat-table [dataSource]="data.metaDatas" class="w-100">
+            <ng-container matColumnDef="displayName">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td  data-td-head="Name"  mat-cell *matCellDef="let element"> {{element.displayName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef> Value </th>
+                <td data-td-head="Value" mat-cell *matCellDef="let element"> {{element.value}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="openDialog(row.paymentId)"></tr>
+        </table>
+ 

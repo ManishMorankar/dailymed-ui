@@ -1,0 +1,150 @@
+<div class="page-title col-md-12 "><h1> Installation Type Deduction Maintenance</h1>
+	<div class="breadcrumbs"><a  href="#">Home</a>/<span>Installation Type Deduction Maintenance</span>
+	</div></div>
+
+
+  <div class="content">
+ 
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-dollar-sign"></i>  Installation Type Deduction</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-12">
+             
+            <div class="input-group float-right table-search">
+              <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText" placeholder="Search" (input)="searchForItem()">
+
+                            <span class="input-group-icon">
+              <i class="fas fa-search"></i>
+          </span>
+        </div>
+    
+      </div>
+
+
+        </div>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+            <mat-cell  [attr.data-td-head]="column.value"   *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer table-content" (click)= "rowClick(row)"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        <div *ngIf="apiService.checkPermission('CreateRateTables')">
+          <a class="btn  btn-primary float-right" *ngIf="!addInd" (click)="addInd = !addInd"><i  class="material-icons hover">add_circle</i> Add</a>
+          <a class="btn  btn-primary float-right"  *ngIf="addInd" (click)="addInd = !addInd" ><i class="material-icons hover">remove_circle</i> Hide</a>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="addInd">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-plus"></i> Add Installation Type Deduction</h4>
+      </div>
+      <div class="card-body">
+        
+          <form [formGroup]="installationTypeDeductionForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row" *ngIf="activeInstallationTypeDeductions">
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Installation Type</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="installation_type_dropdown" formControlName="installationType"
+                  data-style="btn btn-link" id="installation_type_dropdown">
+                  <option *ngFor="let fp of dropdowns.installationTypes" value="{{fp.installationTypeId}}">
+                    {{fp.installationType1}}</option>
+                </select>
+              </div>
+              
+            </div>
+          </div>
+          </div>
+             <div class="form-group col-md-6">
+               <div class="row">
+                
+                  <label class="col-sm-5">Sales Territory</label>
+                  <div class="col-sm-7">
+                  <select class="custom-select" name="sales_territory_dropdown" formControlName="salesTerritory"
+                    data-style="btn btn-link" id="sales_territory_dropdown">
+                    <option *ngFor="let fp of dropdowns.salesTerritories" value="{{fp.installationTypeId}}">
+                      {{fp.salesTerritory1}}</option>
+                  </select>
+                </div>
+               </div>
+             </div>
+              <div class="form-group col-md-6">
+                <div class="row">
+                <label class="col-sm-5">Effective Start Date</label>
+                <div class="col-sm-7">
+                <input type="date" name="start_date" id="start_date" class="custom-input"
+                  formControlName="effectiveStartDate" placeholder="">
+                <div *ngIf="installationTypeDeductionForm.errors && installationTypeDeductionForm.errors.maxDate">
+                  <p style="color: red;">New Effecting Start Date should be greater than any previous start dates</p>
+                </div>
+                </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Installation Type Deduction Rate</label>
+                <div class="col-sm-7">
+                <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }"
+                  name="installationTypeDeductionRate" formControlName="installationTypeDeductionRate" class="custom-input">
+                <div *ngIf="installationTypeDeductionRate.errors && installationTypeDeductionRate.errors.max">
+                  <p style="color: red;">Installation Type Deduction Rate cannot be higher than $20.00</p>
+                </div></div>
+              </div>
+            </div>
+            <div class="row align-button-right">
+              <button type="submit" class="btn btn-primary" [disabled]="installationTypeDeductionForm.invalid"><i class="fas fa-plus"></i> Add Installation
+                Type Deduction</button>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+    <div class="card" *ngIf="installationTypeDeductionGroup">
+      <div class="card-header-info">
+        <h4 class="card-title"><i class="fas fa-history"></i> History</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- <hr style="width: 95%; border-color: #26c6da;" /> -->
+          <div class="w-100">
+            <a class="text-info"><i class="material-icons float-right blue-icon"
+                (click)="installationTypeDeductionGroup = null">cancel</i></a>
+          </div>
+           
+                
+                    <div class="col-md-12">
+                      <label>Installation Type</label>
+                     {{installationTypeDeductionGroup[0].installationType}} 
+                    </div>
+               
+              
+          <div class="col-md-12 mt-3">
+          <table class="my-table mat-table w-100">
+            <thead>
+              <tr  class="mat-header-row">
+                <th class="mat-header-cell"  scope="col">Effective Start Date</th>
+                <th class="mat-header-cell"  scope="col">Effective End Date</th>
+                <th class="mat-header-cell"  scope="col">Installation Type Deduction Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mat-row " *ngFor="let tr of installationTypeDeductionGroup">
+                <td class="mat-cell" data-td-head="Effective Start Date">{{tr.effectiveStartDate | date}}</td>
+                <td class="mat-cell" data-td-head="Effective End Date">{{tr.effectiveEndDate | date}}</td>
+                <!-- <td class="mat-cell" data-td-head="Installation Type Deduction Rate">{{tr.installationTypeDeductionRate | currency:'USD':true:'1.2-3'}}</td> -->
+                <!-- Dilip Rate table changes -->
+                <td class="mat-cell" data-td-head="Installation Type Deduction Rate">{{tr.installationTypeDeductionRate | currency:'USD':true:'1.3-3'}}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    

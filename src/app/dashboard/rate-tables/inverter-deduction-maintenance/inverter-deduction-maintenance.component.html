@@ -1,0 +1,106 @@
+<div class="page-title col-md-12 "><h1> Inverter Deduction Maintenance</h1>
+	<div class="breadcrumbs"><a  href="#">Home</a>/<span>Inverter Deduction Maintenance</span>
+	</div></div>
+
+ 
+  <div class="content">
+   
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-dollar-sign"></i> Inverter Deductions</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-12">
+             
+            <div class="input-group float-right table-search">
+              <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText"
+              placeholder="Search" (input)="searchForItem()">
+                            <span class="input-group-icon">
+              <i class="fas fa-search"></i>
+          </span>
+        </div>
+    
+      </div>
+</div>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+            <mat-cell  [attr.data-td-head]="column.value"   *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer table-content"
+            (click)="rowClick(row)"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        <div *ngIf="apiService.checkPermission('CreateRateTables')">
+          <a class="btn  btn-primary float-right"  *ngIf="!addInd"  (click)="addInd = !addInd"><i class="material-icons pointer"
+             >add_circle</i> Add</a>
+          <a class="btn  btn-primary float-right"  *ngIf="addInd"  (click)="addInd = !addInd"><i class="material-icons pointer"
+             >remove_circle</i> Hide</a>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="addInd">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-plus"></i> Add Inverter Deduction</h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <form [formGroup]="inverterDeductionForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row" *ngIf="activeInverterDeductions">
+              <div class="form-group col-md-6"><div class="row">
+                <label class="col-sm-5">Inverter Type</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="inverter_type_dropdown" formControlName="inverterType"
+                  data-style="btn btn-link" id="inverter_type_dropdown">
+                  <option *ngFor="let fp of dropdowns.inverterTypes" value="{{fp.inverterTypeId}}">
+                    {{fp.inverterType1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+              <div class="form-group col-md-6"><div class="row"> 
+                <label class="col-sm-5">Finance Partner</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="finance_partner_dropdown" formControlName="financePartner"
+                  data-style="btn btn-link" id="finance_partner_dropdown">
+                  <option *ngFor="let fp of dropdowns.financePartners" value="{{fp.financePartnerId}}">
+                    {{fp.financePartner1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+             
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Effective Start Date</label>
+                <div class="col-sm-7">
+                <input type="date" name="start_date" id="start_date" class="custom-input"
+                  formControlName="effectiveStartDate" placeholder="">
+                <div *ngIf="inverterDeductionForm.errors && inverterDeductionForm.errors.maxDate">
+                  <p style="color: red;">New Effecting Start Date should be greater than any previous start dates</p>
+                </div>
+              </div></div>
+            </div>
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Inverter Deduction Rate</label>
+                <div class="col-sm-7">
+                <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }"
+                  name="inverterDeductionRate" formControlName="inverterDeductionRate" class="custom-input">
+                <div *ngIf="inverterDeductionRate.errors && inverterDeductionRate.errors.max">
+                  <p style="color: red;">Inverter Deduction Rate cannot be higher than $20.00</p>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+            <div class="row align-button-right">
+              <button type="submit" class="btn btn-primary" [disabled]="inverterDeductionForm.invalid"><i class="fas fa-plus"></i> Add Inverter
+                Deduction</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    

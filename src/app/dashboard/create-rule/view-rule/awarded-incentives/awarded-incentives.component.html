@@ -1,0 +1,32 @@
+<table mat-table [dataSource]="awardedIncentivesData" matSort class="my-table w-100" >
+    <ng-container matColumnDef="contactId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Id </th>
+        <td data-td-head="Contact Id" mat-cell *matCellDef="let element"> {{element.contactId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ruleName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Rule </th>
+        <td data-td-head="Rule" mat-cell *matCellDef="let element"> {{element.ruleName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee </th>
+        <td data-td-head="Employee" mat-cell *matCellDef="let element"> <a [routerLink]="['/ui/commissions/salesrep', element.contactId]"
+              >{{element.contactName}}</a> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stepName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Step </th>
+        <td data-td-head="Step"  mat-cell *matCellDef="let element"> {{element.stepName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionValue">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td data-td-head="Action"  mat-cell *matCellDef="let element"> {{element.actionValue | currency}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns displayColumns;" (click)="onClick(row);" class="hover"></tr>
+</table>
+<mat-paginator #awardedPaginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" (page)="pageEvent = $event; pageChange($event);">
+</mat-paginator>

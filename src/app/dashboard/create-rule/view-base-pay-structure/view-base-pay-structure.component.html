@@ -1,0 +1,152 @@
+<div class="page-title col-md-12 ">
+  <h1> View Base Pay Structure</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>View Base Pay Structure</span></div>
+</div>
+
+
+<div class="content">
+  <div class="row">
+    <div class="col-md">
+
+
+      <div class="card ">
+        <div class="card-body">
+          <div class="card">
+            <div class="card-header-info p-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row"><label class="col-sm-5">Name</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="custom-input " [(ngModel)]="basePayStructureForm.ruleName" disabled>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="col-sm-5">Description</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="custom-input" [(ngModel)]="basePayStructureForm.description" disabled>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="col-sm-5">Rule Type</label>
+                    <p class="rule-type-output col-sm-7">
+                      Base Pay Structure
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="mt-3">Pay Structure Detail</h4>
+              <div class="row">
+                <div class="col-md-6">
+
+                  <label>Number Of Stages</label>
+
+                  <select name="number-of-stages" class="custom-select custom-select-width"
+                    [(ngModel)]="basePayStructureForm.numberOfStages" id="number-of-stages" disabled>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" *ngFor="let bps of basePayStructureForm.basePayStructures; index as i">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="w-100 steps-title">
+                  <h3 class="step_index">Stage <span>{{i + 1}}</span></h3>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- <label class="bmd-label  align_label"><b>Name</b></label> -->
+                  <input type="text" name="rule_name" [(ngModel)]="bps.contactBasePayStructureName"
+                    class="custom-input head-input" disabled>
+                </div>
+                <div class="col-md-12">
+
+                  <label>Number Of Payments</label>
+
+                  <select name="number-of-payments" style="width:auto; margin:0 0 02px 0;" class="custom-select"
+                    id="number-of-payments" [value]="bps.numberOfPayments" disabled>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+
+                </div>
+                <ng-container>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label class="col-sm-5">Start Date</label>
+                      <div class="col-sm-7" *ngIf="!edit; else startDateElseBlock">
+                        {{bps.startDate | date}}
+                      </div>
+                    </div>
+                    <ng-template #startDateElseBlock>
+                      <div class="col-sm-7">
+                        <input type="date" id="start-date" class="custom-input"
+                          [ngModel]="bps.startDate | date:'yyyy-MM-dd'" (ngModelChange)="bps.startDate = $event">
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div class="col-md-6" *ngIf="!edit">
+                    <div class="row">
+                      <label class="col-sm-5">End Date</label>
+                      <div class="col-sm-7">
+                        {{bps.endDate | date}}
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+
+              <h4 class="mt-4 green-color">Pay Stream Detail</h4>
+
+
+              <table class="my-table mat-table w-100">
+                <thead>
+                  <tr>
+                    <th class="mat-header-cell">Payment Number</th>
+                    <th class="mat-header-cell">Percentage</th>
+                    <th class="mat-header-cell">Stage</th>
+                    <th class="mat-header-cell">Days In Advance</th>
+                    <th class="mat-header-cell">Payment Type</th>
+                    <th class="mat-header-cell">Pay Based On</th>
+                  </tr>
+                </thead>
+                <tr class="mat-row" *ngFor="let item of bps.payStream">
+                  <td data-td-head="Payment Number" class="mat-cell">{{item.paymentNumber}}</td>
+                  <td data-td-head="Percentage" class="mat-cell">{{item.percentage}}</td>
+                  <td data-td-head="Stage" class="mat-cell">{{item.stage}}</td>
+                  <td data-td-head="Days In Advance" class="mat-cell">{{item.daysInAdvance}}</td>
+                  <td data-td-head="Payment Type" class="mat-cell">
+                    {{getPaymentType(item.paymentTypeId).paymentTypeName}}</td>
+                  <td data-td-head="Pay Based On" class="mat-cell">{{item.payBasedOn}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="apiService.checkPermission('ChangeBasePayStructureForContact')">
+        <div class="row">
+          <div class="col text-right">
+            <button class="btn btn-primary" [routerLink]="['/ui/clone-rule/'+viewRuleId]"><i class="far fa-clone"></i> Clone</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

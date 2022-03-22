@@ -1,0 +1,36 @@
+<div class="dailog-title-bg">
+  <div class="dailog-title"><i class="fas fa-history"></i>  History<button class="dailog-close" [mat-dialog-close]><span>X</span></button>
+  </div>
+</div>
+
+  <div class="row" *ngIf="moduleDeductionGroup">
+    
+    <div class="col-md-6">
+      <div class="row">
+                    <label class="col-sm-5">Sales Territory</label>
+                    <span class="col-sm-7">{{moduleDeductionGroup[0].salesTerritory}}</span>
+                  </div></div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label class="col-sm-5">Module Type</label>
+                    <span class="col-sm-7">{{moduleDeductionGroup[0].moduleType}}</span>
+                  </div></div>
+                  
+        <table class="my-table mat-table w-100 mt-3">
+          <thead>
+            <tr  class="mat-header-row">
+              <th class="mat-header-cell" scope="col">Effective Start Date</th>
+              <th class="mat-header-cell" scope="col">Effective End Date</th>
+              <th class="mat-header-cell" scope="col">Module Deduction Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="mat-row "  *ngFor="let tr of moduleDeductionGroup">
+              <td data-td-head="Effective Start Date" class="mat-cell">{{tr.effectiveStartDate | date}}</td>
+              <td data-td-head="Effective End Date" class="mat-cell">{{tr.effectiveEndDate | date}}</td>
+              <td data-td-head="Module Deduction Rate" class="mat-cell">{{tr.moduleDeductionRate | currency:'USD':true:'1.2-3'}}</td>
+            </tr>
+          </tbody>
+        </table>
+       
+  </div>

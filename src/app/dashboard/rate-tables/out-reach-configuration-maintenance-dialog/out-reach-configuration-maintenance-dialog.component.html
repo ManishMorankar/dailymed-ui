@@ -1,0 +1,41 @@
+<div class="dailog-title-bg">
+  <div class="dailog-title">History<button class="dailog-close" [mat-dialog-close]><span>X</span></button>
+  </div>
+</div>
+  <div class="row" *ngIf="OutreachPayConfigurationTypeGroup">
+     
+    <div class="col-md-6"> <div class="row">
+
+                   <label class="col-sm-5"> Configuration Name </label>
+                    <span class="col-sm-7">{{OutreachPayConfigurationTypeGroup[0].outreachPayConfigurationTypeName}}</span>
+                  </div>
+                </div>
+           
+        <table class="my-table mat-table w-100 mt-3">
+          <thead>
+            <tr  class="mat-header-row">
+              <th  class="mat-header-cell" scope="col">Pay Before or After Threshold is Reached</th>
+              <th class="mat-header-cell" scope="col">Pay Based On</th>
+              <!-- <th scope="col">ActiveInd</th> -->
+              <th class="mat-header-cell" scope="col">Awarded Amount</th>
+              <th class="mat-header-cell" scope="col">Threshold to Reach</th>
+              <th class="mat-header-cell" scope="col">Effective Start Date</th>
+              <th class="mat-header-cell" scope="col">Effective End Date</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="mat-row" *ngFor="let tr of OutreachPayConfigurationTypeGroup">
+              <td data-td-head="PayAfter ThresholdInd" class="mat-cell">{{tr.payAfterThresholdInd ? "After" : "Before" }}</td>
+              <td data-td-head="Pay BasedOn" class="mat-cell">{{tr.payBasedOn }}</td>
+              <!-- <td>{{tr.activeInd  }}</td> -->
+              <td data-td-head="Awarded Amount" class="mat-cell">{{tr.configurationAmount | currency }}</td>
+              <td data-td-head="Configuration Threshold" class="mat-cell">{{tr.configurationThreshold }}</td>
+              <td data-td-head="EffectiveStartDate" class="mat-cell">{{tr.effectiveStartDate | date}}</td>
+              <td data-td-head="EffectiveEndDate" class="mat-cell">{{tr.effectiveStartDate | date}}</td>              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+  

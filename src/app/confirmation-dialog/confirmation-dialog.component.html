@@ -1,0 +1,10 @@
+<div>
+    <h1 mat-dialog-title>Confirm</h1>
+    <mat-dialog-content>
+        <p style="text-align: center;">{{data.message}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions style="display: flex; justify-content: center;">
+        <button type="button" class="btn btn-primary pr-0 add_another" [mat-dialog-close]="false" tabindex="1">NO</button>
+        <button type="button" class="btn btn-primary pr-0 add_another" [mat-dialog-close]="true" tabindex="2">YES</button>
+    </mat-dialog-actions>
+</div>

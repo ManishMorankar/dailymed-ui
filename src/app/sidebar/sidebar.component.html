@@ -1,0 +1,179 @@
+<mat-drawer-container class="commissions-container">
+    <mat-drawer #drawer class="commissions-drawer" mode="side" opened="true">
+        <!-- <div class="top-close">
+        </div> -->
+        <div class="main-head">
+            <a class="trinity-logo-sidebar"><img src="/assets/images/logo_peg.png" alt="" (click)="goHome()"></a>
+            <button type="button" class="top-close-button menu-toggle" (click)="toggleSidenav()" id="nav-toggle" ><i
+                class="material-icons close">keyboard_backspace</i></button> 
+        </div>
+        <div class="nav-list-container">
+            <ul class="nav-list">
+                <ng-container *ngIf="dashboard; else elseBlock">
+                    
+                    <li class="commissions-nav-item" *ngIf="apiService.checkPermission('DataIntegration')">
+                        <a class="commissions-nav-link" (click)="toggleApplicationsDropdown()">
+                                                   
+                                        <i class="material-icons icon-spacer">web</i>
+                                        Applications 
+                                        <ng-container *ngIf="!subApplications; else showSubApplications">
+                                            <i class="material-icons float-right">keyboard_arrow_down</i>
+                                        </ng-container>
+                                        <ng-template #showSubApplications>
+                                            <i class="material-icons float-right">keyboard_arrow_up</i>
+                                        </ng-template>
+                                    
+                                
+                        </a>
+                        <ng-container *ngIf="subApplications">
+                            <div class="sub-rates">
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/data-integration']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Data Integration</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </li>
+                    <li class="commissions-nav-item" [class.active]="userMngtBody"
+                        *ngIf="apiService.checkPermission('CreateNewUser') || apiService.checkPermission('AssignRolesToUser')">
+                        <a class="commissions-nav-link" [routerLink]="['/ui/usermanagement']" (click)="updateSidebarService()">
+                            
+                                    <i class="material-icons icon-spacer">report</i>
+                                  User Management 
+                               
+                        </a>
+                    </li>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <li class="commissions-nav-item" *ngIf="apiService.checkPermission('CreateRule')">
+                        <a class="commissions-nav-link" [routerLink]="['/ui/commissions/rule/create']" (click)="updateSidebarService()">
+                           
+                             
+                                    <i class="material-icons icon-spacer">create</i>
+                               Rule Builder
+                             
+                        </a>
+                    </li>
+                    <li class="commissions-nav-item" *ngIf="apiService.checkPermission('CreatePlan')">
+                        <a class="commissions-nav-link" [routerLink]="['/ui/commissions/createplan']" (click)="updateSidebarService()">
+                           
+                                    <i class="material-icons icon-spacer">view_list</i>
+                                    Plan Builder 
+                               
+                        </a>
+                    </li>
+                <li class="commissions-nav-item" *ngIf="apiService.checkPermission('ApprovePayments')">
+                    <a class="commissions-nav-link" (click)="togglePaymentDropdown()">
+                 
+                                    <i class="material-icons icon-spacer">attach_money</i>
+                                   Payments 
+                                    <ng-container *ngIf="!subRateTables; else showRateTable">
+                                        <i class="material-icons float-right float-right">keyboard_arrow_down</i>
+                                    </ng-container>
+                                    <ng-template #showRateTable>
+                                        <i class="material-icons float-right float-right">keyboard_arrow_up</i>
+                                    </ng-template>
+                             
+                             
+                    </a>
+                    <ng-container *ngIf="subPaymentTables">
+                        <div class="sub-rates">
+                            <div class="sub-rate-table-row"
+                                [routerLink]="['/ui/commissions/payments']" (click)="updateSidebarService()">
+                                <a class="mt-0">Payment Approvals</a>
+                            </div>
+                            <div class="sub-rate-table-row"
+                                [routerLink]="['/ui/commissions/paymentwithdrawals']" (click)="updateSidebarService()">
+                                <a class="mt-0">Payment Withdrawals</a>
+                            </div>
+                        </div>
+                    </ng-container>
+                </li>
+                    <li class="commissions-nav-item"
+                        *ngIf="apiService.checkPermission('CommissionReports') || apiService.checkPermission('PaymentReports') || apiService.checkPermission('PaymentBookReports')">
+                        <a class="commissions-nav-link" [routerLink]="['/ui/commissions/report']" (click)="updateSidebarService()">
+                            
+                                    <i class="material-icons icon-spacer">timeline</i>
+                                    Reports 
+                                
+                        </a>
+                    </li>
+                    <li class="commissions-nav-item" *ngIf="apiService.checkPermission('ViewRateTables')">
+                        <a class="commissions-nav-link" (click)="toggleRateTableDropdown()">
+                            
+                                        <i class="material-icons icon-spacer">assessment</i>
+                                        Rate Tables 
+                                        <ng-container *ngIf="!subRateTables; else showRateTable">
+                                            <i class="material-icons float-right">keyboard_arrow_down</i>
+                                        </ng-container>
+                                        <ng-template #showRateTable>
+                                            <i class="material-icons float-right">keyboard_arrow_up</i>
+                                        </ng-template>
+                                   
+                        </a>
+                        <ng-container *ngIf="subRateTables">
+                            <div class="sub-rates">
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/territoryrate']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Territory Rates</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/financepartnerdeduction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Finance Partner
+                                        Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/modulededuction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Module Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/inverterdeduction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Inverter Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/installationtypededuction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Installation Type Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/purchasemethoddeduction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Purchase Method Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/permitdeduction']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Permit Deductions</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/ppabonusrate']" (click)="updateSidebarService()">
+                                    <a class="mt-0">PPA Bonus Rates</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/outreachconfig']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Outreach Configuration</a>
+                                </div>
+                                <div class="sub-rate-table-row"
+                                    [routerLink]="['/ui/commissions/ratetables/teiredoverage']" (click)="updateSidebarService()">
+                                    <a class="mt-0">Tiered Overage</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </li>
+                    <!-- <li class="commissions-nav-item">
+                        <a class="commissions-nav-link" [routerLink]="['/ui/commissions/search']">
+                            <button type="button" mat-button class="commissions-nav-button">
+                                <div class="button-container">
+                                    <i class="material-icons icon-spacer">search</i>
+                                    <p class="custom-font-weight">Search</p>
+                                </div>
+                            </button>
+                        </a>
+                    </li> -->
+                </ng-template>
+
+            </ul>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header *ngIf="apiService.isLoggedIn()"></app-header>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

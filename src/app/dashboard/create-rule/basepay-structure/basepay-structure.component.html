@@ -1,0 +1,64 @@
+<div [hidden]="!showBasePayStructure">
+
+	<div class="card">
+		<div class="card-header-info">
+			<h4 class="card-title no-hover-effect"><i class="fas fa-dollar-sign"></i> Pay Structure Detail</h4>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row">
+
+						<label class="col-sm-5"> Number Of Stages </label>
+						<div class="col-sm-7">
+							<select name="number-of-stages" class="custom-select" [(ngModel)]="numberOfStages"
+								id="number-of-stages">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<label class="col-md-12">Provide Start/End Date:</label>
+						<div class="col-md-12">
+							<mat-radio-group class="row" [(ngModel)]="basePayStructure.promptAssignPlan">
+								<mat-radio-button class="col-md-6" [value]=true>
+									When plan is assigned
+								</mat-radio-button>
+								<mat-radio-button class="col-md-6" [value]=false>
+									Now
+								</mat-radio-button>
+							</mat-radio-group>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngFor="let stage of forLoop(numberOfStages); index as i;">
+
+		<app-stage *ngIf="i != numberOfStages - 1; else elseBlock" [stageNumber]="i + 1"
+			[promptAssignPlan]="basePayStructure.promptAssignPlan" [clone]="basePayStructureClones[i]">
+		</app-stage>
+		<ng-template #elseBlock>
+			<app-stage [stageNumber]="i + 1" [promptAssignPlan]="basePayStructure.promptAssignPlan"
+				[clone]="basePayStructureClones[i]" [disabled]="true">
+			</app-stage>
+		</ng-template>
+
+	</div>
+	<div class="row">
+		<div class="col text-right">
+			<button type="button" class="btn btn-primary" (click)="onGoBack();"><i class="fas fa-times"></i>
+				Cancel</button>
+			<button type="button" class="btn btn-primary" (click)="resetForm();"><i class="fas fa-sync-alt"></i>
+				Clear</button>
+			<button type="button" class="btn btn-primary" (click)="submitBasePayStructure()"><i class="fas fa-save"></i>
+				Save Rule</button>
+		</div>
+	</div>
+
+</div>

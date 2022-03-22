@@ -1,0 +1,28 @@
+.align_label{
+  margin-top: -27px !important;
+}
+
+.date-output {
+  height: 2.5em;
+  width: 210px;
+  padding: 5px 55px;
+  background-color: rgb(235, 235, 228);
+  border: 1px solid gray;
+}
+
+.desc.mat-form-field.mat-form-field {
+  color: black !important;
+  width: 100%;
+}
+
+.desc-area.mat-form-field-underline {
+  background-color: white !important;
+}
+
+.desc-label {
+  color: white !important;
+}
+
+.desc-area.mat-input-element:disabled {
+  color: white !important;
+}

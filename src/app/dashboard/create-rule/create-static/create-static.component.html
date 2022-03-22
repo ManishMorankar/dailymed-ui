@@ -1,0 +1,83 @@
+<!-- <div>
+    <div class="" role="form"> -->
+<!-- Create Static -->
+<div class="dailog-title-bg">
+    <div class="dailog-title"><i class="fas fa-plus-circle"></i> Create Static<button class="dailog-close" [mat-dialog-close]><span>X</span></button>
+    </div>
+</div>
+ 
+   
+    <mat-dialog-content class="w-100">
+        <!-- <div class="">
+                    <div class="table-responsive-sm ">
+                        <form (ngSubmit)="onSubmit()">
+                            <div class="">
+                                <div class="form-group">
+                                    <label for="type">Type</label> -->
+        <!-- Update variable in component named type with selected option -->
+        <!-- <select class="form-control" id="type" [(ngModel)]="staticModel.data_type" name="data_type">
+                                        <option *ngFor="let opt of options" [value]="opt">{{opt}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input">Input</label> -->
+        <!-- change input type depending on selected type -->
+        <!-- <div [ngSwitch]="staticModel.data_type">
+                                        <input *ngSwitchCase="'Numeric'" [(ngModel)]="staticModel.value" type="number" name="static_value" class="form-control" id="input">
+                                        <input *ngSwitchCase="'String'" [(ngModel)]="staticModel.value" type="text" name="static_value" class="form-control" id="input">
+                                        <input *ngSwitchCase="'Date'" [(ngModel)]="staticModel.value" type="date" name="static_value" class="form-control" id="input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="display-name">Display Name</label>
+                                    <input type="text" [(ngModel)]="staticModel.display_name" name="display_name" class="form-control" id="display-name">
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <button type="submit" class="btn" mat-dialog-close>Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> -->
+        <mat-form-field class="col-md-12" >
+             
+            <div class="row"> <div class="col-md-8"> <div class="row">
+            <label class="col-sm-5">Data Type</label>
+            <div class="col-sm-7">
+            <select class="custom-select" [(ngModel)]="staticModel.data_type">
+                <option *ngFor="let opt of options" [value]="opt">{{opt}}</option>
+            </select>
+         
+    </div>
+        </div>
+    </div>
+</div>
+        </mat-form-field>
+
+        <ng-container class="col-md-12" *ngIf="staticModel.data_type != null && staticModel.data_type != ''">
+           <div class="row">
+            <div class="col-md-6">
+                <label>Value</label>
+                <div class="w-100" [ngSwitch]="staticModel.data_type">
+                    <input   class="custom-input" *ngSwitchCase="'Numeric'" [(ngModel)]="staticModel.value" type="number">
+                    <input   class="custom-input"  *ngSwitchCase="'String'" [(ngModel)]="staticModel.value" type="text">
+                    <input   class="custom-input"  *ngSwitchCase="'Date'" [(ngModel)]="staticModel.value" type="date">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label>Display Name</label>
+<div class="w-100">
+                 <input class="custom-input"   [(ngModel)]="staticModel.display_name">
+                </div>
+            </div>
+        </div>
+        </ng-container>
+    </mat-dialog-content>
+    <div class="spacer"></div>
+    <mat-dialog-actions align="end">
+        <button class="btn btn-primary"  (click)="onSubmit()"   mat-dialog-close><i class="fas fa-check"></i> Submit</button>
+    </mat-dialog-actions>
+ 
+<!-- </div>
+</div> -->

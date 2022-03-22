@@ -1,0 +1,35 @@
+
+<!-- <app-login-dialog></app-login-dialog> -->
+<!-- End Navbar -->
+
+<mat-toolbar class="commissions-navbar header">
+  <!-- <a class="trinity-logo-sidebar"><img src="/assets/images/trinity-logo-white-2.png" alt=""></a>-->
+  <!--<ng-container>
+    <button type="button" mat-button (click)="toggleSidenav()" id="nav-toggle"  [ngClass]="{'toggle-color':sidebarToggle}"  class="menu-toggle"><i
+        class="material-icons">{{icon}}</i></button>
+        
+  </ng-container>  -->
+
+
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="showSearch">
+    <app-search></app-search>
+  </ng-container>
+
+  <i class="header-icon material-icons hover" (click)="dashboard()" *ngIf="homeUrl">home</i>
+
+
+  <span href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: flex; align-items: center;" class="hover header-link">
+    <i class="header-icon material-icons">person</i>
+    {{apiService.getUserName()}}
+  </span>
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+    <!-- <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a> -->
+    <a class="dropdown-item" (click)="logOut()">Logout</a>
+    <a class="dropdown-item" (click)="openVersionDialog()">Version</a>
+    <!-- <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="['logout']">Log out</a> -->
+  </div>
+</mat-toolbar>

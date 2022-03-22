@@ -1,0 +1,135 @@
+.info-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.light-blue-card {
+  max-width: 31% !important;
+  background: #025686;
+}
+
+.page-title h1 {
+  color: #313b3d;
+  font-weight: 300;
+  line-height: 46px;
+  padding-top: 8px;
+  margin: 0;
+  display: inline-block;
+}
+
+.light-green-card {
+  max-width: 31% !important;
+  background: #025686;
+}
+
+.light-grey-card {
+  max-width: 31% !important;
+  background: #616060;
+}
+
+.info-box-font {
+  color: #fff;
+}
+
+.info-card {
+  color: #fff;
+  border: none;
+  vertical-align: middle;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.info-icon {
+  font-size: 50px;
+  line-height: 100%;
+  opacity: .6;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+}
+
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background: none;
+    border: none;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #025686;
+    color: #025686;
+  }
+
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    position: relative;
+  }
+
+  .nav-tabs .nav-item {
+    margin-bottom: -1px;
+  }
+
+.nav-link {
+  display: block;
+  padding: .5rem 1rem;
+}
+
+.tab-content {
+  background: #FFF;
+  border: none;
+  border-radius: 0;
+  border-top: none;
+  padding-top: 24px !important;
+}
+
+  .tab-content > .active {
+    display: block;
+  }
+
+.fade {
+  transition: opacity .15s linear;
+}
+
+.my-table {
+  width: 100%;
+}
+
+.filter-container {
+  display: flex;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2 !important;
+}
+
+.mat-list-base {
+  padding-top: 8px;
+  display: block;
+  background-color: #e1e1e1;
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,41 @@
+#search{
+  width: 100%;
+  margin-top: 20px;
+}
+
+#search-row {
+  /* width: 500px; */
+ width:350px;
+  margin-right: 20px;
+}
+
+#search.mat-form-field.mat-form-field {
+  font-size: 12px;
+  color: white;
+}
+
+
+.form-check .form-check-label .circle .check{
+  background-color: black !important;
+}
+
+.form-check .form-check-input:checked~.circle{
+  border-color: black !important;
+}
+
+#search.mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start {
+  background-color:rgba(255,255,255,0.2) !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper{height: 35px;}
+#search.mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
+  background-color: rgba(255,255,255,0.2) !important;
+}
+
+#search.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white;
+}
+.mat-form-field-infix{height: 35px; width:120px;}
+.mat-form-field-appearance-outline .mat-form-field-infix{padding:0;}
+.mat-form-field-appearance-outline .mat-form-field-outline-start, .mat-form-field-appearance-outline .mat-form-field-outline-end{border-radius: 0; border-color:rgba(255,255,255, 0.4);}
+#search .mat-input-element::placeholder{color:#FFF !important;}
+#search input::placeholder{line-height: 20px;}

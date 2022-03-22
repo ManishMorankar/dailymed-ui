@@ -1,0 +1,63 @@
+<div class="dailog-title-bg">
+  <div class="dailog-title">History<button class="dailog-close" [mat-dialog-close]><span>X</span></button>
+  </div>
+</div>
+<div class="row" *ngIf="territoryRateGroup">
+ 
+       
+  <div class="col-md-6"> <div class="row">
+                    <label class="col-sm-5">Sales Territory</label>
+                    <span class="col-sm-7">{{territoryRateGroup[0].salesTerritory}}</span>
+                 </div> </div>
+                  <div class="col-md-6"> <div class="row">
+                    <label class="col-sm-5">Utility Company</label>
+                    <span class="col-sm-7">{{territoryRateGroup[0].utilityCompany}}</span>
+                </div> </div>
+                  <div class="col-md-6"> <div class="row">
+                    <label class="col-sm-5">Finance Partner</label>
+                    <span class="col-sm-7">{{territoryRateGroup[0].financePartner}}</span>
+               </div> </div>
+                  <div class="col-md-6"> <div class="row">
+                    <label class="col-sm-5">Purchase Method</label>
+                    <span class="col-sm-7">{{territoryRateGroup[0].purchaseMethod}}</span>
+                 </div> </div>
+
+       <div class="col-md-12">
+        <table class="my-table mat-table w-100 mt-3">
+          <thead>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell" scope="col">Effective Start Date</th>
+              <th class="mat-header-cell" scope="col">Effective End Date</th>
+              <th class="mat-header-cell" scope="col">Base Rate</th>
+              <th class="mat-header-cell" scope="col">Base %</th>
+              <th class="mat-header-cell" scope="col">Self Gen Bonus %</th>
+              <th class="mat-header-cell" scope="col">Overage %</th>
+              <th class="mat-header-cell" scope="col">Referral %</th>
+              <th class="mat-header-cell" scope="col">Lead Fee</th>
+              <th class="mat-header-cell" scope="col">Minimum Commission</th>
+              <th class="mat-header-cell" scope="col">Self Gen Overage Percentage</th>
+              <th class="mat-header-cell" scope="col">Floor Rate</th>
+              <th class="mat-header-cell" scope="col">Self Gen Share Indicator</th>
+              <th class="mat-header-cell" scope="col">Use Floor for Base Rate Indicator</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="mat-row" *ngFor="let tr of territoryRateGroup">
+              <td data-td-head="Effective Start Date" class="mat-cell">{{tr.effectiveStartDate | date}}</td>
+              <td data-td-head="Effective End Date" class="mat-cell">{{tr.effectiveEndDate | date}}</td>
+              <td data-td-head="Base Rate" class="mat-cell">{{tr.baseRate | currency:'USD':true:'1.2-3'}}</td>
+              <td data-td-head="Base %" class="mat-cell">{{tr.basePercentage | percent}}</td>
+              <td data-td-head="Self Gen Bonus %" class="mat-cell">{{tr.selfGenBonusPercentage | percent}}</td>
+              <td data-td-head="Overage %" class="mat-cell">{{tr.overagePercentage | percent}}</td>
+              <td data-td-head="Referral %" class="mat-cell">{{tr.referralPercentage | percent}}</td>
+              <td data-td-head="Lead Fee" class="mat-cell">{{tr.leadFee | currency}}</td>
+              <td data-td-head="Minimum Commission" class="mat-cell">{{tr.minimumCommission | currency}}</td>
+              <td data-td-head="Self Gen Overage Percentage" class="mat-cell">{{tr.selfGenOveragePercentage | percent}}</td>
+              <td data-td-head="Floor Rate" class="mat-cell">{{tr.floorRate | currency:'USD':true:'1.2-3'}}</td>
+              <td data-td-head="Self Gen Share Indicator" class="mat-cell">{{tr.selfGenShareIndicator}}</td>
+              <td data-td-head="Use Floor for Base Rate Indicator" class="mat-cell">{{tr.commissionOnFloorIndicator}}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+  </div></div>

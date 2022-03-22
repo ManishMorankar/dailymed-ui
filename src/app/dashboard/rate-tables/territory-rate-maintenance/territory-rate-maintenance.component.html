@@ -1,0 +1,330 @@
+<div class="page-title col-md-12 "><h1> Territory Rate Maintenance</h1>
+	<div class="breadcrumbs"><a  href="#">Home</a>/<span>Territory Rate Maintenance</span>
+	</div></div>
+  <div class="content">
+  
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect">Territory Rate</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+             
+          <div class="input-group float-right table-search">
+           <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText" placeholder="Search" (input)="searchForItem()">
+           <span class="input-group-icon">
+            <i class="fas fa-search"></i>
+        </span>
+      </div>
+  
+    </div>
+          </div>
+          <mat-table class="my-table" #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+                <mat-cell  [attr.data-td-head]="column.value"    *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+              </ng-container>
+    
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row  *matRowDef="let row; columns: displayedColumns;" class="pointer table-content" (click)= "rowClick(row)"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+            <div *ngIf="apiService.checkPermission('CreateRateTables')">
+                <a class="btn btn-primary float-right"  (click)="addInd = !addInd" *ngIf="!addInd" ><i class="material-icons pointer">add_circle</i> Add</a>
+                <a class="btn btn-primary float-right"  (click)="addInd = !addInd"  *ngIf="addInd" ><i class="material-icons pointer">remove_circle</i> Hide</a>
+              </div>
+
+      </div>
+    </div>
+    <div class="card" *ngIf="addInd">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect">Add Territory Rate</h4>
+      </div>
+      <div class="card-body">
+       
+          <form [formGroup]="territoryRateForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row" *ngIf="activeTerritoryRates">
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Sales Territory</label>
+                  <div class="col-sm-7">
+                    <select class="custom-select" name="sales_territory_dropdown" formControlName="salesTerritory"
+                            data-style="btn btn-link" id="sales_territory_dropdown">
+                      <option *ngFor="let st of dropdowns.salesTerritories" value="{{st.salesTerritoryId}}">
+                        {{st.salesTerritory1}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Utility Company</label>
+                  <div class="col-sm-7">
+                    <select class="custom-select" name="utility_company_dropdown" formControlName="utilityCompany"
+                            data-style="btn btn-link" id="utility_company_dropdown">
+                      <option *ngFor="let uc of dropdowns.utilityCompanies" value="{{uc.utilityCompanyId}}">
+                        {{uc.utilityCompany1}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Finance Partner</label>
+                  <div class="col-sm-7">
+                    <select class="custom-select" name="finance_partner_dropdown" formControlName="financePartner"
+                            data-style="btn btn-link" id="finance_partner_dropdown">
+                      <option *ngFor="let fp of dropdowns.financePartners" value="{{fp.financePartnerId}}">
+                        {{fp.financePartner1}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Purchase Method</label>
+                  <div class="col-sm-7">
+                    <select class="custom-select" name="purchase_method_dropdown" formControlName="purchaseMethod"
+                            data-style="btn btn-link" id="purchase_method_dropdown">
+                      <option *ngFor="let pm of dropdowns.purchaseMethods" value="{{pm.purchaseMethodId}}">
+                        {{pm.purchaseMethod1}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Effective Start Date</label>
+                  <div class="col-sm-7">
+                    <input type="date" name="start_date" id="start_date" class="custom-input"
+                           formControlName="effectiveStartDate" placeholder="">
+                    <div *ngIf="territoryRateForm.errors && territoryRateForm.errors.maxDate">
+                      <p style="color: red;">New Effecting Start Date should be greater than any previous start dates</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Base Rate</label>
+                  <div class="col-sm-7">
+                    <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }" name="baseRate"
+                           formControlName="baseRate" class="custom-input">
+                    <div *ngIf="baseRate.errors && baseRate.errors.max">
+                      <p style="color: red;">Base Rate cannot be higher than $20.00</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Base %</label>
+                  <div class="col-sm-7">
+                    <input currencyMask
+                           [options]="{ allowNegative: false, align: 'left', prefix: '', suffix: '%', precision: 2 }"
+                           name="base_percentage" formControlName="basePerc" class="custom-input">
+                    <div *ngIf="basePerc.errors && basePerc.errors.max">
+                      <p style="color: red;">Base % cannot be higher than 100.00 %</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Self Gen Bonus %</label>
+                  <div class="col-sm-7">
+                    <input currencyMask
+                           [options]="{ allowNegative: false, align: 'left', prefix: '', suffix: '%', precision: 2 }"
+                           name="self_gen_bonus_percentage" formControlName="selfGenBonusPerc" class="custom-input">
+                    <div *ngIf="selfGenBonusPerc.errors && selfGenBonusPerc.errors.max">
+                      <p style="color: red;">Self Gen Bonus % cannot be higher than 100.00 %</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Overage %</label>
+                  <div class="col-sm-7">
+                    <input currencyMask
+                           [options]="{ allowNegative: false, align: 'left', prefix: '', suffix: '%', precision: 2 }"
+                           name="overage_percentage" formControlName="overagePerc" class="custom-input">
+                    <div *ngIf="overagePerc.errors && overagePerc.errors.max">
+                      <p style="color: red;">Overage % cannot be higher than 100.00 %</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Referral %</label>
+                  <div class="col-sm-7">
+                    <input currencyMask
+                           [options]="{ allowNegative: false, align: 'left', prefix: '', suffix: '%', precision: 2 }"
+                           name="referral_percentage" formControlName="referralPerc" class="custom-input">
+                    <div *ngIf="referralPerc.errors && referralPerc.errors.max">
+                      <p style="color: red;">Referral % cannot be higher than 100.00 %</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Lead Fee</label>
+                  <div class="col-sm-7">
+                    <input currencyMask [options]="{ allowNegative: false, align: 'left' }" name="lead_fee"
+                           formControlName="leadFee" class="custom-input">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Minimum Commission</label>
+                  <div class="col-sm-7">
+                    <input currencyMask [options]="{ allowNegative: false, align: 'left' }" name="minimum_commission"
+                           formControlName="minimumCommission" class="custom-input">
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Self Gen Overage %</label>
+                  <div class="col-sm-7">
+                    <input currencyMask [options]="{ allowNegative: false, align: 'left', prefix: '', suffix: '%', precision: 2 }"
+                           name="selfGenOveragePercentage" formControlName="selfGenOveragePercentage" class="custom-input">
+                    <div *ngIf="selfGenOveragePercentage.errors && selfGenOveragePercentage.errors.max">
+                      <p style="color: red;">Self Gen Overage % cannot be higher than 100.00 %</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Floor Rate</label>
+                  <div class="col-sm-7">
+                    <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }" name="floorRate"
+                           formControlName="floorRate" class="custom-input">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Self Gen Share Indicator</label>
+                  <div class="col-sm-7">
+                    <input class="custom-check-input" type="checkbox" name="selfGenShareIndicator" (change)="selfChecked($event)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <div class="row">
+                  <label class="col-sm-5">Use Floor for Base Rate Indicator</label>
+                  <div class="col-sm-7">
+                    <input class="custom-check-input" type="checkbox" name="commissionOnFloorIndicator" (change)="commChecked($event)"  >
+                  </div>
+                </div>
+              </div>
+
+
+              <!---->
+              <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="territoryRateForm.invalid"><i class="fas fa-plus"></i> Add Territory Rate</button>
+              </div>
+
+            </div>  
+          </form>
+          
+       
+      </div>
+    </div>
+    <div class="card" *ngIf="territoryRateGroup">
+      <div class="card-header-info">
+        <h4 class="card-title">History</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- <hr style="width: 95%; border-color: #26c6da;" /> -->
+          <div class="w-100">
+            <a class="text-info"><i class="material-icons float-right blue-icon"
+                (click)="territoryRateGroup = null">cancel</i></a>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <table class="table-sm">
+                  <tbody>
+                    <tr>
+                      <td><b>Sales Territory</b></td>
+                      <td>{{territoryRateGroup[0].salesTerritory}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Utility Company</b></td>
+                      <td>{{territoryRateGroup[0].utilityCompany}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Finance Partner</b></td>
+                      <td>{{territoryRateGroup[0].financePartner}}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Purchase Method</b></td>
+                      <td>{{territoryRateGroup[0].purchaseMethod}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">Effective Start Date</th>
+                <th scope="col">Effective End Date</th>
+                <th scope="col">Base Rate</th>
+                <th scope="col">Base %</th>
+                <th scope="col">Self Gen Bonus %</th>
+                <th scope="col">Overage %</th>
+                <th scope="col">Referral %</th>
+                <th scope="col">Lead Fee</th>
+                <th scope="col">Minimum Commission</th>
+                <th scope="col">Self_Gen_Overage_Percentage</th>
+                <th scope="col">Floor Rate</th>
+                <th scope="col">Self Gen Share Indicator</th>
+                <th scope="col">Use Floor for Base Rate Indicator</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tr of territoryRateGroup">
+                <td>{{tr.effectiveStartDate | date}}</td>
+                <td>{{tr.effectiveEndDate | date}}</td>
+                <td>{{tr.baseRate | currency:'USD':true:'1.2-3'}}</td>
+                <td>{{tr.basePercentage | percent}}</td>
+                <td>{{tr.selfGenBonusPercentage | percent}}</td>
+                <td>{{tr.overagePercentage | percent}}</td>
+                <td>{{tr.referralPercentage | percent}}</td>
+                <td>{{tr.leadFee | currency}}</td>
+                <td>{{tr.minimumCommission | currency}}</td>
+                <td>{{tr.selfGenOveragePercentage | percent}}</td>
+                <td>{{tr.floorRate | currency:'USD':true:'1.2-3'}}</td>
+                <td>{{tr.selfGenShareIndicator}}</td>
+                <td>{{tr.commissionOnFloorIndicator}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>

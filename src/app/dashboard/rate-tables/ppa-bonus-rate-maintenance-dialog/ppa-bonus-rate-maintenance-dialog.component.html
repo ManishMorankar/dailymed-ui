@@ -1,0 +1,79 @@
+<div class="dailog-title-bg">
+  <div class="dailog-title"><i class="fas fa-history"></i> History<button class="dailog-close"
+      [mat-dialog-close]><span>X</span></button>
+  </div>
+</div>
+<div class="row" *ngIf="ppaBonusRateGroup">
+
+
+  <div class="col-md-6">
+    <div class="row">
+      <label class="col-sm-5">Sales Territory</label>
+      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].salesTerritory}}</span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <label class="col-sm-5">Utility Company</label>
+      <span class="col-sm-5">{{ppaBonusRateGroup[0][0].utilityCompany}}</span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <label class="col-sm-5">Finance Partner</label>
+      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].financePartner}}</span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <label class="col-sm-5">Purchase Method</label>
+      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].purchaseMethod}}</span>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <table class="my-table mat-table w-100 mt-3">
+      <thead>
+        <tr class="mat-header-row">
+          <th class="mat-header-cell" scope="col">Effective Start Date</th>
+          <th class="mat-header-cell" scope="col">Effective End Date</th>
+          <!-- <th scope="col">PPA Rate</th>
+              <th scope="col">Price Per kW</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let tr of ppaBonusRateGroup">
+          <tr class="mat-row" (click)="groupClick(tr)">
+            <td data-td-head="Effective Start Date" class="mat-cell">{{tr[0].effectiveStartDate | date}}</td>
+            <td data-td-head="Effective End Date" class="mat-cell">{{tr[0].effectiveEndDate | date}}</td>
+          </tr>
+          <td colspan="2" style="background-color: #FFF;"
+            *ngIf="ppaBonusRateSelectedGroup && tr[0].effectiveStartDate == ppaBonusRateSelectedGroup[0].effectiveStartDate">
+
+            <table class="my-table mat-table w-100 mt-3">
+              <thead>
+                <tr class="mat-header-row">
+                  <th class="mat-header-cell" scope="col">PPA Rate</th>
+                  <th class="mat-header-cell" scope="col">Price Per kW</th>
+                  <th class="mat-header-cell" scope="col">PPW Bonus Price Per KW</th>
+                  <th class="mat-header-cell" scope="col">PPW Bonus Metric</th>
+                  <!-- <th scope="col">PPA Rate</th>
+                      <th scope="col">Price Per kW</th> -->
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr class="mat-row" *ngFor="let tr of ppaBonusRateSelectedGroup">
+                  <td data-td-head="PPA Rate" class="mat-cell"> {{tr.ppaRate | currency:'USD':true:'1.2-3'}}</td>
+                  <td data-td-head="Price per kw" class="mat-cell"> {{tr.pricePerKw | currency}}</td>
+                  <td data-td-head="PPW Bonus Price Per KW" class="mat-cell"> {{tr.ppwBonusPricePerKw | currency:'USD':true:'1.2-3'}}</td>
+                  <td data-td-head="PPW Bonus Metric" class="mat-cell"> {{tr.ppwBonusMetric}}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </td>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,720 @@
+<div class="page-title col-md-12 ">
+  <h1> Create Rule</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>Create Rule</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <form [formGroup]="createRuleForm">
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-pencil-ruler"></i> Create Rule</h4>
+      </div>
+      <div class="card-body">
+
+
+
+        <div class="row mb-1 gray-bg pt-3 pb-3">
+          <div class="col-md-3">
+            <!-- <h4 class="card-matTooltip">Create Rule</h4> -->
+            <select name="creationType" name="activeCreationType" formControlName="activeCreationType"
+              [(ngModel)]="activeCreationType" class="custom-select hover" id="creationType"
+              (change)="onChangeCreationType($event)">
+              <option *ngFor="let opt of creationTypes" [value]="opt" value="{{opt}}">Create {{opt}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+
+
+
+            <label class="bmd-label-floating">Name</label>
+
+            <input type="text" name="rule_name" formControlName="rule_name" class="custom-input">
+            <div class="error"
+              *ngIf="createRuleForm.controls['rule_name'].hasError('required') && createRuleForm.controls['rule_name'].touched">
+              Rule name is required</div>
+            <div class="error" *ngIf="createRuleForm.controls['rule_name'].hasError('pattern')">
+              Rule name should be alpha-numeric only</div>
+            <div class="error" *ngIf="createRuleForm.controls['rule_name'].hasError('firstChar')">
+              First character must be @</div>
+          </div>
+
+          <div class="col-md-3">
+
+
+            <label class="bmd-label-floating">Description</label>
+
+            <input type="text" name="Description" formControlName="Description" class="custom-input">
+            <div class="error"
+              *ngIf="createRuleForm.controls['Description'].hasError('required') && createRuleForm.controls['Description'].touched">
+              Rule Description is required</div>
+            <div class="error"
+              *ngIf="createRuleForm.controls['Description'].hasError('maxlength') && createRuleForm.controls['Description'].touched">
+              Description can be max 200 characters long
+            </div>
+
+
+          </div>
+
+          <div class="col-md-3" [hidden]="activeCreationType != 'Rule'">
+
+            <label class="bmd-label-floating">Type</label>
+            <select name="rule_type_id" formControlName="rule_type_id" (change)="onChangeRuleType($event, '')"
+              class="custom-select hover" id="mySelect">
+              <option *ngFor="let type of ruleTypes" [value]="type.ruleTypeId" [attr.child_data]="type.isParent"
+                [attr.payment_types_data]="type.hasPaymentType" [attr.commission_types_data]="type.hasCommissionType"
+                [attr.trigger_types_data]="type.hasCommissionRuleTrigger" [attr.quartertype]="type.frequency">
+                {{type.ruleCd}}
+              </option>
+            </select>
+            <div class="error"
+              *ngIf="createRuleForm.controls['rule_type_id'].hasError('required') && createRuleForm.controls['rule_type_id'].touched">
+              Rule type is required</div>
+
+          </div>
+          <div class="col-md-3" [hidden]="!employeeIncentive && !bonusReclaimShow">
+
+            <ng-container *ngIf="employeeIncentive; else bonusReclaimTemplate">
+              <label class="bmd-label-floating">Employee Incentive Options</label>
+              <div>
+                <mat-checkbox class="mr-2" type="checkbox" id="no-reclaim" formControlName="noReclaim" name="noReclaim">
+                </mat-checkbox>
+                <label class="mt-1 bmd-label-floating">No Reclaim</label>
+              </div>
+            </ng-container>
+            <ng-template #bonusReclaimTemplate>
+              <label class="bmd-label-floating">Bonus Reclaim Options</label>
+              <div>
+                <mat-checkbox class="mr-2" type="checkbox" id="no-reclaim" formControlName="noReclaim" name="noReclaim">
+                </mat-checkbox>
+                <label class="mt-1 bmd-label-floating">No Reclaim</label>
+              </div>
+            </ng-template>
+
+
+            <!-- <div class="form-group">
+                      <input class="form-check-input hover" type="checkbox" id="effective-start-end-date-ind"
+                        formControlName="effective_start_end_date_ind">
+                      <label class="form-check-label text-white">Effective Start/End Date</label>
+                    </div> -->
+          </div>
+          <div class="col-md-3" *ngIf="showChildRuleTypes">
+            <label class="bmd-label-floating">Subcategory</label>
+            <select name="child_rule_type_id" class="custom-select hover" id="child_rule_type_id"
+              (change)="onChangeSubCategory($event)">
+              <option *ngFor="let type of childRuleTypes" [value]="type.ruleTypeId" [attr.quartertype]="type.frequency">
+                {{type.ruleCd}}
+              </option>
+            </select>
+          </div>
+
+          <!-- <div class="row"
+                  [hidden]="!( (dateDropdownShow == true && showRateIncentive) || (dateDropdownShow == true  && showBonusIncentive) || (employeeIncentive && createRuleForm.controls['effective_start_end_date_ind'].value && createRuleForm.controls['prompt_assign_plan'].value == false) || (bonusReclaimShow && createRuleForm.controls['effective_start_end_date_ind'].value && createRuleForm.controls['prompt_assign_plan'].value == false))">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="white-label ">Start Date</label>
+                      <input type="date" name="start_date" matTooltip="Start Date" id="start_date"
+                        class="custom-control hover" formControlName="startDate" [(ngModel)]="startDate"
+                        placeholder=" ">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="white-label ">End Date</label>
+                      <input type="date" name="end_date" matTooltip="End Date" id="end_date"
+                        class="custom-control hover" placeholder=" " formControlName="endDate" [(ngModel)]="endDate">
+                    </div>
+                  </div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                </div> -->
+
+          <div class="col-md-3" [hidden]="!(quarterDropdownShow) ">
+
+            <label class="bmd-label-floating">Select Quarter</label>
+            <select name="start_date" class="custom-select hover" formControlName="startDate" id="start_date">
+              <ng-container *ngFor="let quarter of calandarYearQuarters ; let i = index">
+                <option [value]="i">
+                  {{quarter.calandarYearQuarterName}}
+                </option>
+              </ng-container>
+            </select>
+
+          </div>
+          <div class="col-md-3" [hidden]="!(quarterDropdownShow) ">
+
+            <label class="bmd-label-floating">Select Year</label>
+            <select name="end_date" class="custom-select hover" formControlName="endDate" id="end_date">
+              <option *ngFor="let years of yearsList" [value]="years">
+                {{years}}
+              </option>
+            </select>
+
+          </div>
+
+
+          <div class="col-md-3" [hidden]="!(monthlyDropdownShow) ">
+            <div class="form-group">
+              <label class="bmd-label-floating">Select Month</label>
+              <select name="start_date" class="custom-select hover" formControlName="startDate" id="start_date">
+                <ng-container *ngFor="let month of monthNames ; let i = index">
+                  <option [value]="i">
+                    {{month}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3" [hidden]="!(monthlyDropdownShow) ">
+            <div class="form-group">
+              <label class="bmd-label-floating">Select Year</label>
+              <select name="end_date" class="custom-select hover" formControlName="endDate" id="end_date">
+                <option *ngFor="let years of yearsList" [value]="years">
+                  {{years}}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-12" *ngIf="commissionRuleShow || paymentRuleShow || commissionTriggerRuleShow">
+            <div class="row">
+              <div class="col-md-3" *ngIf="commissionRuleShow && commissionRuleTypes">
+                <label class="bmd-label-floating">Commission Types</label>
+                <select name="commission_rule_type_id" class="custom-select hover" id="commission_rule_type_id">
+                  <option *ngFor="let type of commissionRuleTypes" [value]="type.id">
+                    {{type.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3" *ngIf="paymentRuleShow && paymentRuleTypes">
+                <label class="bmd-label-floating">Payment Types</label>
+                <select name="payment_rule_type_id" class="custom-select hover" id="payment_rule_type_id">
+                  <option *ngFor="let type of paymentRuleTypes" [value]="type.id">
+                    {{type.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3" *ngIf="commissionTriggerRuleShow && commissionTriggerRuleTypes">
+                <label class="bmd-label-floating">Commission Trigger Types</label>
+                <select name="trigger_rule_type_id" class="custom-select hover" id="trigger_rule_type_id">
+                  <option *ngFor="let type of commissionTriggerRuleTypes" [value]="type.id">
+                    {{type.name}}
+                  </option>
+                </select>
+              </div>
+              <!-- <div class="col-md-3">
+                     <div
+                      [hidden]="!(employeeIncentive && createRuleForm.controls['effective_start_end_date_ind'].value) && !(bonusReclaimShow && createRuleForm.controls['effective_start_end_date_ind'].value)">
+                      <input type="radio" formControlName="prompt_assign_plan" (click)="getPromptAssignVal('normal')"
+                        [value]="true" id="prompt-radio" class="hover" checked>
+                      <label class="text-white" for="prompt-radio">
+                        Start and end date will be provided when plan is assigned to a contacts
+                      </label>
+                      <input type="radio" id="dont-prompt-radio" (click)="getPromptAssignVal('normal')"
+                        formControlName="prompt_assign_plan" [value]="false" class="hover">
+                      <label class="text-white" for="dont-prompt-radio">
+                        Provide start date and end date now
+                      </label>
+                    </div>
+                  </div> -->
+              <div class="col-md-3"
+                *ngIf="ruleTypeName != 'Base Pay' && !showRateIncentive && !showPaymentBook && pageType != 'baseformula'">
+                <label class="bmd-label-floating">Payment Due Date</label>
+                <select name="payment_due_date_mappings" class="custom-select hover" id="payment_due_date_mappings"
+                  formControlName="payment_due_date_mapping_id">
+                  <option *ngFor="let dueDate of paymentDueDateMappings" [value]="dueDate.paymentDueDateMappingId">
+                    {{dueDate.paymentDueDateMappingName}}
+                  </option>
+                </select>
+              </div>
+
+              <!-- CREATE ZERO COMMISSION -->
+              <!-- <div class="col-md-3" *ngIf="showBasePay && pageType != 'baseformula'">
+                <label class="bmd-label-floating">Create Zero Commission</label>
+                <div>
+                  <mat-checkbox class="" [(ngModel)]="createZeroCommission" [ngModelOptions]="{standalone: true}">
+                  </mat-checkbox>
+                </div>
+              </div> -->
+              <div class="col-md-3"
+                *ngIf="showBasePay && pageType != baseformula && ruleTypeName == 'Employee Incentive'">
+
+                <label class="bmd-label-floating">Number Of Bonuses</label>
+                <input type="number" name="number_of_bonuses" formControlName="number_of_bonuses" class="custom-input">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div id="trinityTreeContainer" class="col-12 col-md-3 col-xl-3">
+            <div class="card sticky" style="overflow: auto; height: 500px;">
+              <div id="trinityTree" class="bstree">
+                <div class="card-body">
+                  <div class=" input-group ">
+                    <input class="custom-input mb-0" placeholder="search" id="searchItem" (input)="searchForItem()">
+                    <span class="input-group-icon">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+                  <ng-container *ngIf="searchedItem">
+                    <ul class="search-results">
+                      <li *ngFor="let item of searchedItem" class="base_formula_li" id="base_formula_li">
+                        <i class="fas fa-angle-right"></i>
+                        <span><a class="drag-data searched" draggable="true" matTooltipPosition="right"
+                            [matTooltip]="item.dataType" [attr.data_type]="item.dataType"
+                            (dragstart)="drag($event)">{{item}}</a></span>
+                      </li>
+                    </ul>
+                  </ng-container>
+                  <ng-container>
+                    <ul id="tree1">
+                      <li><a>Table Content</a>
+                        <ul>
+                          <ng-container *ngFor="let item of tableContentData | keyvalue">
+                            <li class="branch">
+                              <a>{{item.key}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.value">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" (dragstart)="drag($event)"
+                                        matTooltipPosition="right" [matTooltip]="subItem.dataType"
+                                        [attr.data_type]="subItem.dataType">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                      <li><a>Static</a>
+                        <ul>
+                          <li><button type="button" class="btn btn-sm btn-primary" (click)="openCreateStatic()"><i
+                                class="material-icons">control_point</i> Create Static</button>
+                          </li>
+                          <ng-container *ngFor="let item of staticStructure">
+                            <li class="branch">
+                              <a>{{item.dataType}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.content">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" (dragstart)="drag($event)"
+                                        matTooltipPosition="right" [matTooltip]="item.dataType"
+                                        [attr.data_type]="item.dataType">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                      <li><a>Base Formulas</a>
+                        <ul>
+                          <li *ngFor="let item of baseFormulasData" class="base_formula_li" id="base_formula_li">
+                            <span><a class="drag-data" draggable="true" matTooltipPosition="right"
+                                [matTooltip]="item.dataType" [attr.data_type]="item.dataType"
+                                (dragstart)="drag($event)">{{item.displayName}}</a></span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a>Aggregates</a>
+                        <ul *ngIf="aggregateStructure">
+                          <ng-container *ngFor="let item of aggregateStructure">
+                            <li class="branch">
+                              <a>{{item.tableName}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.content">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" matTooltipPosition="right"
+                                        [matTooltip]="subItem.dataType" [attr.data_type]="subItem.dataType"
+                                        (dragstart)="drag($event)">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                      <li><a>Rates And Exceptions</a>
+                        <ul *ngIf="rateAndExceptionStructure">
+                          <ng-container *ngFor="let item of rateAndExceptionStructure">
+                            <li class="branch">
+                              <a>{{item.tableName}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.content">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" matTooltipPosition="right"
+                                        [matTooltip]="subItem.dataType" [attr.data_type]="subItem.dataType"
+                                        (dragstart)="drag($event)">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                      <li><a>Booleans</a>
+                        <ul>
+                          <ng-container *ngFor="let item of booleansData">
+                            <li class="branch">
+                              <a>{{item.tableName}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.content">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" matTooltipPosition="right"
+                                      [matTooltip]="subItem.dataType" [attr.data_type]="subItem.dataType"
+                                      (dragstart)="drag($event)">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                      <li><a>Prompts</a>
+                        <ul *ngIf="promptStructure">
+                          <ng-container *ngFor="let item of promptStructure">
+                            <li class="branch">
+                              <a>{{item.tableName}}</a>
+                              <ul>
+                                <ng-container *ngFor="let subItem of item.content">
+                                  <li>
+                                    <span><a class="drag-data" draggable="true" matTooltipPosition="right"
+                                        [matTooltip]="subItem.dataType" [attr.data_type]="subItem.dataType"
+                                        (dragstart)="drag($event)">{{subItem.displayName}}</a></span>
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </li>
+                    </ul>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-basepay-structure" [showBasePayStructure]="showBasePayStructure" [cloneRule]="cloneRule">
+          </div>
+          <div class="app-payment-book" [showPaymentBook]="showPaymentBook" [createRuleForm]="createRuleForm">
+          </div>
+          <div [hidden]="!showBasePay" class="col-md-9 showBasePay">
+            <ng-container *ngFor="let rate of rateObject; let i = index">
+
+
+              <div id="tr_step_1" class=" row mb-3">
+                <div class="col-md-12">
+                  <div class="w-100 steps-title">
+                    <h3 class="step_index">Step <span>{{i + 1}}</span></h3>
+                    <div class="step-close"> <i class="material-icons" matTooltipPosition="right"
+                        matTooltip="Delete Step" (click)="removeStep(i)">clear</i></div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="step_tr_class p-3">
+                    <div class="row">
+                      <div class="col-md-8">
+
+
+                        <div class="stepName row ">
+
+                          <div class="col-5">
+                            <ng-container *ngIf="rate.conditionName; else noCondition">
+                              <span class="stepLabel">Step Name:</span>
+                            </ng-container>
+                            <ng-template #noCondition>
+                              <label>Enter A Step Name:</label>
+                            </ng-template>
+                          </div>
+                          <div class="col-7">
+                            <input type="text" name="{{'step_name_' + i}}" id="{{'step_name_' + i}}"
+                              data-toggle="tooltip" matTooltip="Please enter the step name" class="custom-input"
+                              (input)="addStepName(i)" placeholder="{{rate.conditionName}}">
+                          </div>
+                        </div>
+                        <hr>
+                        <h4>Conditions</h4>
+                        <ng-container *ngFor="let currentCondition of rate.conditions; let j = index">
+                          <div id="inputbox_table_1" class="gray-bg mb-2  lft-green-brdr">
+
+
+                            <div id="tr_step_1_condition_1">
+                              <div class="col-md-12  condition-container">
+                                <div class="row">
+                                  <!--<h4 class="col index_1 no-hover-effect">{{j + 1}}. </h4>-->
+                                  <span class="condition-count">{{j+1}} </span>
+
+                                  <div class=" col-sm-4 ">
+                                    <input matTooltipPosition="right"
+                                      matTooltip="Left Condition. Please drag metadata from the left tree" type="text"
+                                      name="{{'step_condition_left_' + j}}"
+                                      id="{{'step_condition_left_' + i + '_' + j}}"
+                                      class="custom-input condition-input no-hover-effect"
+                                      placeholder="{{currentCondition.condition1.name}}"
+                                      (input)="addCondition(rate.id, i, j, 'left')" onkeypress="return false;">
+                                    <!-- Dilip 05/29/2020 COM-770 -->
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <select name="{{'step_' + i +'_operator_' + j}}"
+                                      id="{{'step_' + i +'_operator_' + j}}" matTooltipPosition="right"
+                                      matTooltip="Conditional operators" class="custom-select gray-bg over"
+                                      [(ngModel)]="currentCondition.operator" [ngModelOptions]="{standalone: true}">
+                                      <option *ngFor="let type of conditionalOperator" [value]="type.name">
+                                        {{type.name}}
+                                      </option>
+                                    </select>
+                                  </div>
+                                  <div class="col-sm-4 ">
+                                    <input matTooltipPosition="right"
+                                      matTooltip="Right Condition. Please drag metadata from the left tree" type="text"
+                                      id="{{'step_condition_right_' + i + '_' + j}}"
+                                      name="{{'step_condition_right_' + i + '_' + j}}"
+                                      class="custom-input condition-input no-hover-effect"
+                                      placeholder="{{currentCondition.condition2.name}}"
+                                      (input)="addCondition(rate.id, i, j, 'right')" onkeypress="return false;">
+                                    <!-- Dilip 05/29/2020 COM-770 -->
+                                  </div>
+                                </div>
+
+
+                              </div>
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <ng-container *ngIf="currentCondition.isValid; else invalidCondition">
+                                      <div>
+                                        <span style="color:green;"><i class="fas fa-check"></i> Valid Condition</span>
+                                      </div>
+                                    </ng-container>
+                                    <ng-template #invalidCondition>
+                                      <div>
+                                        <!-- <i class="material-icons mr-2" style="color: red">clear</i> -->
+                                        <span style="color: red"><i class="fas fa-times"></i> Invalid Condition</span>
+                                      </div>
+                                    </ng-template>
+                                  </div>
+                                  <div class="col-4">
+                                    <div class="float-right" (click)="removeCondition(i, j)">
+                                      <i class="material-icons" matTooltipPosition="right"
+                                        matTooltip="Delete Condition">delete_outline</i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <div class="w-100 text-right">
+                          <button type="button" class=" btn btn-sm btn-primary" (click)="addNewCondition(i, j)"
+                            id="{{'add_condition_'+ i}}"> <i class="material-icons">add</i> Add
+                            Condition</button>
+                        </div>
+                        <mat-radio-group class="row" [(ngModel)]="rate.conditionQualifier"
+                          [ngModelOptions]="{standalone: true}">
+                          <mat-radio-button class="col-md-6" [value]="'Always true'" (click)="enableField(i, 2)">
+                            Always true
+                          </mat-radio-button>
+                          <mat-radio-button class="col-md-6" [value]="'All conditions should meet'"
+                            (click)="enableField(i, 0)">
+                            All conditions should meet
+                          </mat-radio-button>
+                          <mat-radio-button class="col-md-6" [value]="'One or more conditions should meet'"
+                            (click)="enableField(i, 0)">
+                            One or more conditions should meet
+                          </mat-radio-button>
+                          <mat-radio-button class="col-md-6" [value]="'Advanced'" (click)="enableField(i, 1)">
+                            Advanced
+                          </mat-radio-button>
+                        </mat-radio-group>
+                        <ng-container *ngFor="let conditions of advancedConditionArray; let m = index">
+                          <ng-container *ngIf="m == i">
+                            <ng-container *ngIf="conditions.visable">
+
+                              <div class="advanced-condition-section">
+                                <section>
+                                  <div class="example-label">Condition Number</div>
+                                  <div class="btn-group">
+                                    <ng-container *ngFor="let currentCondition of rate.conditions; let k = index">
+                                      <button type="button" class="btn btn-secondary advanced-condition-operator"
+                                        (click)="addAdvancedConditionOption(k, i, 0)">Condition {{k + 1}}</button>
+                                    </ng-container>
+                                  </div>
+                                </section>
+                                <section>
+                                  <div class="example-label">Operators</div>
+                                  <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary advanced-condition-operator"
+                                      (click)="addAdvancedConditionOption('AND', i, 1)">AND</button>
+                                    <button type="button" class="btn btn-secondary advanced-condition-operator"
+                                      (click)="addAdvancedConditionOption('OR', i, 1)">OR</button>
+                                    <button type="button" class="btn btn-secondary advanced-condition-operator"
+                                      (click)="addAdvancedConditionOption('(', i, 1)">(</button>
+                                    <button type="button" class="btn btn-secondary advanced-condition-operator"
+                                      (click)="addAdvancedConditionOption(')', i, 1)">)</button>
+                                  </div>
+                                </section>
+
+                              </div>
+                              <div class="advanced-condition">
+                                <ng-container *ngFor="let conditions of advancedConditionArray; let l = index">
+                                  <ng-container *ngIf="l == i">
+                                    <div class="advanced-condition-container">
+                                      <ng-container *ngIf="!conditions.firstItem">
+                                        <ng-container *ngFor="let element of conditions.condition; let m = index">
+                                          <p matTooltipPosition="above" matTooltip="Remove"
+                                            class="advanced-condition-element"
+                                            (click)="removeAdvancedCondition(m, l, i)">{{element}}</p>
+                                          <!-- <p class="advanced-condition-delete" id="x" (click)="removeAdvancedCondition(m, l, i)">X</p> -->
+                                        </ng-container>
+                                      </ng-container>
+                                    </div>
+                                  </ng-container>
+                                </ng-container>
+                              </div>
+                              <div class="advanced-condition-string">
+                                <ng-container *ngFor="let conditions of advancedConditionArray; let l = index">
+                                  <ng-container *ngIf="l == i">
+                                    <span class="advanced-condition-valid-header">{{conditions.conditionString}}</span>
+                                  </ng-container>
+                                </ng-container>
+                              </div>
+                              <div class="advanced-condition-valid">
+                                <ng-container *ngFor="let conditions of advancedConditionArray; let l = index">
+                                  <ng-container *ngIf="l == i">
+                                    <ng-container *ngIf="conditions.valid; else invalidAdvancedCondition">
+                                      <div>
+
+                                        <span style="color: green" class="no-hover-effect">Valid</span>
+                                      </div>
+                                    </ng-container>
+                                    <ng-template #invalidAdvancedCondition>
+                                      <div>
+                                        <!-- <i class="material-icons mr-2" style="color: red">clear</i> -->
+                                        <span style="color: red" class="no-hover-effect">Invalid</span>
+                                        <span class="advanced-condition-valid-text"> :{{conditions.validReason}}</span>
+                                      </div>
+                                    </ng-template>
+
+                                  </ng-container>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+
+                        <!-- <input type="text" id="{{'step_' + i + '_criteria_text'}}"
+                                                    (input)="addAdvancedCondition(i)" class="form-control"
+                                                    placeholder="Advanced Condition" matTooltipPosition="right"
+                                                    matTooltip="1 AND 2 OR 3"> -->
+
+
+                      </div>
+                      <div class="col-md-4 border-left">
+                        <h4>Action</h4>
+                        <div class="btn-group operator-action">
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('+', i)">+</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('-', i)">-</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('*', i)">*</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('/', i)">/</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('%', i)">%</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction('(', i)">(</button>
+                          <button type="button" class="btn btn-secondary operator"
+                            (click)="addArithmeticToAction(')', i)">)</button>
+                        </div>
+                        <input type="text" class="action-drag no-hover-effect" id="{{'actionbox_' + i}}"
+                          placeholder="Drag Data Here" (input)="addToAction(i)" name="step_1_action">
+                        <div class="error"
+                          *ngIf="createRuleForm.controls['step_1_action'].hasError('required') && createRuleForm.controls['step_1_action'].touched">
+                          Action is required</div>
+                        <div class="action-list" cdkDropList (cdkDropListDropped)="onDrop($event, i)">
+                          <ng-container *ngFor="let item of rate.action; let k = index">
+                            <div class="action-object hover-move"
+                              [ngStyle]="{'background-color':item.action ==='(' ? 'PaleVioletRed' : item.action == ')' ? 'PaleVioletRed' : ''}"
+                              cdkDrag>
+                              <div id="x" (click)="removeAction(k, i)">X</div>
+                              <span>{{item.action}}</span>
+
+                            </div>
+                          </ng-container>
+                        </div>
+
+                        <div class="validator">
+                          <ng-container *ngIf="rate.validAction;else NotValid">
+                            <span class="validator-text-valid no-hover-effect">Valid Action</span>
+                          </ng-container>
+                        </div>
+                        <ng-template #NotValid>
+                          <span class="validator-text-invalid no-hover-effect"><i class="fas fa-times"></i> Not Valid:
+                          </span>
+                          <span class="invalid-reasoning no-hover-effect">{{rate.invalidReasoning}}</span>
+                        </ng-template>
+                        <div class="row">
+                          <div class="col-md-12 mt-3">
+                            <div class="row">
+                              <mat-checkbox class="col-6" [(ngModel)]="rate.roundInd"
+                                [ngModelOptions]="{standalone: true}">Round?</mat-checkbox>
+                              <div class=" col-6">
+                                <select class="custom-select float-right" [(ngModel)]="rate.roundDepth"
+                                  [ngModelOptions]="{standalone: true}" [disabled]="!rate.roundInd">
+                                  <option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]" [value]="i">
+                                    {{i}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="w-100 text-right mt-2">
+                          <button class="actionDisplay pr-0 btn btn-info" (click)="openSnackBar(rate.action)">
+                            <i class="fas fa-eye"></i> Display Full Action
+                          </button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </ng-container>
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-primary pr-0 add_another" matTooltipPosition="right"
+                  matTooltip="Add next step" (click)="addNewStep()"><i class="material-icons">add</i> Add
+                  step </button>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col text-right">
+                <button type="button" class="btn btn-primary" (click)="onGoBack();"><i class="fas fa-times"></i>
+                  Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="resetForm();"><i class="fas fa-sync-alt"></i>
+                  Clear</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit();"
+                  [disabled]="createRuleForm.invalid"><i class="fas fa-save"></i> {{saveBtn}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<!-- Create Static Modal is placed in header due to positioning when placed inside create-rule component -->
+<!-- <app-create-static></app-create-static> -->

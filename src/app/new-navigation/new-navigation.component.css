@@ -1,0 +1,287 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.element.style {
+  color: #025686;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+  .sidenav .mat-toolbar {
+    background: inherit;
+  }
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-icon {
+  color: #025686;
+}
+
+.sidebar-custom {
+  height: fit-content;
+  font-size: 20px;
+  line-height: 1.2em;
+  /* margin: 5px; */
+  margin-bottom: 5px;
+  position: relative;
+  /* background-color: #e8f2f9; */
+  /* border-radius: 10px; */
+  color: rgba(0,0,0,.54) !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.trinity-logo-sidebar img {
+  max-height: 50px;
+  padding-top: 6px;
+}
+
+.main-head {
+  height: 60px;
+  position: relative;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  /* padding-right: 50px; */
+}
+
+.page-title h1 {
+  color: #313b3d;
+  font-weight: 300;
+  line-height: 46px;
+  padding-top: 8px;
+  margin: 0;
+  display: inline-block;
+}
+
+.mat-list-base .mat-list-item .mat-line {
+  position: relative;
+}
+
+  .mat-list-base .mat-list-item .mat-line .mat-icon {
+    font-size: 16px;
+    position: absolute;
+    right: 0;
+    color: black;
+    text-align: right;
+  }
+
+.sidenav-expanded .mat-list-base .mat-list-item .mat-line .mat-icon {
+  pointer-events: none;
+}
+
+.mat-list-base .mat-list-item.mat-list-item-with-avatar, .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  height: auto;
+}
+
+.menu-open {
+  border-radius: 0;
+  width: 50px;
+  height: 50px;
+  background: white;
+  box-shadow: none;
+  color: #fff;
+}
+
+  .menu-open.mat-icon {
+    color: #fff !important;
+  }
+
+.menu-toggle {
+  position: absolute;
+  text-align: center;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+}
+
+  .menu-toggle.mat-icon {
+    color: #fff !important;
+  }
+
+.mat-drawer-content, .mat-drawer, .mat-drawer-side, .logo-cont, .trinity-logo-sidebar img {
+  transition: 0.4s all ease-in-out;
+}
+
+.sidenav-collapsed .mat-drawer-side {
+  width: 60px;
+}
+
+.sidenav-expanded .mat-drawer-side {
+  width: 220px;
+}
+
+.mat-drawer-content {
+  margin-left: 60px !important;
+}
+
+.sidenav-expanded .mat-drawer-content {
+  margin-left: 220px !important;
+}
+
+.main-head {
+  position: relative;
+}
+
+  .main-head::after {
+    content: '';
+    border-top: 60px solid white;
+    border-right: 22px solid transparent;
+    position: absolute;
+    right: -22px;
+    top: 0;
+  }
+
+.logo-cont {
+  width: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.sidenav-expanded .logo-cont {
+  width: 170px;
+}
+
+.sidenav-collapsed .trinity-logo-sidebar img {
+  transform-origin: center;
+  transform: scale(0);
+}
+
+.fa-users-cog:before {
+  content: "\f509";
+  color: black;
+}
+
+.menu-cont {
+  width: 50px;
+  height: 50px;
+}
+
+.mat-nav-list a {
+  color: #333;
+}
+
+.sub-menu .mat-list-item {
+  padding: 4px 10px 4px 32px;
+  line-height: 16px;
+  font-size: 13px;
+  white-space: normal;
+}
+
+  .sub-menu .mat-list-item a {
+    color: black;
+    white-space: normal;
+    line-height: 18px;
+  }
+
+.sub-menu {
+  background: #fbfafa;
+}
+
+.mat-list-base {
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+
+.sub-menu .mat-list-item {
+  position: relative;
+}
+
+  .sub-menu .mat-list-item::before {
+    position: absolute;
+    left: 30px;
+    top: 5px;
+    color: #025686;
+    font-family: "Font Awesome 5 Free";
+    font-size: 10px;
+    font-weight: 900;
+    content: '\f054';
+  }
+
+@media (max-width: 768px) {
+  .mat-drawer-content {
+    margin: 0 !important;
+  }
+
+  .sidenav-collapsed .mat-drawer-side {
+    width: 0;
+  }
+
+  .menu-open {
+    width: 36px;
+    height: 36px;
+    right: -18px;
+  }
+
+  .menu-cont .mat-icon {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .menu-cont .mat-mini-fab .mat-button-wrapper {
+    line-height: 36px;
+  }
+
+  .sidenav-expanded .mat-drawer-content {
+    margin-left: 0 !important;
+  }
+
+  .mat-list-base {
+    overflow: hidden;
+  }
+
+  .mat-drawer-inner-container {
+    overflow: visible;
+  }
+
+  .main-head {
+    height: 36px
+  }
+
+  .menu-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.mat-list-base[_ngcontent-xdi-c298] {
+  background-color: #e1e1e1;
+  color: #000;
+}
+
+.mat-list-base .mat-list-item .material-icons {
+  font-size: 20px;
+  color: #000;
+}
+
+.mat-list-base[_ngcontent-fnm-c298] .mat-list-item[_ngcontent-fnm-c298] .mat-line[_ngcontent-fnm-c298] {
+  color: black;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: white;
+  color: #025686;
+}
+
+.mat-list-base {
+  padding-top: 8px;
+  display: block;
+  background-color: #e1e1e1;
+  -webkit-tap-highlight-color: transparent;
+}

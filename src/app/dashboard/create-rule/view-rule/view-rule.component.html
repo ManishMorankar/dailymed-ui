@@ -1,0 +1,447 @@
+<div class="page-title col-md-12 ">
+  <h1> View Rule</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>View Rule</span></div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <form>
+        <div class="w-100 text-right">
+          <ng-container *ngIf="this.apiService.checkPermission('CalculateCommissionsDepartmentLevel')">
+            <button
+              *ngIf="(rulesForm.ruleTypeName == 'Bonus Incentive Goal' || rulesForm.ruleTypeName == 'Rate Incentive Goal') && apiService.checkPermission('AwardOnDemandBonuses')"
+              type="button" class="btn btn-primary " (click)="onDemandProcessStatus()">
+              <i class="fas fa-award"></i> Award Incentive</button>
+          </ng-container>
+        </div>
+        <fieldset disabled="disabled">
+          <div class="card">
+            <div class="card-header-info">
+              <h4 class="card-title no-hover-effect"><i class="fas fa-eye"></i> View Rule</h4>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="row">
+                    <!-- <label class="bmd-label-floating text-white align_label">Name</label>
+                            <input type="text" class="form-control" [ngModelOptions]="{standalone : true}"
+                              [(ngModel)]="rulesForm.ruleName"> -->
+                    <label class="col-sm-5">Name</label>
+                    <div class="col-sm-7">
+                      <p class="custom-input">{{rulesForm.ruleName}}</p>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-4" [hidden]="activeCreationType != 'Rule'">
+                  <div class="row">
+                    <label class="col-sm-5">Type</label>
+                    <div class="col-sm-7">
+                      <select (change)="onChangeRuleType($event)" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="rulesForm.ruleTypeId" class="custom-select" id="mySelect">
+                        <option *ngFor="let type of ruleTypes" [value]="type.ruleTypeId">
+                          {{type.ruleCd}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <!-- Employee Incentive One Time Rule Check -->
+                <div class="col-md-4" [hidden]="!employeeIncentive && !bonusReclaimShow">
+                  <div class="row">
+                    <label class="col-sm-5">No Reclaim</label>
+                    <div class="col-sm-7">
+                      <mat-checkbox [ngModelOptions]="{standalone : true}" [(ngModel)]="rulesForm.noReclaim"
+                        [disabled]="true"></mat-checkbox>
+                    </div>
+                  </div>
+                  <!-- <div class="form-group">
+                        <input class="form-check-input" type="checkbox" id="effective-start-end-date-ind"
+                          [checked]="effectiveStartEndDateInd">
+                        <label class="form-check-label text-white">Effective Start/End Date</label>
+                      </div> -->
+                </div>
+                <!-- <div class="col-md-2"
+                  [hidden]="!(employeeIncentive && effectiveStartEndDateInd) && !(bonusReclaimShow && effectiveStartEndDateInd)">
+                  <div class="row">
+                        <input type="radio" [checked]="rulesForm.promptAssignPlan == true" id="prompt-radio">
+                        <label for="prompt-radio">
+                          Start and end date will be provided when plan is assigned to a contact
+                        </label>
+                      </div>
+                  <div class="row">
+                        <input type="radio" id="dont-prompt-radio" [checked]="rulesForm.promptAssignPlan == false">
+                        <label for="dont-prompt-radio">
+                          Provide start date and end date now
+                        </label>
+                      </div>
+                </div> -->
+                <div class="col-md-4" *ngIf="showChildRuleTypes">
+                  <div class="row">
+                    <label class="col-sm-5">Subcategory</label>
+                    <div class="col-sm-7">
+                      <select name="child_rule_type_id" class="custom-select" id="child_rule_type_id"
+                        [ngModelOptions]="{standalone : true}" [(ngModel)]="incentiveTypeId">
+                        <option *ngFor="let type of childRuleTypes" [value]="type.ruleTypeId">
+                          {{type.ruleCd}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4"
+                  [hidden]="!(showBonusIncentive || showRateIncentive || (employeeIncentive && effectiveStartEndDateInd && rulesForm.promptAssignPlan == false) || (bonusReclaimShow && effectiveStartEndDateInd && rulesForm.promptAssignPlan == false))">
+                  <div class="row">
+                    <div class="col-sm-5">
+
+                      <label>{{startDateLabel}}:</label>
+
+                      {{rulesForm.effectiveStartDate}}
+
+
+                    </div>
+                    <div class="col-sm-7">
+
+                      <label class="">{{endDateLabel}}:</label>
+
+                      {{rulesForm.effectiveEndDate}}
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4" *ngIf="commissionRuleTypes && commissionRuleTypes.length > 0">
+                  <div class="row">
+                    <label class="col-sm-5">Commission Types</label>
+                    <div class="col-sm-7">
+                      <select name="commission_rule_type_id" class="custom-select"
+                        [ngModelOptions]="{standalone : true}" [(ngModel)]="commissionRuleId"
+                        id="commission_rule_type_id">
+                        <option *ngFor="let type of commissionRuleTypes" [value]="type.id">
+                          {{type.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="paymentRuleTypes && paymentRuleTypes.length > 0">
+                  <div class="row">
+                    <label class="col-sm-5">Payment Types</label>
+                    <div class="col-sm-7">
+                      <select name="payment_rule_type_id" class="custom-select" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="paymentRuleTypeId" id="payment_rule_type_id">
+                        <option *ngFor="let type of paymentRuleTypes" [value]="type.id">
+                          {{type.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="commissionTriggerRuleTypes && commissionTriggerRuleTypes.length > 0">
+                  <div class="row">
+                    <label class="col-sm-5">Commission Trigger Types</label>
+                    <div class="col-ms-7">
+                      <select name="trigger_rule_type_id" class="custom-select" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="commissionTriggerRuleId" id="trigger_rule_type_id">
+                        <option *ngFor="let type of commissionTriggerRuleTypes" [value]="type.id">
+                          {{type.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4"
+                  *ngIf="rulesForm.ruleTypeName != 'Base Pay' && !showRateIncentive && !showPaymentBook">
+                  <div class="row">
+                    <label class="col-sm-5">Payment Due Date</label>
+                    <div class="col-sm-7">
+                      <select name="payment_due_date_mappings" class="custom-select" id="payment_due_date_mappings"
+                        [ngModelOptions]="{standalone : true}" [(ngModel)]="paymentDueDateMappingsName">
+                        <option *ngFor="let dueDate of paymentDueDateMappings"
+                          [value]="dueDate.paymentDueDateMappingId">
+                          {{dueDate.paymentDueDateMappingName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="rulesForm.numberOfBonuses">
+                  <div class="row">
+
+                    <label class="col-sm-5">Number Of Bonuses</label>
+                    <div class="col-sm-7">
+                      <input matInput type="number" class="custom-input" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="rulesForm.numberOfBonuses">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="row">
+
+                    <label class="col-sm-12">Description</label>
+                    <div class="col-sm-12">
+                      <textarea class="custom-input" name="name" rows="3" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="rulesForm.description"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-3" *ngIf="showBonusIncentive">
+                    <label class="bmd-label-floating text-white">Frequency </label>
+                    <select
+                      class="custom-select">
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">Quarterly</option>
+                    </select>
+                  </div> -->
+              </div>
+
+              <div class="row">
+                <div class="steps-div col-md-12">
+                  <div id="tbl" class="row  mb-3" *ngFor="let step of stepsArray;let i=index">
+
+                    <div class="col-md-12">
+                      <div class="w-100 steps-title">
+                        <h3 class="step_index">Step <span>{{i+1}}</span></h3>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="step_tr_class p-3">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="custom-input head-input">{{step.step_name}}</p>
+
+                          </div>
+                          <div class="col-md-9">
+                            <fieldset>
+
+                              <h4>Conditions</h4>
+                              <div id="inputbox_table_1" class="gray-bg mb-2 pb-1 lft-green-brdr"
+                                *ngFor="let item of step.conditions;let j=index">
+
+                                <div class="col-md-12 condition-container">
+                                  <div class="row">
+                                    <span class="condition-count">{{j+1}} </span>
+                                    <!--   <h4 class="no-hover-effect">{{j+1}} </h4> -->
+                                    <div class="col-sm-4">
+                                      <p class="custom-input" id="div1">{{item.left_side}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <select class="custom-select" id="step_1_operator_1"
+                                        [ngModelOptions]="{standalone : true}"
+                                        [(ngModel)]=item.operators>{{item.operators}}
+                                        <option value="<">Less than</option>
+                                        <option value=">">Greater than</option>
+                                        <option value="<=">Less than or equal</option>
+                                        <option value=">=">Greater than or equal</option>
+                                        <option value="=">Equal</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <p class="custom-input">{{item.right_side}}</p>
+                                    </div>
+                                    <!-- </div> -->
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <!-- Dilip 06/23/2020 COM-981 -->
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input no-hover-effect" type="radio" value="4"
+                                          [ngModelOptions]="{standalone : true}" [(ngModel)]=step.criteria>Always true
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input no-hover-effect" type="radio" value="1"
+                                          [ngModelOptions]="{standalone : true}" [(ngModel)]=step.criteria>All
+                                        conditions should meet
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input no-hover-effect" type="radio" value="2"
+                                          [ngModelOptions]="{standalone : true}" [(ngModel)]=step.criteria>One or more
+                                        conditions should meet
+
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input no-hover-effect" type="radio" value="3"
+                                          [ngModelOptions]="{standalone : true}"
+                                          ngModel={{getValueType(step.criteria)}}>Advanced
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating ">Advanced Condition </label>
+                                      <input type="text" class="form-control" [ngModelOptions]="{standalone:true}"
+                                        [(ngModel)]=step.comment>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+                          <div class="col-md-3 border-left">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <h4>Action</h4>
+                                <textarea rows="6" id="action" class="custom-input p-0" value=""
+                                  [ngModelOptions]="{standalone : true}" [(ngModel)]=step.action></textarea>
+                              </div>
+                              <!-- <input type="text" class="custom-control p-0" > -->
+                              <div class="col-md-12" *ngIf="step.roundDepth != null">
+                                <h4 class="bmd-label-floating" for="rounding">Rounding Depth</h4>
+                                <select class="custom-select" id="rounding" [(ngModel)]="step.roundDepth"
+                                  [ngModelOptions]="{standalone : true}">
+                                  <option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]" [value]="i">
+                                    {{i}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+        <!-- Added Permission for View Grid Awarded Incentives -- Dilip -->
+        <div *ngIf="apiService.checkPermission('ViewGridAwardedIncentives')">
+          <div class="card"
+            *ngIf="rulesForm.ruleTypeName == 'Bonus Incentive Goal' || rulesForm.ruleTypeName == 'Rate Incentive Goal'">
+            <div class="card-header-info">
+              <h5 class="card-title"><i class="fas fa-award"></i> Awarded Incentives</h5>
+            </div>
+
+
+
+
+
+
+            <div class="card-body">
+              <div class="w-100 text-right">
+                <button class="btn btn-primary" (click)="GetAwardedIncentivesWorksheet()"><i
+                    class="fas fa-download"></i> Download</button>
+              </div>
+              <div [hidden]="!awardIncentiveData">
+                <app-awarded-incentives [ruleId]="viewRuleId" [steps]="steps"></app-awarded-incentives>
+              </div>
+              <!--<table class="table">
+                      <tbody>
+                        <tr>
+                          <th>Contact Id</th>
+                          <th>Rule</th>
+                          <th>Employee</th>
+                          <th>Step</th>
+                          <th>Action</th>
+                        </tr>
+                        <ng-container *ngIf="awardIncentiveData">
+                          <ng-container
+                            *ngFor="let incentive of awardIncentiveData | paginate: { itemsPerPage: 10, currentPage: page };let i = index;">
+                            <tr data-toggle="collapse" [attr.href]="'#collapseExample_'+i" aria-expanded="false"
+                              aria-controls="collapseExample">
+                              <td>
+                                {{ incentive.contactId }}
+                              </td>
+                              <td>
+                                {{ incentive.ruleName}}
+                              </td>
+                              <td>
+                                {{ incentive.contactName}}
+                              </td>
+                              <td>
+                                {{ incentive.stepName}}
+                              </td>
+                              <td>
+                                {{ incentive.actionValue}}
+                              </td>
+                            </tr>
+                            
+                            <tr class="hiddenRow">
+                              <td colspan="7" class="hiddenRow">
+                                <div class="collapse" [id]="'collapseExample_'+i">
+                                  <div class="card card-body">
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <th>S.No</th>
+                                          <th>Display Name</th>
+                                          <th>Action</th>
+                                        </tr>
+                                        <ng-container *ngFor="let condition of incentive.metaDatas; let k = index">
+                                          <tr>
+                                            <td>
+                                              {{k+1}}.
+                                            </td>
+                                            <td>{{ condition.displayName }}</td>
+                                            <td>{{ condition.value }}</td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </ng-container>
+                      </tbody>
+                    </table> -->
+            </div>
+          </div>
+        </div>
+        <!-- <pagination-controls style="text-align: center;" (pageChange)="page = $event" autoHide="true">
+                </pagination-controls> -->
+        <!-- </div>
+
+            </fieldset> -->
+        <div *ngIf="apiService.checkPermission('CloneRule')">
+          <div class="row">
+            <div class="col text-right">
+              <button class="btn btn-primary" *ngIf="apiService.checkPermission('CloneRule')"
+                [routerLink]="['/ui/clone-rule/'+viewRuleId]"><i class="far fa-clone"></i> Clone</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

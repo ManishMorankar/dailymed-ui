@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-header-info">
+
+    <h4 class="card-title col-md-2 no-hover-effect">Stage {{stageNumber}}</h4>
+
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-sm-5">Name</label>
+          <div class="col-sm-7">
+            <input type="text" name="rule_name" [(ngModel)]="basePayStructure.basePayStructureName"
+              class="custom-input">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="bmd-label "> Number Of Payments </label>
+          <select name="number-of-payments" class="custom-select hover" [(ngModel)]="basePayStructure.numberOfPayments"
+            id="number-of-payments" (change)="onNumberOfPaymentsChange();" [disabled]="disabled">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+      </div>
+      <ng-container *ngIf="!basePayStructure.promptAssignPlan">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="bmd-label">Start Date</label>
+            <input type="date" name="start_date" id="bp_start_date" [(ngModel)]="basePayStructure.startDate"
+              class="custom-control">
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header-info">
+    <h4 class="card-title no-hover-effect">Pay Stream Detail</h4>
+  </div>
+  <div class="card-body">
+    <div class="pay-stream-details">
+      <table class="my-table mat-table w-100">
+        <thead>
+          <tr class="mat-header-row ng-star-inserted">
+
+            <th class="mat-header-cell">Payment Number</th>
+            <th class="mat-header-cell">Percentage</th>
+            <th class="mat-header-cell">Payment Due Date</th>
+            <th class="mat-header-cell">Days In Advance</th>
+            <th class="mat-header-cell">Payment Type</th>
+            <th class="mat-header-cell">Pay Based On</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <ng-container *ngFor="let item of forLoop(basePayStructure.numberOfPayments); index as i">
+            <app-pay-stream-item style="width:100%; display:contents;"
+              *ngIf="i != basePayStructure.numberOfPayments - 1; else elseBlock" [paymentNumber]="i + 1"
+              [paymentDueDateMappingId]="getPaymentDueDate('Actual Install Date').paymentDueDateMappingId"
+              [clone]="basePayStructure.payStream[i]" (payStreamItem)="onPayStreamItemChange($event)">
+            </app-pay-stream-item>
+            <ng-template #elseBlock>
+              <app-pay-stream-item style="width:100%; display:contents;" [paymentNumber]="i + 1" [percentage]="100"
+                [paymentDueDateMappingId]="getPaymentDueDate('Actual Install Date').paymentDueDateMappingId"
+                [daysInAdvance]="0" [payBasedOn]="'total commission'" [disabled]="true"
+                (payStreamItem)="onPayStreamItemChange($event)" [clone]="basePayStructure.payStream[i]"
+                class="row table-row">
+              </app-pay-stream-item>
+            </ng-template>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<p style="color: red" class="no-hover-effect">*The last Pay Stream ensure that the contact receives 100% of remaining
+  commissions</p>

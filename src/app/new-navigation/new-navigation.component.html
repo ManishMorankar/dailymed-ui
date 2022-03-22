@@ -1,0 +1,137 @@
+<mat-drawer-container *ngIf="this.apiService.showMenu()" class="example-container mat-typography"
+                      [className]="isExpanded ? 'sidenav-expanded' : 'sidenav-collapsed'" autosize>
+  <mat-drawer #drawer mode="side" disableClose="true" opened="true" class="drawer-shadow">
+    <div class="main-head">
+      <div class="logo-cont">
+        <a class="trinity-logo-sidebar"><img src="/assets/images/log.png" alt=""></a>
+      </div>
+      <div class="menu-cont">
+        <ng-container *ngIf="isExpanded; else notExpanded">
+          <button mat-mini-fab (click)="leftArrowClick()" color="primary" class="menu-toggle">
+            <mat-icon aria-label="Menu" style="color: #025686;">menu_open</mat-icon>
+          </button>
+
+
+        </ng-container>
+        <ng-template #notExpanded>
+          <button mat-mini-fab (click)="rightArrowClick()" color="primary" class="menu-open">
+            <mat-icon aria-label="Menu" style="color: #025686;">menu</mat-icon>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+
+    <mat-nav-list>
+
+
+      <!--<mat-list-item class="sidebar-custom"
+                     *ngIf="apiService.checkPermission('Master') || apiService.checkPermission('Admin')||true">
+        <ng-container>
+          <span class="material-icons fas fa-building" data-toggle="tooltip" data-placement="right" title="Organization"
+                (click)="iconClickOrganization()">
+
+          </span>
+
+          <a mat-line (click)="adminTextOrganization()">
+            Organization
+            <ng-container *ngIf="!subOrganizationTables; else subOrganizationTablesArrow">
+              <mat-icon mat-list-icon (click)="downArrowOrganization()">add</mat-icon>
+            </ng-container>
+            <ng-template #subOrganizationTablesArrow>
+              <mat-icon mat-list-icon (click)="upArrowOrganization()">remove</mat-icon>
+            </ng-template>
+          </a>
+
+        </ng-container>
+      </mat-list-item>
+      <ng-container *ngIf=" subOrganizationTables">
+        <div class="sub-menu">
+
+          <mat-list-item *ngIf="apiService.checkPermission('Master') || apiService.checkPermission('Admin')||true">
+            <a mat-line class="sidebar-custom-inner" *ngIf="isExpanded" [routerLink]="['/ui/dashboard/masters/organization']">Organization Master</a>
+          </mat-list-item>
+
+
+
+
+        </div>
+      </ng-container>-->
+
+      <mat-list-item class="sidebar-custom"
+                     *ngIf="apiService.checkPermission('Master') || apiService.checkPermission('Admin') || apiService.checkPermission('Users')||true">
+        <ng-container>
+          <span class="material-icons fas fa-users-cog" data-toggle="tooltip" data-placement="right" title="Administration"
+                (click)="iconClickAdministration()">
+
+          </span>
+
+          <a mat-line (click)="adminTextAdministration()">
+            Administration
+            <ng-container *ngIf="!subAdministrationTables; else subAdministrationTablesArrow">
+              <mat-icon mat-list-icon (click)="downArrowAdministration()">add</mat-icon>
+            </ng-container>
+            <ng-template #subAdministrationTablesArrow>
+              <mat-icon mat-list-icon (click)="upArrowAdministration()">remove</mat-icon>
+            </ng-template>
+          </a>
+
+        </ng-container>
+      </mat-list-item>
+      <ng-container *ngIf=" subAdministrationTables">
+        <div class="sub-menu">
+
+          <mat-list-item *ngIf="apiService.checkPermission('Users') || apiService.checkPermission('Admin')||true">
+            <a mat-line class="sidebar-custom-inner" *ngIf="isExpanded" [routerLink]="['ui/dashboard/masters/users']">User Master</a>
+          </mat-list-item>
+
+          <!--<mat-list-item *ngIf="apiService.checkPermission('Users') || apiService.checkPermission('Admin')||true">
+            <a mat-line class="sidebar-custom-inner" *ngIf="isExpanded" [routerLink]="['ui/dashboard/masters/assignuserlicense']"> User License</a>
+          </mat-list-item>-->
+
+        </div>
+      </ng-container>
+
+
+      <mat-list-item class="sidebar-custom"
+                     *ngIf="apiService.checkPermission('Reports') || apiService.checkPermission('Admin')||true">
+        <ng-container>
+          <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Reports"
+                (click)="iconClickReport()">
+            analytics
+          </span>
+
+          <a mat-line (click)="adminTextReport()">
+            Reports
+            <ng-container *ngIf="!subReportTables; else subReportTablesArrow">
+              <mat-icon mat-list-icon (click)="downArrowReport()">add</mat-icon>
+            </ng-container>
+            <ng-template #subReportTablesArrow>
+              <mat-icon mat-list-icon (click)="upArrowReport()">remove</mat-icon>
+            </ng-template>
+          </a>
+
+        </ng-container>
+      </mat-list-item>
+      <ng-container *ngIf=" subReportTables">
+        <div class="sub-menu">
+
+          <mat-list-item *ngIf="apiService.checkPermission('Reports') || apiService.checkPermission('Admin')||true">
+            <a mat-line class="sidebar-custom-inner" *ngIf="isExpanded" [routerLink]="['ui/dashboard/masters/daily-med-report']">Daily Med Report</a>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="true">
+            <a mat-line class="sidebar-custom-inner" *ngIf="isExpanded" [routerLink]="['/ui/options']">
+              Options
+            </a>
+          </mat-list-item>
+        </div>
+      </ng-container>
+
+
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content *ngIf="checkShowMenu()">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

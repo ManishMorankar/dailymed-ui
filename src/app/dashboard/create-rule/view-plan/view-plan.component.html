@@ -1,0 +1,71 @@
+<div class="page-title col-md-12 ">
+	<h1> View Plan</h1>
+	<div class="breadcrumbs"><a href="#">Home</a>/<span>View Plan</span>
+	</div>
+</div>
+
+
+
+
+<div class="content" *ngIf="apiService.checkPermission('ViewPlan')">
+
+
+	<div class="card">
+		<div class="card-header card-header-info">
+			<h6 class="card-title "><i class="fas fa-eye"></i> View Plan</h6>
+		</div>
+		<form action="" method="post" accept-charset="utf-8" class="card-body">
+			<fieldset disabled="disabled">
+
+				<div class="row mt-2 ">
+					<div class="col col-md col-xl">
+						<div class="row">
+							<div class="col-md-4 mt-3">
+								<div class="card">
+									<div class="card-header-info">
+										<h4 name="rule_name" class="pl-3">{{planName}}</h4>
+									</div>
+									<div class="card-body ">
+										<input id="bstree-data" type="hidden" name="bstree-data"
+											data-ancestors="Teretory:Base">
+										<div class="w-100">
+											<ul id="tree2" class="custom-tree">
+												<li *ngFor="let item of basicPlan;let i = index" id={{i}} class="hover">
+													<i class="fas fa-chevron-circle-right"></i> <a id={{i}}
+														class="hover">{{item.parent}}</a>
+													<ul>
+														<li *ngFor="let childItem of item.child;let j =index" id={{i}}
+															(click)="onChildClick(item, childItem)" class="hover"><i
+																class="fas fa-chevron-right"></i>
+															<a class=child{{j}}>{{childItem.ruleName}}</a>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<ng-container *ngIf="!noRule; else ruleless">
+								<ng-container
+									*ngIf="showPreview && ruleId && ruleType == 'Base Pay' || ruleType == 'Bonus' || ruleType == 'Rate Incentive Goal' || ruleType == 'Bonus Incentive Goal'">
+									<app-show-rule class="col-md-8 mt-3" [viewRuleId]="ruleId">
+									</app-show-rule>
+								</ng-container>
+							</ng-container>
+							<ng-template #ruleless>
+								<span>There are no current rules of this type.</span>
+							</ng-template>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+
+	</div>
+</div>
+<div *ngIf="apiService.checkPermission('ClonePlan')">
+	<div class="row justify-content-end w-100">
+		<button type="submit" class="btn btn-primary" (click)="clone()"><i class="far fa-clone"></i> Clone</button>
+	</div>

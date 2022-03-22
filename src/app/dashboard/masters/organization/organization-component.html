@@ -1,0 +1,161 @@
+<div class="page-title col-md-12 ">
+  <h1> Organization Master</h1>
+  <div class="breadcrumbs">
+    <a href="#">Home</a>/<span>Organization Master</span>
+  </div>
+</div>
+<div class="content">
+  <div>
+    <!--<a class="btn btn-primary float-right" (click)="addInd = !addInd" *ngIf="!addInd">
+    <i class="material-icons pointer">add_circle</i> Add
+  </a>
+  <a class="btn btn-primary float-right" (click)="addInd = !addInd" *ngIf="addInd || cancelclick" (OnClick)="cancelClick()">
+    <i class="material-icons pointer">remove_circle</i> Cancel
+  </a>-->
+    <a class="btn btn-primary float-right" *ngIf="addbtn" (click)="addClick()">
+      <i class="material-icons pointer">add_circle</i> Add
+    </a>
+    <a class="btn btn-primary float-right" *ngIf="cancelbtn" (click)="cancelClick()">
+      <i class="material-icons pointer">remove_circle</i> Cancel
+    </a>
+  </div>
+  <div class="card" *ngIf="addInd || updateInd">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect" *ngIf="add">Add Organization Master </h4>
+      <h4 class="card-title no-hover-effect" *ngIf="update">Update Organization Master </h4>
+    </div>
+    <div class="card-body">
+
+      <form [formGroup]="OrganizationForm" (ngSubmit)="onSubmit()" class="w-100">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-5">Organization Code </label>
+              <div class="col-sm-7">
+                <input type="text" name="OrganizationCode" id="OrganizationCode" class="custom-input" formControlName="OrganizationCode"
+                       placeholder="">
+                <div class="error"
+                     *ngIf="OrganizationForm.controls['OrganizationCode'].hasError('required') && OrganizationForm.controls['OrganizationCode'].touched">
+                  Organization Code
+                  is
+                  required.
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-5">Organization Name </label>
+              <div class="col-sm-7">
+                <input type="text" name="OrganizationName" id="OrganizationName" class="custom-input" formControlName="OrganizationName"
+                       placeholder="">
+                <div class="error"
+                     *ngIf="OrganizationForm.controls['OrganizationName'].hasError('required') && OrganizationForm.controls['OrganizationName'].touched">
+                  Organization Name
+                  is
+                  required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary" *ngIf="add">
+              <i class="fas fa-plus"></i> Add Organization Master
+            </button>
+            <button type="submit" class="btn btn-primary" *ngIf="update">
+              <i class="fas fa-plus"></i> Update Organization Master
+            </button>
+          </div>
+
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect">Organization Master</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="float-right">
+            <button class="btn btn-primary" (click)="filter = !filter">
+              <i class="material-icons">filter_list</i>
+              Filter
+            </button>
+          </div>
+          <div class="form-group  col-sm-3 input-group  float-right pr-0 mr-2">
+            <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText"
+                   (keyup)="applyFilter($event)" name="searchText" placeholder="Search">
+            <span class="input-group-icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="filter">
+        <div class="gray-bg row">
+          <div class="col-md-12 pt-3 pb-3 gray-bg">
+            <div class="row filter-row">
+              <div class="form-group col-md-3">
+                <label class="bmd-label-floating">Organization Master</label>
+                <input type="text" class="custom-input" [(ngModel)]="selectedOrganization"
+                       (change)="onChangeFilter()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <table mat-table [dataSource]="OrganizationDataSource" matSort class="my-table mt-3" style="width: 100%">
+        <ng-container matColumnDef="selected">
+          <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Select </th>
+          <td mat-cell *matCellDef="let element">
+            <section class="checkbox-section">
+              <mat-checkbox [(ngModel)]="element.selected" (change)="onSelectionChange()">
+              </mat-checkbox>
+            </section>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="OrganizationCode">
+          <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Organization Code </th>
+          <td data-td-head=" Organization Code" mat-cell *matCellDef="let element">
+            {{element.organizationCode}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="OrganizationName">
+          <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Organization Name </th>
+          <td data-td-head=" Organization Name" mat-cell *matCellDef="let element">
+            {{element.organizationName}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="OrganizationCols"></tr>
+        <tr mat-row *matRowDef="let row; columns OrganizationCols;" (click)="rowClick(row)" class="pointer table-content"></tr>
+      </table>
+
+
+
+      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+
+      <div>
+
+
+      </div>
+      <div>
+        <button class="btn btn-danger" (click)="deleteSelected()" [disabled]="!checkSelected()">
+          <i class="material-icons">clear</i>Delete ({{getNumberSelected()}})
+          Selected
+        </button>
+      </div>
+    </div>
+  </div>
+
+

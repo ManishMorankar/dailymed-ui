@@ -1,0 +1,126 @@
+<div class="page-title col-md-12 "><h1> Finance Partner Deduction Maintenance</h1>
+	<div class="breadcrumbs"><a  href="#">Home</a>/<span>Finance Partner Deduction Maintenance</span>
+	</div></div>
+ 
+  <div class="content">
+ 
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"> <i class="fas fa-hand-holding-usd"></i> Finance Partner</h4>
+      </div>
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-md-12">
+             
+          <div class="input-group float-right table-search">
+            <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText" placeholder="Search" (input)="searchForItem()">
+            <span class="input-group-icon">
+            <i class="fas fa-search"></i>
+        </span>
+      </div>
+  
+    </div>
+          </div>
+ <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+            <mat-cell  [attr.data-td-head]="column.value"    *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer table-content" (click)= "rowClick(row)"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        <div *ngIf="apiService.checkPermission('CreateRateTables')">
+          <a class="btn  btn-primary float-right" *ngIf="!addInd"  (click)="addInd = !addInd" ><i class="material-icons pointer">add_circle</i> Add</a>
+          <a class="btn  btn-primary float-right" *ngIf="addInd"  (click)="addInd = !addInd"><i class="material-icons pointer">remove_circle</i> Hide</a>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="addInd">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-dollar-sign"></i> Add Finance Partner Deduction</h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <form [formGroup]="financePartnerDeductionForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row" *ngIf="activeFinancePartnerDeductions">
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Finance Partner</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="finance_partner_dropdown" formControlName="financePartner"
+                  data-style="btn btn-link" id="finance_partner_dropdown">
+                  <option *ngFor="let fp of dropdowns.financePartners" value="{{fp.financePartnerId}}">
+                    {{fp.financePartner1}}</option>
+                </select>
+              </div>
+              </div>
+            </div>
+            
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Effective Start Date</label>
+                <div class="col-sm-7">
+                <input type="date" name="start_date" id="start_date" class="custom-input"
+                  formControlName="effectiveStartDate" placeholder="">
+                <div *ngIf="financePartnerDeductionForm.errors && financePartnerDeductionForm.errors.maxDate">
+                  <p style="color: red;">New Effecting Start Date should be greater than any previous start dates</p>
+                </div>
+              </div>
+            </div> </div>
+              <div class="form-group col-md-6"> <div class="row">
+                <label class="col-sm-5">Finance Partner Deduction Rate</label>
+                <div class="col-sm-7">
+                <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }"
+                  name="financePartnerDeductionRate" formControlName="financePartnerDeductionRate" class="custom-input">
+                <div *ngIf="financePartnerDeductionRate.errors && financePartnerDeductionRate.errors.max">
+                  <p style="color: red;">Finance Partner Deduction Rate cannot be higher than $20.00</p>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            <div class="row align-button-right">
+              <button type="submit" class="btn btn-primary" [disabled]="financePartnerDeductionForm.invalid"><i class="fas fa-plus"></i> Add Finance
+                 Partner Deduction</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="financePartnerDeductionGroup">
+      <div class="card-header-info">
+        <h4 class="card-title"><i class="fas fa-history"></i> History</h4>
+      </div>
+      <div class="card-body">
+         
+          <!-- <hr style="width: 95%; border-color: #26c6da;" /> -->
+          <div class="w-100">
+            <a class="text-info"><i class="material-icons float-right blue-icon"
+                (click)="financePartnerDeductionGroup = null">cancel</i></a>
+          </div>
+         
+                 <h6 class="mt-2 mb-3">Finance Partner <span>{{financePartnerDeductionGroup[0].financePartner}}</span> </h6>
+                    
+              
+             
+          <table class="my-table mat-table col-md-12">
+            <thead>
+              <tr class="mat-header-row"> 
+                <th class="mat-header-cell"  scope="col">Effective Start Date</th>
+                <th class="mat-header-cell" scope="col">Effective End Date</th>
+                <th class="mat-header-cell" scope="col">Finance Partner Deduction Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mat-row " *ngFor="let tr of financePartnerDeductionGroup">
+                <td class="mat-cell" data-td-head="Effective Start Date">{{tr.effectiveStartDate | date}}</td>
+                <td class="mat-cell"  data-td-head="Effective End Date">{{tr.effectiveEndDate | date}}</td>
+                <!-- <td class="mat-cell"  data-td-head="Finance Partner Deduction Rate">{{tr.financePartnerDeductionRate | currency:'USD':true:'1.2-3'}}</td> -->
+                <!-- Dilip Rate table changes -->
+                <td class="mat-cell"  data-td-head="Finance Partner Deduction Rate">{{tr.financePartnerDeductionRate | currency:'USD':true:'1.3-3'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        
+      </div>
+    

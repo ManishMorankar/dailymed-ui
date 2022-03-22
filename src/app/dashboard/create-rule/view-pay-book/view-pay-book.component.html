@@ -1,0 +1,55 @@
+<div class="page-title col-md-12 ">
+  <h1> View Payment Book</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>View Payment Book</span></div>
+</div>
+
+<div class="content">
+
+  <div class="row">
+    <div class="col-md">
+
+      <div class="card" *ngIf="paymentBook">
+        <div class="card-header-info p-3">
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Name: </label> {{paymentBook.ruleName}}
+            </div>
+            <div class="col-sm-6">
+              <label>Description:</label> {{paymentBook.ruleDescription}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Book Type</label>
+
+                <div class="col-sm-7">
+                  <input type="text" class="custom-input" value="{{paymentBook.pbType}}" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Overdraw Limit ( - )</label>
+
+                <div class="col-sm-7">
+                  <input type="number" class="custom-input" value="{{paymentBook.overdrawLimit}}" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Weekly Pay</label>
+
+                <div class="col-sm-7">
+                  <input type="number" class="custom-input" value="{{paymentBook.weeklyPay}}" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

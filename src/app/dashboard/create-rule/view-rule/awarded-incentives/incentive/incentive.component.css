@@ -1,0 +1,28 @@
+.condition-row-container {
+  width: 100%;
+  display: inline-flex;
+}
+
+.condition-row {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.spaced {
+  justify-content: space-evenly;
+}
+
+.apart {
+  justify-content: space-between;
+}
+
+/* .mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+} */
+
+.condition-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}

@@ -1,0 +1,181 @@
+<div class="page-title col-md-12 ">
+  <h1> View Base Formula</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>View Base Formula</span></div>
+</div>
+
+<div class="content">
+
+
+  <div class="row">
+    <div class="col-md">
+      <form>
+        <fieldset disabled="disabled">
+          <div class="card">
+            <div class="card-header-info">
+              <h4 class="card-title no-hover-effect"><i class="fas fa-eye"></i> View Base Formula</h4>
+            </div>
+            <div class="card-body">
+
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="row">
+
+                    <label class="col-sm-4">Name</label>
+                    <div class="col-sm-7">
+                      <input class="custom-input" [ngModelOptions]="{standalone : true}"
+                        [(ngModel)]="rulesForm.rule_name" />
+                    </div>
+                    <!-- <label class="bmd-label-floating text-white align_label">Name</label>
+                          <input type="text" class="form-control" [ngModelOptions]="{standalone : true}" [(ngModel)]="rulesForm.rule_name"> -->
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="col-sm-4">Description</label>
+                    <div class="col-sm-7">
+                      <textarea class="custom-input" name="name" rows="3" style="width:100%;"
+                        [ngModelOptions]="{standalone : true}" [(ngModel)]="rulesForm.description"></textarea>
+                      <!-- <label class="bmd-label-floating text-white align_label">Description</label>
+                          <textarea name="name" rows="3" cols="50" [ngModelOptions]="{standalone : true}" [(ngModel)]="rulesForm.description"></textarea> -->
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="row">
+
+
+
+                <div class="steps-div col-md-12">
+                  <div id="tbl" class="row mb-3" *ngFor="let step of stepsArray;let i=index">
+
+                    <div class="col-md-12">
+                      <div class="w-100 steps-title">
+                        <h3 class="step_index">Step <span>{{i+1}}</span></h3>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="step_tr_class p-3">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="custom-input head-input">{{step.step_name}}</p>
+                          </div>
+                          <div class="col-md-9">
+                            <fieldset>
+
+                              <h4>Conditions</h4>
+                              <div id="inputbox_table_1" class="gray-bg mb-2  pb-1 lft-green-brdr"
+                                *ngFor="let item of step.conditions;let j=index">
+
+                                <div class="col-md-12  condition-container">
+                                  <div class="row">
+                                    <span class="condition-count">{{j+1}} </span>
+                                    <!--   <h4 class="no-hover-effect">{{j+1}} </h4> -->
+                                    <div class="col-sm-4">
+                                      <p class="custom-input" id="div1">{{item.left_side}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <select class="custom-select" id="step_1_operator_1"
+                                        [ngModelOptions]="{standalone : true}"
+                                        [(ngModel)]=item.operators>{{item.operators}}
+                                        <option value="<">Less than</option>
+                                        <option value=">">Greater than</option>
+                                        <option value="<=">Less than or equal</option>
+                                        <option value=">=">Greater than or equal</option>
+                                        <option value="=">Equal</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <p class="custom-input">{{item.right_side}}</p>
+                                    </div>
+                                    <!-- </div> -->
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" value="1"
+                                          [ngModelOptions]="{standalone : true}" [(ngModel)]=step.criteria>All
+                                        conditions should meet
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" value="2"
+                                          [ngModelOptions]="{standalone : true}" [(ngModel)]=step.criteria>One or more
+                                        conditions should meet
+
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-check form-check-radio">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" value="3"
+                                          [ngModelOptions]="{standalone : true}"
+                                          ngModel={{getValueType(step.criteria)}}>Advanced
+                                        <span class="circle">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Advanced Condition </label>
+                                      <input type="text" class="custom-input" [ngModelOptions]="{standalone:true}"
+                                        [(ngModel)]=step.criteria>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+                            </fieldset>
+                          </div>
+                          <div class="col-md-3 border-left">
+                            <h4>Action</h4>
+                            <textarea rows="6" disabled class="custom-input" value=""
+                              [ngModelOptions]="{standalone : true}" [(ngModel)]=step.action></textarea>
+                            <!-- <input type="text" class="custom-control p-0" > -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <ng-container *ngIf="apiService.checkPermission('CloneBaseFormula')">
+          <div class="row">
+            <div class="col text-right">
+              <button class="btn btn-primary" [routerLink]="['/ui/clone-baseformula/'+ viewRuleId]"><i
+                  class="far fa-clone"></i> Clone</button>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,61 @@
+<div class="content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 offset-md-0" style="padding-top:25px;">
+        <div class="text-center">
+          <a [routerLink]="['/']"><img src="/assets/images/log.png" width="150px" alt=""></a>
+        </div>
+        <div class="card" style="box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);">
+          <div class="card-header">
+            <div class="text-center">
+              <h3 style="font-weight: 400;"> LOGIN </h3>
+            </div>
+            <!-- <hr/> -->
+          </div>
+
+          <div class="card-body">
+            <form [formGroup]="loginForm">
+              <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">E-mail</label>
+                    <input type="email" formControlName="email" name="email" class="form-control" autocomplete="off"
+                      (change)="setEmail($event)">
+                    <!-- <div class="error"
+     *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
+     E-mail is required</div>
+   <div class="error"
+     *ngIf="loginForm.controls['email'].hasError('email') && loginForm.controls['email'].touched">Email
+     must be a valid email address</div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Password</label>
+                    <input type="password" name="password" formControlName="password" class="form-control"
+                      autocomplete="off" (change)="setPassword($event)" (keyup.enter)="onSubmit()">
+                    <!--<div class="error"
+    *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+    Password is required</div>-->
+                  </div>
+                </div>
+              </div>
+
+
+              <button type="button" (click)="onSubmit()" class="btn pull-right col-md-12">LOGIN</button>
+              <!--<div class="clearfix"></div>-->
+            </form>
+            <!--<div class="row justify-content-center">
+              <a [routerLink]="['/forgotpassword']" class="col-md-12 text-center">
+                <button type="submit" class="btn col-md-12">Forgot Password</button>
+              </a>
+            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

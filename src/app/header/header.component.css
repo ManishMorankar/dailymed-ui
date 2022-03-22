@@ -1,0 +1,55 @@
+#nav-toggle:focus {
+  outline: none;
+}
+
+#nav-toggle {
+  /* background-color: #6CCA98; */
+}
+
+.commissions-navbar {
+  background-color: #025686 !important;
+  height: 60px;
+  top: 0;
+  color: white;
+  position: fixed;
+  left: 0;
+  z-index: 9;
+  right: 0;
+}
+
+.trinity-logo-sidebar img {
+  max-height: 50px;
+}
+
+.header-link {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.header-icon {
+  padding: 0 5px;
+  font-size: 18px;
+}
+
+.toggle-color {
+}
+
+.menu-toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #025686;
+  border-radius: 0;
+}
+
+.mat-list-base {
+  padding-top: 8px;
+  display: block;
+  background-color: #e1e1e1;
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,90 @@
+<div class="page-title col-md-12 ">
+  <h1>User Management</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>User Management</span>
+  </div>
+</div>
+
+   <div class="content">
+  
+      <div class="card">
+        <div class="card-header-info card-header">
+          <h4 class="card-title"><i class="fas fa-users"></i> All Users</h4>
+      
+        </div>
+        <div class="card-body allusers">
+          <div class="row">
+            <div class="col-md-12 text-right mb-2">
+            <button class="btn btn-primary"
+            *ngIf="apiService.checkPermission('CreateNewUser') || true"
+            [routerLink]="['/ui/dashboard/masters/users/create']"><i class="fas fa-user-plus"></i> Create User</button>
+            </div>
+            <!--<div class="col-md-6" > <div class="row">
+             
+                <label class="col-sm-5">Roles</label>
+                <div class="col-sm-7">
+                <select name="role_id" class="custom-select"  [(ngModel)]="role_id" id="role_id" (selectionChange)="filterDepartment();">
+                  <option value="0" selected>All</option>
+                  <option *ngFor="let roleItem of rolesList" [value]="roleItem.roleID">{{roleItem.roleName}}
+                  </option>
+                </select>
+              </div>
+              </div>-->
+              <!-- <label class="bmd-label-floating">Roles</label>
+          <select name="role_id" [(ngModel)]="role_id" class="custom-select" id="role_id"
+            (change)="filterDepartment();">
+            <option *ngFor="let roleItem of rolesList" value="{{roleItem.roleID}}">{{roleItem.roleName}}</option>
+          </select> -->
+            <!--</div>-->
+             <div class="col-md-6"><div class="row">
+              
+                <label class="col-sm-5">Search</label>
+                <div class="col-sm-7">
+                <input class="custom-input" [(ngModel)]="searchText" name="searchText" placeholder="Search">
+              </div>
+            </div>
+            </div>
+    
+            <!-- <div class="col-md-3">
+              <label class="bmd-label-floating">Contract Signed Date</label>
+              <input type="date" class="form-control">
+            </div> -->
+          </div>
+          <div class="col-md-12 ">
+            <table class="my-table mat-table w-100 mt-3">
+              <thead>
+                <tr  class="mat-header-row">
+                <th    class="mat-header-cell" scope="col">S.No</th>
+                <th   class="mat-header-cell" scope="col">Name</th>
+                <th   class="mat-header-cell" scope="col">Email</th>
+                <th   class="mat-header-cell" scope="col">Status</th>
+                <th   class="mat-header-cell" scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr class="mat-row"  
+                  *ngFor="let users of (usersList | tableFilter: searchText) | paginate: { itemsPerPage: 10, currentPage: page }; let i = index;">
+                  <td data-td-head="S.No" class="mat-cell" scope="row">{{'U' + (((page-1)*10)+(i+1))}}</td>
+                  <td data-td-head="Name" class="mat-cell" scope="row">{{users.name}}</td>
+                  <td data-td-head="Email" class="mat-cell" scope="row">{{users.email}}</td>
+                  <td data-td-head="EStatus" class="mat-cell" scope="row">
+                    <span class="badge badge-success" *ngIf="users.status == 1 || users.status == '1'">Active</span>
+                    <span class="badge badge-danger" *ngIf="users.status != 1">Inactive</span>
+                  </td>
+                  <td data-td-head="Action" class="mat-cell" class="td-actions" scope="row">
+                    <button type="button" *ngIf="apiService.checkPermission('CreateNewUser') || true" rel="tooltip"
+                      (click)="onEditUser(users)" title="" class="btn btn-success btn-link btn-sm"
+                      data-original-title="Edit">
+                      <i class="material-icons">edit</i>
+                    </button>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls class="float-right" (pageChange)="page = $event" autoHide="true">
+          </pagination-controls>
+        </div>
+      </div>
+     
+</div>

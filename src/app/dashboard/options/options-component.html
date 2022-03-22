@@ -1,0 +1,71 @@
+<div class="page-title col-md-12 ">
+  <h1>Options</h1>
+  <div class="breadcrumbs">
+    <a href="#">Home</a>/<span>Options</span>
+  </div>
+</div>
+<div class="content">
+  <form [formGroup]="importSalesDataForm" (ngSubmit)="importSalesData()" class="w-100">
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect">Import Sales Data</h4>
+        <div class="card-body">
+          <label>* Select File</label>
+          <input type="file" class="form-control" formControlName="uploadDocument" (change)="onSelectFile($event)">
+          <div class="error"
+               *ngIf="importSalesDataForm.controls['uploadDocument'].hasError('required') && importSalesDataForm.controls['uploadDocument'].touched">
+            File
+            is
+            required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Import
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form [formGroup]="replaceCompanyForm" (ngSubmit)="replaceCompany()" class="w-100">
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect">Replace Company Name</h4>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="">* Old Company Name</label>
+                <div class="col-sm-6">
+                  <input type="text" class="custom-input" formControlName="oldCompanyName" placeholder="">
+                  <div class="error"
+                       *ngIf="replaceCompanyForm.controls['oldCompanyName'].hasError('required') && replaceCompanyForm.controls['oldCompanyName'].touched">
+                    Old Company name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="">* New Company Name</label>
+                <div class="col-sm-6">
+                  <input type="text" class="custom-input" formControlName="newCompanyName" placeholder="">
+                  <div class="error"
+                       *ngIf="replaceCompanyForm.controls['newCompanyName'].hasError('required') && replaceCompanyForm.controls['newCompanyName'].touched">
+                    New Company name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-plus"></i> Replace
+            </button>
+          </div>
+        </div>
+  </form>
+</div>

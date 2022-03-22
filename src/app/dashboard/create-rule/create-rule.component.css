@@ -1,0 +1,336 @@
+.tree, .tree ul {
+    margin:0;
+    padding:0;
+    list-style:none
+}
+.tree ul {
+    margin-left:0;
+    position:relative
+}
+.tree ul ul {
+    margin-left:.5em
+}
+.tree ul:before {
+    
+}
+.tree li {
+    margin: 0;
+padding:0;
+    line-height:28px;
+    color:black;
+    font-weight:400;
+    position:relative
+}
+.tree li.branch{  margin:5px 5px 5px 0;  padding:0 0 0 15px;}
+
+.tree li i{position: absolute; left:0; top:8px; }
+.tree ul li:before {
+   
+}
+.tree ul li:last-child:before {
+    background:#fff;
+    height:auto;
+    top:1em;
+    bottom:0
+}
+.indicator {
+    margin-right:5px;
+}
+.tree li a {
+    text-decoration: none; padding-left: 5px;
+  width:100%; display: inline-block; line-height: 28px;
+ }
+ .tree li.branch > a{line-height: 20px;}
+.tree li a:hover {
+    cursor: pointer;
+}
+.tree li button, .tree li button:active, .tree li button:focus {
+    text-decoration: none;
+    color:black;
+    border:none;
+    background:transparent;
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+    outline: 0;
+}
+
+.h-94{
+  height: 94%;
+}
+
+.w-72{
+  width:72%;
+}
+
+.fa-plus-circle:before {
+    color: #41b3c2;
+    font-size: medium;
+}
+ /* input[type=text] {
+    text-decoration: none;
+    color: #fff;
+    background-color: #22cbce;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 2px;
+    white-space: nowrap;
+} */
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.custom-error-msg {
+    display: none;
+}
+
+.custom-select-width{
+    width: 50%;
+    margin: 10px;
+}
+
+.bootstrap-select>select.bs-select-hidden, select.bs-select-hidden, select.selectpicker {
+    display: block!important;
+}
+
+.white-label{
+  color: white;
+}
+.drag-data:hover {
+    cursor: move!important;
+    background-color: #efefef;
+}
+.action-drag {
+    border: 2px dashed #eee;
+    color: #eee;
+    text-align: center;
+    font-size: 17px;
+    width: 100%;
+}
+.operator-action {
+    width: 100%;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+}
+.operator {
+    background-color: #eee;
+    margin-right: 5px;
+    border-radius: 25px;
+    padding: 10px;
+}
+.flex-container {
+    /* display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+    align-content: center;
+}
+.action-object{
+    background-color: #408bc0;
+    color: #fff;
+     width: 100%;
+    margin-top: 7px;
+    text-align: center;
+    font-size: 12px;
+    
+}
+#x {
+    background: #fff;
+    color: #41b3c2;
+    float: right;
+    height: 100%;
+    width: 15px;
+}
+#x:hover{
+    cursor: pointer;
+    background-color: red;
+    color: #fff;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.action-object:last-child {
+    border: none;
+}
+ 
+.action-drag.cdk-drop-list-dragging .action-object:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.validate-button {
+    width: 100%;
+}
+.validator {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+.validator-text-invalid {
+    color: red;
+  }
+.validator-text-valid {
+    color: green;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+.invalid-reasoning {
+    color: #5f5f5f;
+    font-weight: 400;
+}
+.condition-container {
+    display:flex;
+    flex-direction: row;
+}
+.remove-condition:hover {
+    cursor: pointer;
+}
+.custom-control {
+    padding-left: 2px !important;
+}
+.condition-input {
+    border: 1px solid #ababab;
+    border-radius: 20px;
+    /* box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); */
+}
+.material-icons > .condition-criteria{
+    color: grey;
+    font-size: 16px;
+}
+.criteria-text:hover {
+    cursor: pointer;
+    color: lightblue;
+}
+.searched {
+ width:100%; display: inline-block; position: relative; padding:5px 5px 5px 15px;
+}
+.searched i{position: absolute; left:0; top:7px; color: #37b471;}
+.advanced-condition {
+    display: flex;
+    justify-content: center;
+}
+.advanced-condition-element {
+    background-color: #37b471;
+    color: #FFF;
+   margin-bottom: 0px;
+   padding-right: 10px;
+   padding-left: 10px;
+       /* margin-right: 5px;
+    padding: 2px; */ line-height: 24px;
+    font-size: 13px;
+}
+.advanced-condition-element:hover {
+    background-color: red;
+     color: #fff;
+    transition: .7s;
+    cursor: pointer;
+}
+.advanced-condition-container {
+    display:flex;
+    border: .5 solid #eee;
+    /* box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); */
+    margin-right: 5px;
+}
+.advanced-condition-delete {
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: .7rem;
+    margin-right: 5px;
+}
+.advanced-condition-section {
+    margin-top: 10px; padding-top:10px;
+    border-top: 1px solid #eee;
+    display:flex;
+    justify-content: space-around;
+}
+.advanced-condition-operator {
+    background-color: #d6d6d6;
+    color: #41b3c2 !important;
+    margin-right: 5px;
+    border-radius: 25px;
+    padding: 10px;
+}
+.advanced-condition-valid {
+    display: flex;
+    justify-content: center;
+}
+.advanced-condition-valid-header {
+    font-weight: 600;
+}
+.advanced-condition-valid-text {
+
+}
+.advanced-condition-string {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+.bmd-overwrite {
+    position: initial !important;
+}
+
+.actionDisplay {
+    padding-top: 5px;
+    text-align: center;
+    margin-top: 5px;
+    border: 1px solid #eee;
+    background-color: #eee;
+    color: #000;
+    border-radius: 10px;
+
+}
+.actionDisplay:hover {
+    cursor: pointer;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    transition: ease-in;
+}
+.custom-snackbar {
+    background-color: #eee;
+    color: #000;
+    font-weight: 700;
+    max-width: 100% !important;
+}
+.stepName {
+    display: flex;
+    /* justify-content: end; */
+}
+.stepInput {
+    margin-left: 5px;
+    max-width: 70% !important;
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    border-color: #eee;
+    padding-top: 10px;
+}
+.stepInput:focus {
+    transition: .5s;
+    border-color: #369DD6;;
+}
+.stepLabel {
+    font-weight: 500;
+    padding: 10px 10px 10px 0px;
+}
+.stepLabelInvalid {
+    font-weight: 500;
+    padding: 10px 10px 10px 0px;
+    color: crimson;
+}
+label {
+    color: #000 !important;
+}

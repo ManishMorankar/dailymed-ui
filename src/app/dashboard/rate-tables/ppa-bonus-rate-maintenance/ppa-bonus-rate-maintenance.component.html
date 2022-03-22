@@ -1,0 +1,214 @@
+<div class="page-title col-md-12 "><h1> PPA Bonus Rate Maintenance (Formerly Sunnova Lease Bonus)</h1>
+	<div class="breadcrumbs"><a  href="#">Home</a>/<span>PPA Bonus Rate Maintenance (Formerly Sunnova Lease Bonus)</span>
+	</div></div>
+
+ 
+  <div class="content">
+    
+    <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect">PPA Bonus Rates</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">             
+            <div class="input-group float-right table-search">
+              <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText" placeholder="Search" (input)="searchForItem()">
+              <span class="input-group-icon">
+              <i class="fas fa-search"></i> 
+          </span>
+        </div>
+    
+      </div>
+        </div>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+            <mat-cell  [attr.data-td-head]="column.value"   *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer table-content" (click)= "rowClick(row)"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        <div *ngIf="apiService.checkPermission('CreateRateTables')">
+          <a class="btn  btn-primary float-right"  *ngIf="!addInd"  (click)="addInd = !addInd" ><i class="material-icons pointer">add_circle</i> Add</a>
+          <a class="btn  btn-primary float-right" *ngIf="addInd"  (click)="addInd = !addInd"><i class="material-icons pointer">remove_circle</i> Hide</a>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="addInd">
+      <div class="card-header-info">
+        <h4 class="card-title no-hover-effect"><i class="fas fa-plus"></i> Add PPA Bonus Rate</h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <form [formGroup]="ppaBonusRateForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row" *ngIf="activePpaBonusRates">
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">Sales Territory</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="sales_territory_dropdown" formControlName="salesTerritory"
+                  data-style="btn btn-link" id="sales_territory_dropdown">
+                  <option *ngFor="let st of dropdowns.salesTerritories" value="{{st.salesTerritoryId}}">
+                    {{st.salesTerritory1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">Utility Company</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="utility_company_dropdown" formControlName="utilityCompany"
+                  data-style="btn btn-link" id="utility_company_dropdown">
+                  <option *ngFor="let uc of dropdowns.utilityCompanies" value="{{uc.utilityCompanyId}}">
+                    {{uc.utilityCompany1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">Finance Partner</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="finance_partner_dropdown" formControlName="financePartner"
+                  data-style="btn btn-link" id="finance_partner_dropdown">
+                  <option *ngFor="let fp of dropdowns.financePartners" value="{{fp.financePartnerId}}">
+                    {{fp.financePartner1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">Purchase Method</label>
+                <div class="col-sm-7">
+                <select class="custom-select" name="purchase_method_dropdown" formControlName="purchaseMethod"
+                  data-style="btn btn-link" id="purchase_method_dropdown">
+                  <option *ngFor="let pm of dropdowns.purchaseMethods" value="{{pm.purchaseMethodId}}">
+                    {{pm.purchaseMethod1}}</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">Effective Start Date</label>
+                <div class="col-sm-7">
+                <input type="date" name="start_date" id="start_date" class="custom-input"
+                  formControlName="effectiveStartDate" placeholder="">
+                <div *ngIf="ppaBonusRateForm.errors && ppaBonusRateForm.errors.maxDate">
+                  <p style="color: red;">New Effecting Start Date should be greater than any previous start dates</p>
+                </div>
+              </div>
+              </div>
+            </div>
+            </div>
+            <div class="row" *ngFor="let group of ppaPpkwGroup; index as i">
+              <div class="gray-bg col-md-12"><div class="row">
+              <div class="form-group col-md-4"> <div class="row">
+                <label class="col-sm-5">PPA Rate</label>
+                <div class="col-sm-7">
+                <input currencyMask [options]="{ allowNegative: false, align: 'left', precision: 3 }"
+                  name="{{getControlName(group[0])}}" formControlName="{{getControlName(group[0])}}"
+                  class="custom-input">
+              </div>
+              </div>
+              </div>
+              <div class="form-group col-md-4"><div class="row">
+                <label class="col-sm-5">Price Per kW</label>
+                <div class="col-sm-7">
+                <input currencyMask [options]="{ allowNegative: false, align: 'left' }"
+                  name="{{getControlName(group[1])}}" formControlName="{{getControlName(group[1])}}"
+                  class="custom-input">
+              </div>
+            </div>
+          </div> 
+          <a class="text-info"><i class="material-icons hover" (click)="removeFormRow(i)">delete</i></a>
+              <a class="text-info hover"><i *ngIf="i == ppaPpkwGroup.length - 1" class="material-icons"
+                  (click)="addFormRow()">add_box</i></a>
+                </div>
+              </div>
+            </div>
+            <div class="row align-button-right">
+              <button type="submit" class="btn btn-primary" [disabled]="ppaBonusRateForm.invalid"><i class="fas fa-plus"></i> Add PPA Bonus
+                Rate</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="ppaBonusRateGroup">
+      <div class="card-header-info">
+        <h4 class="card-title"><i class="fas fa-history"></i> History</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- <hr style="width: 95%; border-color: #26c6da;" /> -->
+          <div class="col-md-12">
+            <a class="text-info"><i class="material-icons float-right blue-icon" (click)="ppaBonusRateGroup = null">cancel</i></a>
+          </div>
+          
+             
+              <div class="row">
+                 <div class="col-md-4"><div class="row">
+                      <label class="col-sm-5">Sales Territory</label>
+                      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].salesTerritory}}</span>
+                    </div></div>
+                    <div class="col-md-4"><div class="row"> 
+                      <label class="col-sm-5">Utility Company</label>
+                      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].utilityCompany}}</span>
+                     </div></div>
+                     <div class="col-md-4"><div class="row"> 
+                      <label class="col-sm-5">Finance Partner</label>
+                      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].financePartner}}</span>
+                     </div></div>
+                     <div class="col-md-4"><div class="row"> 
+                      <label class="col-sm-5">Purchase Method</label>
+                      <span class="col-sm-7">{{ppaBonusRateGroup[0][0].purchaseMethod}}</span>
+                     </div></div>
+              </div>
+             
+          
+          <table class="my-table mat-table col-md-12 mt-3">
+            <thead>
+              <tr  class="mat-header-row">
+                <th class="mat-header-cell"   scope="col">Effective Start Date</th>
+                <th class="mat-header-cell"   scope="col">Effective End Date</th>
+                <!-- <th scope="col">PPA Rate</th>
+                <th scope="col">Price Per kW</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let tr of ppaBonusRateGroup">
+                <tr  class="mat-row "  (click)="groupClick(tr)">
+                  <td  class="mat-cell" data-td-head="Effective Start Date">{{tr[0].effectiveStartDate | date}}</td>
+                  <td  class="mat-cell" data-td-head="Effective End Date">{{tr[0].effectiveEndDate | date}}</td>
+                </tr>
+                <tr style="background-color: #FFF;"
+                  *ngIf="ppaBonusRateSelectedGroup && tr[0].effectiveStartDate == ppaBonusRateSelectedGroup[0].effectiveStartDate">
+                  <td colspan="2" class="custom-table p-3">
+                    <table class="my-table mat-table col-md-12"> 
+<thead>
+  <tr class="mat-header-row">
+    <th class="mat-header-cell">  PPA Rate</th>
+    <th class="mat-header-cell"> Price Per kW</th>
+  </tr>
+</thead>
+<tbody>
+  <tr  class="mat-row "  *ngFor="let tr of ppaBonusRateSelectedGroup" >
+    <td class="mat-cell" data-td-head=" PPA Rate">  {{tr.ppaRate | currency:'USD':true:'1.2-3'}}</td>
+    <td class="mat-cell" data-td-head="  Price Per kW">   {{tr.pricePerKw | currency}}</td>
+
+  </tr>
+                    </table>
+
+
+
+                     
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 

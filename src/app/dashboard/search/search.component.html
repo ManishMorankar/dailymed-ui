@@ -1,0 +1,125 @@
+<!-- <app-commissions-sidebar></app-commissions-sidebar> -->
+<div>
+
+  <div class=" w-100">
+    <div class="content">
+      <!-- <div class="">
+      <a class="text-info nav-link" (click)="clear()" [routerLink]="['/ui/commissions']">
+        <i class="material-icons">arrow_back</i> back</a>
+    </div> -->
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-md ">
+            <form>
+              <div class="card">
+                <div class="card-header-info">
+                  <h4 class="card-title">Search</h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="opname">Keyword :</label>
+                        <input type="text" class="form-control" id="usr" name="opname" [(ngModel)]="keyword"
+                          placeholder="Type first 3 characters" (ngModelChange)="searchValue(keyword)" required>
+
+                      </div>
+                      <div class="form-group">
+                        <div *ngIf="apiService.checkPermission('ViewRule')"  class="form-check form-check-radio form-check-inline">
+                          <label class="form-check-label active">
+                            <input class="form-check-input" checked type="radio" name="inlineRadioOptions"
+                              id="inlineRadio1" value="option1" (change)="change('option1')">
+                            Rules
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div *ngIf="apiService.checkPermission('ViewOpportunityDetail')" class="form-check form-check-radio form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                              value="option2" [(ngModel)]="option2" (ngModelChange)="change(option2)"> Opportunities
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div *ngIf="apiService.checkPermission('ViewSalesRepDetail')" class="form-check form-check-radio form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                              value="option3" [(ngModel)]="option3" (ngModelChange)="change(option3)"> Sales Reps
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div *ngIf="apiService.checkPermission('ViewPlan')" class="form-check form-check-radio form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                              value="option4" [(ngModel)]="option4" (ngModelChange)="change(option4)"> Plans
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div *ngIf="apiService.checkPermission('ViewBaseFormula')" class="form-check form-check-radio form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5"
+                              value="option5" [(ngModel)]="option5" (ngModelChange)="change(option5)"> Base Formulas
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+
+                      </div>
+                      <!-- <div class="form-group">
+                              <button type="" class="btn" (click)="searchValue()">Search</button>
+                          </div> -->
+                      <div class="form-group">
+                        <div *ngFor="let item of searchValues | paginate: { itemsPerPage: 10, currentPage: page }">
+                          <div *ngIf="type==1" id="search">
+                            <div *ngIf="apiService.checkPermission('ViewRule')">
+                              <a (click)="viewRule(item)"
+                                style="color: #369dd6;cursor: pointer;">{{item.commissionRuleName}}({{item.commissionRuleTypeName}})</a>
+                            </div>
+                          </div>
+                          <div *ngIf="type==2" id="search">
+                            <div *ngIf="apiService.checkPermission('ViewOpportunityDetail')">
+                              <a (click)="viewOpportunity(item.opportunityId)"
+                                style="color: #369dd6;cursor: pointer;">{{item.opportunityName}}</a>
+                            </div>
+                          </div>
+                          <div *ngIf="type==3" id="search">
+                            <div *ngIf="apiService.checkPermission('ViewSalesRepDetail')">
+                              <a (click)="viewContact(item.contactId)"
+                                style="color: #369dd6;cursor: pointer;">{{item.contactName}}</a>
+                            </div>
+                          </div>
+                          <div *ngIf="type==4" id="search">
+                            <div *ngIf="apiService.checkPermission('ViewPlan')">
+                              <a (click)="viewPlan(item.planHeaderId)"
+                                style="color: #369dd6;cursor: pointer;">{{item.planName}}</a>
+                            </div>
+                          </div>
+                          <div *ngIf="type==5" id="search">
+                            <div *ngIf="apiService.checkPermission('ViewBaseFormula')">
+                              <a (click)="viewBaseFormula(item.formulaId)"
+                                style="color: #369dd6;cursor: pointer;">{{item.formulaName}}</a>
+                            </div>
+                          </div>
+                        </div>
+                        <pagination-controls style="text-align: center;" (pageChange)="page = $event" autoHide="true">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

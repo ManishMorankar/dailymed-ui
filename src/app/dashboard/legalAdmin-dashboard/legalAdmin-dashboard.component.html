@@ -1,0 +1,364 @@
+<div class="page-title col-md-12 ">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="card bg-skyblue-dark info-card hover" (click)='moveToSelectedTab("My Task")'>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8 ">
+            <div class="h4 mt-0">{{infoBox.skyblueInfo.name}}</div>
+            <div class="text-uppercase">
+              <h1>{{infoBox.skyblueInfo.number}}</h1>
+            </div>
+          </div>
+          <div class="col-4 text-right info-icon"><i class="fas fa-tasks"></i></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-purple-dark info-card hover" (click)='moveToSelectedTab("Contributed Document")'>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8 ">
+            <div class="h4 mt-0">{{infoBox.blueInfo.name}}</div>
+            <div class="text-uppercase">
+              <h1>{{infoBox.blueInfo.number}}</h1>
+            </div>
+          </div>
+          <div class="col-4 text-right info-icon"><i class="fas fa-file-alt"></i></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-green-dark info-card hover" (click)='moveToSelectedTab("Document For Approveing")'>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8 ">
+            <div class="h4 mt-0">{{infoBox.greenInfo.name}}</div>
+            <div class="text-uppercase">
+              <h1>{{infoBox.greenInfo.number}}</h1>
+            </div>
+          </div>
+          <div class="col-4 text-right info-icon"><i class="fas fa-user-check"></i></div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-gray-dark info-card hover" (click)='moveToSelectedTab("Document For Reading")'>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8 ">
+            <div class="h4 mt-0">{{infoBox.greyInfo.name}}</div>
+            <div class="text-uppercase">
+              <h1>{{infoBox.greyInfo.number}}</h1>
+            </div>
+          </div>
+          <div class="col-4 text-right info-icon"><i class="fas fa-book-reader"></i></div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 mt-2">
+    <div class="card" style='min-height:400px'>
+      <mat-tab-group animationDuration="2000ms">
+        <mat-tab label="My Task">
+          <mat-table #table4 [dataSource]="mytaskDataSource" matSort #sort4="matSort">
+            <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNamesMyTaskDocument">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+                {{column.value}}
+              </mat-header-cell>
+              <mat-cell [attr.data-td-head]="column.value" *matCellDef="let element">
+                <ng-container *ngIf="column.value == 'Project Name'; else projectOwner ">
+                  {{findProjectName(element.projectNameId)}}
+                </ng-container>
+                <ng-template #projectOwner>
+                  <ng-container *ngIf="column.value == 'Project Owner'; else projectStartDate">
+                    {{findUser(element.projectOwnerId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectStartDate>
+                  <ng-container *ngIf="column.value == 'Project Start Date'; else projectDueDate">
+                    {{element.projectStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectDueDate>
+                  <ng-container *ngIf="column.value == 'Project Due Date'; else documentType">
+                    {{element.projectDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentType>
+                  <ng-container *ngIf="column.value == 'Document Type'; else documentStartDate">
+                    {{findDocumentType(element.documentTypeId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentStartDate>
+                  <ng-container *ngIf="column.value == 'Document Start Date'; else documentDue">
+                    {{element.documentStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentDue>
+                  <ng-container *ngIf="column.value == 'Document Due Date'; else departmentId">
+                    {{element.documentDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #departmentId>
+                  <ng-container *ngIf="column.value == 'Department'; else Actionview">
+                    {{findDept(element.departmentId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #Actionview>
+                  <ng-container *ngIf="column.value =='View'; else ActionEdit">
+                    <i class="material-icons" (click)="viewDocument(element)">visibility</i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #ActionEdit>
+                  <ng-container *ngIf="column.value =='Action'; else DocTitel">
+                    <i class="material-icons fas fa-pen" (click)="editDocument(element)"> </i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #DocTitel>
+                  <ng-container *ngIf="column.value == 'Document Title'; else noRepsWithdata">
+                    {{element.documentTitle}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #noRepsWithdata>
+                  {{element[column.id]}}
+                </ng-template>
+              </mat-cell>
+
+
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsMyTaskPlans"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:displayedColumnsMyTaskPlans;" class="pointer table-content"
+                     (click)="rowClick(row)"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator4 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Contributed Document">
+          <mat-table #table1 [dataSource]="documentContributorsDataSource" matSort #sort1="matSort">
+            <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNamesContributorsDocument">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+                {{column.value}}
+              </mat-header-cell>
+              <mat-cell [attr.data-td-head]="column.value" *matCellDef="let element">
+                <ng-container *ngIf="column.value == 'Project Name'; else projectOwner ">
+                  {{findProjectName(element.projectNameId)}}
+                </ng-container>
+                <ng-template #projectOwner>
+                  <ng-container *ngIf="column.value == 'Project Owner'; else projectStartDate">
+                    {{findUser(element.projectOwnerId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectStartDate>
+                  <ng-container *ngIf="column.value == 'Project Start Date'; else projectDueDate">
+                    {{element.projectStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectDueDate>
+                  <ng-container *ngIf="column.value == 'Project Due Date'; else documentType">
+                    {{element.projectDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentType>
+                  <ng-container *ngIf="column.value == 'Document Type'; else documentStartDate">
+                    {{findDocumentType(element.documentTypeId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentStartDate>
+                  <ng-container *ngIf="column.value == 'Document Start Date'; else documentDue">
+                    {{element.documentStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentDue>
+                  <ng-container *ngIf="column.value == 'Document Due Date'; else departmentId">
+                    {{element.documentDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #departmentId>
+                  <ng-container *ngIf="column.value == 'Department'; else Actionview">
+                    {{findDept(element.departmentId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #Actionview>
+                  <ng-container *ngIf="column.value =='View'; else ActionEdit">
+                    <i class="material-icons" (click)="viewDocument(element)">visibility</i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #ActionEdit>
+                  <ng-container *ngIf="column.value =='Action'; else DocTitel">
+                    <i class="material-icons fas fa-pen" (click)="editDocument(element)"> </i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #DocTitel>
+                  <ng-container *ngIf="column.value == 'Document Title'; else noRepsWithdata">
+                    {{element.documentTitle}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #noRepsWithdata>
+                  {{element[column.id]}}
+                </ng-template>
+              </mat-cell>
+
+
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsRepsWithPlans"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsRepsWithPlans;" class="pointer table-content"
+                     (click)="rowClick(row)"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator1 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Document For Approveing">
+          <mat-table #table2 [dataSource]="documentApproversDataSource" matSort #sort2="matSort">
+            <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNamesApproversDocument">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+                {{column.value}}
+              </mat-header-cell>
+              <mat-cell [attr.data-td-head]="column.value" *matCellDef="let element">
+                <ng-container *ngIf="column.value == 'Project Name'; else projectOwner ">
+                  {{findProjectName(element.projectNameId)}}
+                </ng-container>
+                <ng-template #projectOwner>
+                  <ng-container *ngIf="column.value == 'Project Owner'; else projectStartDate">
+                    {{findUser(element.projectOwnerId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectStartDate>
+                  <ng-container *ngIf="column.value == 'Project Start Date'; else projectDueDate">
+                    {{element.projectStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectDueDate>
+                  <ng-container *ngIf="column.value == 'Project Due Date'; else documentType">
+                    {{element.projectDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentType>
+                  <ng-container *ngIf="column.value == 'Document Type'; else documentStartDate">
+                    {{findDocumentType(element.documentTypeId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentStartDate>
+                  <ng-container *ngIf="column.value == 'Document Start Date'; else documentDue">
+                    {{element.documentStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentDue>
+                  <ng-container *ngIf="column.value == 'Document Due Date'; else departmentId">
+                    {{element.documentDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #departmentId>
+                  <ng-container *ngIf="column.value == 'Department'; else Actionview">
+                    {{findDept(element.departmentId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #Actionview>
+                  <ng-container *ngIf="column.value =='View'; else ActionEdit">
+                    <i class="material-icons" (click)="viewDocument(element)">visibility</i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #ActionEdit>
+                  <ng-container *ngIf="column.value =='Action'; else DocTitel">
+                    <i class="material-icons fas fa-pen" (click)="editDocument(element)"> </i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #DocTitel>
+                  <ng-container *ngIf="column.value == 'Document Title'; else noRepsWithdata">
+                    {{element.documentTitle}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #noRepsWithdata>
+                  {{element[column.id]}}
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsApproverDoc"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsApproverDoc;" class="pointer table-content" (click)="rowClick(row)"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Document For Reading">
+          <mat-table #table3 [dataSource]="documentReaderDataSource" matSort #sort3="matSort">
+            <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNamesReaderDocument">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+                {{column.value}}
+              </mat-header-cell>
+              <mat-cell [attr.data-td-head]="column.value" *matCellDef="let element">
+                <ng-container *ngIf="column.value == 'Project Name'; else projectOwner ">
+                  {{findProjectName(element.projectNameId)}}
+                </ng-container>
+                <ng-template #projectOwner>
+                  <ng-container *ngIf="column.value == 'Project Owner'; else projectStartDate">
+                    {{findUser(element.projectOwnerId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectStartDate>
+                  <ng-container *ngIf="column.value == 'Project Start Date'; else projectDueDate">
+                    {{element.projectStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #projectDueDate>
+                  <ng-container *ngIf="column.value == 'Project Due Date'; else documentType">
+                    {{element.projectDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentType>
+                  <ng-container *ngIf="column.value == 'Document Type'; else documentStartDate">
+                    {{findDocumentType(element.documentTypeId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentStartDate>
+                  <ng-container *ngIf="column.value == 'Document Start Date'; else documentDue">
+                    {{element.documentStartDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #documentDue>
+                  <ng-container *ngIf="column.value == 'Document Due Date'; else departmentId">
+                    {{element.documentDueDate | date:"dd/MM/yy"}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #departmentId>
+                  <ng-container *ngIf="column.value == 'Department'; else Actionview">
+                    {{findDept(element.departmentId)}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #Actionview>
+                  <ng-container *ngIf="column.value =='View'; else DocTitel">
+                    <i class="material-icons" (click)="viewDocument(element)">visibility</i>
+                  </ng-container>
+                </ng-template>
+                <ng-template #DocTitel>
+                  <ng-container *ngIf="column.value == 'Document Title'; else noRepsWithdata">
+                    {{element.documentTitle}}
+                  </ng-container>
+                </ng-template>
+                <ng-template #noRepsWithdata>
+                  {{element[column.id]}}
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsReaderDoc"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:displayedColumnsReaderDoc;" class="pointer table-content" (click)="rowClick(row)"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator3 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+

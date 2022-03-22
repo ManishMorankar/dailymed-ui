@@ -1,0 +1,133 @@
+{
+    "statusCode": "201",
+    "message": "Success",
+    "result": [
+    {
+    "empId": "1",
+    "userName": "Raj",
+    "password": null,
+    "email": "raj.kiran@oytconsultants.com",
+    "roleID": 1,
+    "roleName": "Finance Admin",
+    "status": 1,
+    "capabilities": [
+    {
+    "id": 1,
+    "name": "Rule-View Rule"
+    },
+    {
+    "id": 2,
+    "name": "Rule-Create Rule"
+    },
+    {
+    "id": 3,
+    "name": "Rule-Clone Rule"
+    },
+    {
+    "id": 4,
+    "name": "Base Formula-View"
+    },
+    {
+    "id": 5,
+    "name": "Base Formula-Create"
+    },
+    {
+    "id": 6,
+    "name": "Base Formula-Clone"
+    },
+    {
+    "id": 7,
+    "name": "Plan-View"
+    },
+    {
+    "id": 8,
+    "name": "Plan-Create"
+    },
+    {
+    "id": 9,
+    "name": "Plan-Clone"
+    },
+    {
+    "id": 10,
+    "name": "Plan-Assign"
+    },
+    {
+    "id": 11,
+    "name": "View Opportunity detail(Includes commission information)"
+    },
+    {
+    "id": 12,
+    "name": "View sales Rep detail(Include commission related data)"
+    },
+    {
+    "id": 13,
+    "name": "Edit sales rep detail(Commission Rates and Overrides)"
+    },
+    {
+    "id": 14,
+    "name": "Change Payment book type of a contact"
+    },
+    {
+    "id": 15,
+    "name": "Change Contact specific Incentives"
+    },
+    {
+    "id": 16,
+    "name": "Change Base pay structure of a contact"
+    },
+    {
+    "id": 17,
+    "name": "Rate Tables-View"
+    },
+    {
+    "id": 18,
+    "name": "Rate Tables-Update/Create"
+    },
+    {
+    "id": 19,
+    "name": "Sales Rep Dashboard(View Only)"
+    },
+    {
+    "id": 20,
+    "name": "Calculate Commissions-Opportunity Level"
+    },
+    {
+    "id": 21,
+    "name": "Calculate Commissions-(Department Level, Plan Level)"
+    },
+    {
+    "id": 22,
+    "name": "Override Total commission"
+    },
+    {
+    "id": 23,
+    "name": "Create manual payments(Adjustments and Reclaims)"
+    },
+    {
+    "id": 24,
+    "name": "Approve/Reject Payments"
+    },
+    {
+    "id": 25,
+    "name": "View Payment books"
+    },
+    {
+    "id": 26,
+    "name": "Extract to Paycom(Excel File)"
+    },
+    {
+    "id": 27,
+    "name": "Commission Reports"
+    },
+    {
+    "id": 28,
+    "name": "Payment Reports"
+    },
+    {
+    "id": 29,
+    "name": "Payment Book Reports"
+    }
+    ]
+    }
+    ]
+    }

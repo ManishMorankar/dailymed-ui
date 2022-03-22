@@ -1,0 +1,28 @@
+.custom-table {
+    background-color: #FFF;
+    width: 100%
+}
+
+.custom-thead {
+    font-size: 1.2em;
+    font-weight: bolder;
+    background-color: #F3F3F3
+}
+
+.custom-tr {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    border-top: 1px solid lightgrey;
+}
+
+.custom-td {
+    text-align: left;
+    width: calc(100% / 6);
+    padding: 2px 12px;
+}
+
+.table-row {
+    width: 100%;
+    margin: 0;
+}

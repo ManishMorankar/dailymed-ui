@@ -1,0 +1,22 @@
+.error {
+  color: #FF0000;
+}
+
+.custom-header {
+  position: absolute !important;
+}
+
+.card {
+  height: 350px !important;
+}
+
+.wrapper {
+  background-image: url("/assets/images/sample.jpg");
+}
+
+.btn, .btn.btn-default {
+  color: #fff;
+  background-color: #025686;
+  border-color: #025686;
+  box-shadow: 0 2px 2px 0 rgb(153 153 153 / 14%), 0 3px 1px -2px rgb(153 153 153 / 20%), 0 1px 5px 0 rgb(153 153 153 / 12%);
+}

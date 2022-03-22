@@ -1,0 +1,239 @@
+<div class="page-title col-md-12 ">
+  <h1>Document Status Report</h1>
+  <div class="breadcrumbs">
+    <a href="#">Home</a>/<span>Document Status Report</span>
+  </div>
+</div>
+<div class="content">
+
+  <div class="card">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect">Filter Report </h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="DocumentStatusReportForm" (ngSubmit)="getResult()" class="w-100">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Project Type</label>
+              <div class="col-sm-8">
+                <select class="custom-select" name="project_type_dropdown" formControlName="projectType"
+                        data-style="btn btn-link" id="project_type_dropdown" (change)="getProjectDropdowns()">
+                  <option value="">Select</option>
+                  <option value="Project">Project</option>
+                  <option value="Commercial">Commercial</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Project</label>
+              <div class="col-sm-8">
+                <select class="custom-select" name="project_dropdown" formControlName="projectNameId"
+                        data-style="btn btn-link" id="project_dropdown" (change)="getAssignedToDropdownsAndProjectDetails()">
+                  <option value="0">Select</option>
+                  <option *ngFor="let p of projectDropdowns" value="{{p.id}}">
+                    {{p.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Document Type</label>
+              <div class="col-sm-8">
+                <select class="custom-select" name="document_type_dropdown" formControlName="documentTypeId"
+                        data-style="btn btn-link" id="document_type_dropdown">
+                  <option value="0">Select</option>
+                  <option *ngFor="let p of documentTypesDropdowns" value="{{p.id}}">
+                    {{p.description}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Document Status</label>
+              <div class="col-sm-8">
+                <select class="custom-select" name="document_status_dropdown" formControlName="documentStatus"
+                        data-style="btn btn-link" id="document_status_dropdown">
+                  <option value="">Select</option>
+                  <option value="Started">Started</option>
+                  <option value="Not Started">Not Started</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Cancelled">Cancelled</option>
+                  <option value="Completed">Completed</option>
+                  <option value="As Built">As Built</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="row">
+              <label class="col-sm-4">Document Id</label>
+              <div class="col-sm-8">
+                <input type="text" name="documentId" id="documentId" class="custom-input" formControlName="documentId"
+                       placeholder="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-12 text-right">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Generate Report
+          </button>
+          <a class="btn btn-primary float-right" (click)="resetClick()">
+            <i class="material-icons pointer">remove_circle</i> Reset
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect">Result</h4>
+    </div>
+    <div class="card-body">
+      <div style="width:100%; overflow-x:scroll">
+        <table mat-table [dataSource]="resultDataSource" matSort class="my-table mt-3" style="width: 100%;">
+
+          <ng-container matColumnDef="projectType">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Project Type </th>
+            <td data-td-head="Project Type" mat-cell *matCellDef="let element">
+              {{element.projectType}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="projectName">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Project Name </th>
+            <td data-td-head=" Project Name" mat-cell *matCellDef="let element">
+              {{element.projectName}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="projectOwner">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Project Owner </th>
+            <td data-td-head="Project Owner" mat-cell *matCellDef="let element">
+              {{element.projectOwner}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentType">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Document  Type </th>
+            <td data-td-head="Document  Type" mat-cell *matCellDef="let element">
+              {{element.documentType}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="department">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Department  </th>
+            <td data-td-head="department " mat-cell *matCellDef="let element">
+              {{element.department}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentTitle">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Document Title  </th>
+            <td data-td-head=" Document Title " mat-cell *matCellDef="let element">
+              {{element.documentTitle}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentId">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> Document Id  </th>
+            <td data-td-head=" Document Id " mat-cell *matCellDef="let element">
+              {{element.documentId}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentStartDate">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Document StartDate </th>
+            <td data-td-head="Document StartDate" mat-cell *matCellDef="let element">
+              {{element.documentStartDate | date:"yyyy/MM/dd"}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentDueDate">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Document DueDate </th>
+            <td data-td-head="Document DueDate" mat-cell *matCellDef="let element">
+              {{element.documentDueDate | date:"yyyy/MM/dd"}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+            <td data-td-head="Status" mat-cell *matCellDef="let element">
+              {{element.status}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="revisionNumber">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Revision Number</th>
+            <td data-td-head="Revision Number" mat-cell *matCellDef="let element">
+              {{element.revisionNumber}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdOn">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Created On </th>
+            <td data-td-head="Created On" mat-cell *matCellDef="let element">
+              {{element.createdOn | date:"yyyy/MM/dd"}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Created By </th>
+            <td data-td-head="Created By" mat-cell *matCellDef="let element">
+              {{element.createdBy}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="modifiedOn">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Modified On </th>
+            <td data-td-head="Modified On" mat-cell *matCellDef="let element">
+              {{element.modifiedOn | date:"yyyy/MM/dd"}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="modifiedBy">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header>Modified By </th>
+            <td data-td-head="Modified By" mat-cell *matCellDef="let element">
+              {{element.modifiedBy}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fileLink">
+            <th class="mat-column-width" mat-header-cell *matHeaderCellDef mat-sort-header> File </th>
+            <td data-td-head="Document Path" mat-cell *matCellDef="let element">
+              <a class="download-btn" [href]="returnUrl(element.fileLink)" *ngIf="downloadOption(element.fileLink)">
+                <i class="material-icons">cloud_download  </i>
+              </a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="resultCols"></tr>
+          <tr mat-row *matRowDef="let row; columns resultCols;" class="pointer table-content"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+
+      <div class="col-md-12 text-right" *ngIf="exportButton">
+        <button type="submit" class="btn btn-primary" (click)="exportResult()">
+          <i class="fas fa-plus"></i> Export Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+

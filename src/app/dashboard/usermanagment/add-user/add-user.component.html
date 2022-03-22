@@ -1,0 +1,156 @@
+<div class="page-title col-md-12 ">
+  <h1>User Management</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<a href="#/ui/usermanagement">User Management</a>/<span>{{editUser.type == "Edit" ? "Edit" : "Create"}} User</span>
+  </div>
+</div>
+
+ 
+  <div class="content">
+     <div class="card">
+      <div class="card-header-info">
+        <h4 class="card-title"><i class="fas fa-user-plus"></i> {{submit_btn}}</h4>
+      </div>
+      <div class="card-body">
+       
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">User Name</label>
+                <div class="col-sm-7">
+                  <input type="text" name="name" id="name" class="custom-input" formControlName="name" placeholder="">
+                  <div class="error"
+                       *ngIf="userForm.controls['name'].hasError('required') && userForm.controls['name'].touched">
+                    Name is
+                    required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">Status</label>
+                <div class="col-sm-7">
+                  <select class="custom-select" name="status" formControlName="status" data-style="btn btn-link"
+                          id="status">
+                    <option value="">Select</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                  <div class="error"
+                       *ngIf="userForm.controls['status'].hasError('required') && userForm.controls['status'].touched">
+                    Status
+                    is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">Gender </label>
+                <div class="col-sm-7">
+                  <select class="custom-select" formControlName="gender" name="gender" id="Gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="error"
+                       *ngIf="userForm.controls['gender'].hasError('required') && userForm.controls['gender'].touched">
+                    Gender
+                    is
+                    required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="row" *ngIf="!this.editUser.type">-->
+          <div class="row">
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">Email</label>
+                <div class="col-sm-7">
+                  <input name="email" formControlName="email" class="custom-input">
+                  <div class="error"
+                       *ngIf="userForm.controls['email'].hasError('required') && userForm.controls['email'].touched">
+                    E-mail
+                    is required.
+                  </div>
+                  <div class="error"
+                       *ngIf="userForm.controls['email'].hasError('email') && userForm.controls['email'].touched">
+                    Email must
+                    be a valid email address
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">Password</label>
+                <div class="col-sm-7">
+                  <input type="password" name="password" id="password" class="custom-input" formControlName="password"
+                         placeholder="">
+                  <div class="error"
+                       *ngIf="userForm.controls['password'].hasError('required') && userForm.controls['password'].touched">
+                    Password is required.
+                  </div>
+                  <div class="error"
+                       *ngIf="userForm.controls['password'].hasError('minlength') && userForm.controls['password'].touched">
+                    Password must be at least 6 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <div class="row">
+                <label class="col-sm-5">Confirm Password</label>
+                <div class="col-sm-7">
+                  <input name="confirm_pass" type="password" formControlName="confirm_pass" class="custom-input">
+                  <div class="error"
+                       *ngIf="userForm.controls['confirm_pass'].hasError('required') && userForm.controls['confirm_pass'].touched">
+                    Confirm Password is required
+                  </div>
+                  <div class="error"
+                       *ngIf="userForm.controls['confirm_pass'].hasError('minlength') && userForm.controls['confirm_pass'].touched">
+                    Your confirm password must be at least 6 characters long.
+                  </div>
+                  <div class="error" *ngIf="userForm.controls['confirm_pass'].hasError('mustMatch')">
+                    Password & Confirm
+                    Password does not match.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+          </div>
+
+          <div class="row">
+
+
+            
+
+            <div class="col-md-12 text-right">
+              <button type="submit" class="btn btn-primary" *ngIf="add">
+                <i class="fas fa-plus"></i> Add User master
+              </button>
+              <button type="submit" class="btn btn-primary" *ngIf="update">
+                <i class="fas fa-plus"></i> Update User Master
+              </button>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary float-right" [disabled]="userForm.invalid"><i class="fas fa-user-plus"></i>  {{submit_btn}}</button>
+            </div>
+          </div>
+        </form>
+   
+      </div>
+    </div>
+  </div>

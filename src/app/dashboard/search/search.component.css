@@ -1,0 +1,14 @@
+#search{
+  color: #AAAAAA;
+  font-size: initial;
+  font-weight: 400;
+  height: 60px;
+}
+
+.form-check .form-check-label .circle .check{
+  background-color: black !important;
+}
+
+.form-check .form-check-input:checked~.circle{
+  border-color: black !important;
+}

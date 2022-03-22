@@ -1,0 +1,44 @@
+<tr class="mat-row">
+  <td class="mat-cell">
+    <p style="text-align: center; margin: auto;" class="no-hover-effect">{{ paymentNumber }}</p>
+  </td>
+  <td class="mat-cell">
+    <div class="form-group">
+      <input type="number" name="percentage" id="percentage" min="0" max="100" value="" class="custom-input"
+        [(ngModel)]="percentage" (change)="onChange()" [ngClass]="{'disabled' : disabled}"/>
+    </div>
+  </td>
+  <td class="mat-cell">
+    <div class="form-group">
+      <select class=" custom-select hover" name="paymentDueDateMappingId" id="paymentDueDateMappingId" data-style="btn btn-link" [(ngModel)]="paymentDueDateMappingId"
+        (change)="onChange()" [ngClass]="{'disabled' : disabled}">
+        <option *ngFor="let dueDate of paymentDueDateMappings" [value]="dueDate.paymentDueDateMappingId">{{dueDate.paymentDueDateMappingName}}</option>
+      </select>
+    </div>
+  </td>
+  <td class="mat-cell">
+    <div class="form-group">
+      <input type="number" name="days-in-advance" id="days-in-advance" min="0" max="150" value="" class="custom-input"
+        [(ngModel)]="daysInAdvance" (change)="onChange()" [ngClass]="{'disabled' : disabled}" />
+    </div>
+  </td>
+  <td class="mat-cell">
+    <div class="form-group">
+      <select class="custom-select hover" name="payment-type" id="payment-type" data-style="btn btn-link"
+        [(ngModel)]="paymentTypeId" (change)="onChange()">
+        <option *ngFor="let paymentType of paymentTypes" value="{{paymentType.paymentTypeId}}">
+          {{paymentType.paymentTypeName}}</option>
+      </select>
+    </div>
+  </td> 
+  <td class="mat-cell">
+    <div class="form-group">
+      <select class=" custom-select hover" name="paybasedon" id="paybasedon" data-style="btn btn-link"
+        [(ngModel)]="payBasedOn" (change)="onChange()" [ngClass]="{'disabled' : disabled}">
+        <option value="total commission">Total Commission</option>
+        <option value="opportunity amount">Opportunity Amount</option>
+      </select>
+    </div>
+  </td>
+ </tr>
+ 

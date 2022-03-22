@@ -1,0 +1,198 @@
+<div class="page-title col-md-12 ">
+  <h1> Outreach Configuration</h1>
+  <div class="breadcrumbs"><a href="#">Home</a>/<span>Outreach Configuration</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="card">
+    <div class="card-header-info">
+      <h4 class="card-title ">Outreach Configuration</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <div class="input-group float-right table-search">
+            <input class="custom-input" type="text" id="searchTextId" [(ngModel)]="searchText" name="searchText"
+              placeholder="Search" (input)="searchForItem()">
+
+            <span class="input-group-icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> {{column.value}} </mat-header-cell>
+          <mat-cell [attr.data-td-head]="column.value" *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer table-content" (click)="rowClick(row)">
+        </mat-row>
+      </mat-table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+      <div *ngIf="apiService.checkPermission('CreateRateTables')">
+        <a class="btn  btn-primary float-right" *ngIf="!addInd" (click)="addInd = !addInd"><i
+            class="material-icons pointer">add_circle</i> Add</a>
+        <a class="btn  btn-primary float-right" *ngIf="addInd" (click)="addInd = !addInd"><i
+            class="material-icons pointer">remove_circle</i> Hide</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="addInd">
+    <div class="card-header-info">
+      <h4 class="card-title no-hover-effect"><i class="fas fa-plus"></i> Add Outreach Configuration</h4>
+    </div>
+    <div class="card-body">
+      <div>
+        <form [formGroup]="outReachConfigForm" (ngSubmit)="onSubmit()" class="w-100">
+          <div class="row" *ngIf="activeOutreachPayConfigurationType">
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Configuration Name</label>
+                <div class="col-sm-7">
+                  <select class="custom-select" name="outreachPayConfigurationTypeName"
+                    formControlName="outreachPayConfigurationTypeName" data-style="btn btn-link"
+                    id="outreachPayConfigurationTypeName">
+                    <option *ngFor="let fp of dropdowns.outreachPayConfigurationTypes"
+                      value="{{fp.outreachPayConfigurationTypeId}}">
+                      {{fp.outreachPayConfigurationTypeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Pay Before or After Threshold is Reached</label>
+                <div class="col-sm-7">
+                  <select *ngIf="payAfterThresholdInd" class="custom-select" name="payAfterThresholdInd"
+                    formControlName="payAfterThresholdInd" data-style="btn btn-link" id="payAfterThresholdInd">
+                    <option [value]="true">After</option>
+                    <option [value]="false">Before</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Pay Based On</label>
+                <div class="col-sm-7">
+                  <input type="text" name="payBasedOn" formControlName="payBasedOn" class="custom-input">
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-6">
+                <label>Active Ind</label>
+                <input type="text" pattern="[0-9]*" name="activeInd"
+                  formControlName="activeInd" class="form-control">
+              </div> -->
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Awarded Amount</label>
+                <div class="col-sm-7">
+                  <input currencyMask [options]="{ allowNegative: false, align: 'left' }" name="configurationAmount"
+                    formControlName="configurationAmount" class="custom-input">
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Threshold to Reach</label>
+                <div class="col-sm-7">
+                  <input type="number" name="configurationThreshold" formControlName="configurationThreshold"
+                    class="custom-input">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Effective Start Date</label>
+                <div class="col-sm-7">
+                  <input type="date" name="effectiveStartDate" formControlName="effectiveStartDate"
+                    class="custom-input">
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="row">
+                <label class="col-sm-5">Effective End Date</label>
+                <div class="col-sm-7">
+                  <input type="date" name="effectiveEndDate" formControlName="effectiveEndDate" class="custom-input">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-button-right">
+            <button type="submit" class="btn btn-primary" [disabled]="outReachConfigForm.invalid"><i
+                class="fas fa-plus"></i> Add OutReach Config
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="OutreachPayConfigurationTypeGroup">
+    <div class="card-header-info">
+      <h4 class="card-title">History</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <!-- <hr style="width: 95%; border-color: #26c6da;" /> -->
+        <div class="w-100">
+          <a class="text-info"><i class="material-icons float-right blue-icon"
+              (click)="OutreachPayConfigurationTypeGroup = null">cancel</i></a>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <table class="table-sm">
+                <tbody>
+                  <tr>
+                    <td><b>ConfigurationTypeName</b></td>
+                    <td>{{OutreachPayConfigurationTypeGroup[0].outreachPayConfigurationTypeName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-borderless">
+          <thead>
+            <tr>
+              <th scope="col">PayAfter ThresholdInd</th>
+              <th scope="col">Pay BasedOn</th>
+              <!-- <th scope="col">ActiveInd</th> -->
+              <th scope="col">Awarded Amount</th>
+              <th scope="col">Configuration Threshold</th>
+              <th scope="col">EffectiveEndDate</th>
+              <th scope="col">EffectiveStartDate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tr of OutreachPayConfigurationTypeGroup">
+              <td>{{tr.payAfterThresholdInd ? "After" : "Before" }}</td>
+              <td>{{tr.payBasedOn }}</td>
+              <!-- <td>{{tr.activeInd  }}</td> -->
+              <td>{{tr.configurationAmount | currency }}</td>
+              <td>{{tr.configurationThreshold | percent}}</td>
+              <td>{{tr.effectiveStartDate | date}}</td>
+              <td>{{tr.effectiveStartDate | date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

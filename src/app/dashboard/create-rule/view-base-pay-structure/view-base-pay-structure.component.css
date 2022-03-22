@@ -1,0 +1,20 @@
+.align_label{
+  margin-top: -27px !important;
+}
+
+.date-output {
+  height: 2.5em;
+  width: 210px;
+  padding: 5px 55px;
+  background-color: rgb(235, 235, 228);
+  border: 1px solid gray;
+}
+
+.rule-type-output {
+  color: black;
+  height: 2.5em;
+  width: 250px;
+  padding: 5px 55px;
+  background-color: rgb(235, 235, 228);
+  border: 1px solid gray;
+}
